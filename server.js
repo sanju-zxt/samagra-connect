@@ -1,10 +1,20 @@
+"use strict";
+
 const express = require("express");
 const path = require("path");
 
 const app = express();
 
+/* =========================================================
+   SERVER CONFIG
+   ========================================================= */
+
 const PORT = process.env.PORT || 3000;
+
+const HOST = "0.0.0.0";
+
 const GAME_DURATION = 30 * 1000;
+
 const MAX_POINTS = 10;
 
 
@@ -12,9 +22,22 @@ const MAX_POINTS = 10;
    LOAD QUESTIONS
    ========================================================= */
 
-const questions = require(
-    "./questions.json"
-);
+let questions;
+
+try {
+
+    questions = require("./questions.json");
+
+} catch (error) {
+
+    console.error(
+        "ERROR: Could not load questions.json"
+    );
+
+    console.error(error);
+
+    process.exit(1);
+}
 
 
 if (
@@ -27,25 +50,89 @@ if (
     );
 
     process.exit(1);
-
 }
+
+
+/* =========================================================
+   VALIDATE QUESTIONS
+   ========================================================= */
+
+questions.forEach(
+    (question, index) => {
+
+        if (
+            !question ||
+            typeof question !== "object"
+        ) {
+
+            console.error(
+                `Invalid question at index ${index}`
+            );
+
+            process.exit(1);
+        }
+
+
+        if (
+            typeof question.answer !== "string"
+        ) {
+
+            console.error(
+                `Question ${index + 1} has no valid answer.`
+            );
+
+            process.exit(1);
+        }
+
+
+        if (
+            !Array.isArray(question.images)
+        ) {
+
+            question.images = [];
+
+        }
+
+    }
+);
 
 
 /* =========================================================
    APP CONFIG
    ========================================================= */
 
+app.disable("x-powered-by");
+
 app.use(
-    express.json()
+    express.json({
+        limit: "100kb"
+    })
 );
 
+
+app.use(
+    express.urlencoded({
+        extended: false,
+        limit: "100kb"
+    })
+);
+
+
+/* =========================================================
+   STATIC FILES
+   ========================================================= */
 
 app.use(
     express.static(
         path.join(
             __dirname,
             "public"
-        )
+        ),
+        {
+            extensions: [
+                "html"
+            ]
+        }
     )
 );
 
@@ -56,26 +143,21 @@ app.use(
 
 const game = {
 
-    started:
-        false,
+    started: false,
 
-    question:
-        0,
+    finished: false,
 
-    startedAt:
-        0,
+    question: 0,
 
-    submissionsOpen:
-        false,
+    startedAt: 0,
 
-    revealed:
-        false,
+    submissionsOpen: false,
 
-    teams:
-        {},
+    revealed: false,
 
-    submissions:
-        {}
+    teams: {},
+
+    submissions: {}
 
 };
 
@@ -126,6 +208,11 @@ function isCorrect(
     question
 ) {
 
+    if (!question) {
+        return false;
+    }
+
+
     const submittedNormalized =
         normalizeAnswer(
             submitted
@@ -161,6 +248,7 @@ function isCorrect(
 
     return accepted.some(
         answer =>
+
             normalizeAnswer(
                 answer
             ) ===
@@ -228,7 +316,7 @@ function calculatePoints(
 
 
 /* =========================================================
-   CLOSE ROUND AUTOMATICALLY
+   CHECK TIMER
    ========================================================= */
 
 function checkTimer() {
@@ -260,6 +348,10 @@ function checkTimer() {
 
 }
 
+
+/* =========================================================
+   TIMER LOOP
+   ========================================================= */
 
 setInterval(
     checkTimer,
@@ -297,6 +389,12 @@ function getLeaderboard() {
 
             }
 
+
+            /*
+             * If scores are equal,
+             * the team that reached
+             * that score first ranks higher.
+             */
 
             return (
                 a.lastCorrectAt -
@@ -354,7 +452,14 @@ function getLeaderboard() {
                         ? Boolean(
                             submission.correct
                         )
-                        : false
+                        : false,
+
+                currentPoints:
+                    submission
+                        ? Number(
+                            submission.points || 0
+                        )
+                        : 0
 
             };
 
@@ -404,10 +509,15 @@ function getPublicState() {
         started:
             game.started,
 
+        finished:
+            game.finished,
+
         question:
             game.started
                 ? game.question + 1
-                : 0,
+                : game.finished
+                    ? questions.length
+                    : 0,
 
         totalQuestions:
             questions.length,
@@ -415,14 +525,20 @@ function getPublicState() {
         startedAt:
             game.startedAt,
 
+        remaining:
+            remaining,
+
+        duration:
+            GAME_DURATION,
+
+        maxPoints:
+            MAX_POINTS,
+
         submissionsOpen:
             game.submissionsOpen,
 
         revealed:
             game.revealed,
-
-        remaining:
-            remaining,
 
         clueCount:
             question &&
@@ -475,7 +591,50 @@ app.get(
 
 
 /* =========================================================
-   STATE
+   HEALTH CHECK
+   ========================================================= */
+
+app.get(
+    "/api/health",
+    (
+        req,
+        res
+    ) => {
+
+        res.json({
+
+            success:
+                true,
+
+            status:
+                "online",
+
+            game:
+                "SAMAGRA CONNECT",
+
+            questions:
+                questions.length,
+
+            duration:
+                GAME_DURATION / 1000,
+
+            maxPoints:
+                MAX_POINTS,
+
+            uptime:
+                process.uptime(),
+
+            timestamp:
+                Date.now()
+
+        });
+
+    }
+);
+
+
+/* =========================================================
+   PUBLIC STATE
    ========================================================= */
 
 app.get(
@@ -497,48 +656,49 @@ app.get(
    START GAME
    ========================================================= */
 
-function startGame(
-    req,
-    res
-) {
-
-    game.started =
-        true;
-
-    game.question =
-        0;
-
-    game.startedAt =
-        Date.now();
-
-    game.submissionsOpen =
-        true;
-
-    game.revealed =
-        false;
-
-    game.submissions =
-        {};
-
-
-    res.json({
-        success:
-            true,
-
-        message:
-            "Game started.",
-
-        state:
-            getPublicState()
-
-    });
-
-}
-
-
 app.post(
     "/api/admin/start",
-    startGame
+    (
+        req,
+        res
+    ) => {
+
+        game.started =
+            true;
+
+        game.finished =
+            false;
+
+        game.question =
+            0;
+
+        game.startedAt =
+            Date.now();
+
+        game.submissionsOpen =
+            true;
+
+        game.revealed =
+            false;
+
+        game.submissions =
+            {};
+
+
+        res.json({
+
+            success:
+                true,
+
+            message:
+                "Game started.",
+
+            state:
+                getPublicState()
+
+        });
+
+    }
 );
 
 
@@ -546,32 +706,190 @@ app.post(
    NEXT QUESTION
    ========================================================= */
 
-function nextQuestion(
-    req,
-    res
-) {
+app.post(
+    "/api/admin/next",
+    (
+        req,
+        res
+    ) => {
 
-    if (
-        !game.started
-    ) {
+        if (
+            !game.started
+        ) {
 
-        return res
-            .status(400)
-            .json({
-                error:
-                    "Game is not running."
+            return res
+                .status(400)
+                .json({
+
+                    error:
+                        "Game is not running."
+
+                });
+
+        }
+
+
+        /*
+         * If this was the final question,
+         * finish the game.
+         */
+
+        if (
+            game.question >=
+            questions.length - 1
+        ) {
+
+            game.started =
+                false;
+
+            game.finished =
+                true;
+
+            game.submissionsOpen =
+                false;
+
+            game.revealed =
+                true;
+
+
+            return res.json({
+
+                success:
+                    true,
+
+                finished:
+                    true,
+
+                message:
+                    "All questions completed.",
+
+                state:
+                    getPublicState()
+
             });
 
-    }
+        }
 
 
-    if (
-        game.question >=
-        questions.length - 1
-    ) {
+        game.question++;
 
-        game.started =
+        game.startedAt =
+            Date.now();
+
+        game.submissionsOpen =
+            true;
+
+        game.revealed =
             false;
+
+        game.submissions =
+            {};
+
+
+        res.json({
+
+            success:
+                true,
+
+            message:
+                `Question ${
+                    game.question + 1
+                } started.`,
+
+            state:
+                getPublicState()
+
+        });
+
+    }
+);
+
+
+/* =========================================================
+   RESTART CURRENT ROUND
+   ========================================================= */
+
+app.post(
+    "/api/admin/restart",
+    (
+        req,
+        res
+    ) => {
+
+        if (
+            !game.started
+        ) {
+
+            return res
+                .status(400)
+                .json({
+
+                    error:
+                        "Game is not running."
+
+                });
+
+        }
+
+
+        game.startedAt =
+            Date.now();
+
+        game.submissionsOpen =
+            true;
+
+        game.revealed =
+            false;
+
+        game.submissions =
+            {};
+
+
+        res.json({
+
+            success:
+                true,
+
+            message:
+                "Round restarted.",
+
+            state:
+                getPublicState()
+
+        });
+
+    }
+);
+
+
+/* =========================================================
+   REVEAL ANSWER
+   ========================================================= */
+
+app.post(
+    "/api/admin/reveal",
+    (
+        req,
+        res
+    ) => {
+
+        const question =
+            getCurrentQuestion();
+
+
+        if (!question) {
+
+            return res
+                .status(404)
+                .json({
+
+                    error:
+                        "Question not found."
+
+                });
+
+        }
+
 
         game.submissionsOpen =
             false;
@@ -580,15 +898,16 @@ function nextQuestion(
             true;
 
 
-        return res.json({
+        res.json({
+
             success:
                 true,
 
-            finished:
+            revealed:
                 true,
 
-            message:
-                "All questions completed.",
+            answer:
+                question.answer,
 
             state:
                 getPublicState()
@@ -596,178 +915,6 @@ function nextQuestion(
         });
 
     }
-
-
-    game.question++;
-
-    game.startedAt =
-        Date.now();
-
-    game.submissionsOpen =
-        true;
-
-    game.revealed =
-        false;
-
-    game.submissions =
-        {};
-
-
-    res.json({
-        success:
-            true,
-
-        message:
-            `Question ${
-                game.question + 1
-            } started.`,
-
-        state:
-            getPublicState()
-
-    });
-
-}
-
-
-app.post(
-    "/api/admin/next",
-    nextQuestion
-);
-
-
-/* =========================================================
-   RESTART CURRENT QUESTION
-   ========================================================= */
-
-function restartRound(
-    req,
-    res
-) {
-
-    if (
-        !game.started
-    ) {
-
-        return res
-            .status(400)
-            .json({
-                error:
-                    "Game is not running."
-            });
-
-    }
-
-
-    game.startedAt =
-        Date.now();
-
-    game.submissionsOpen =
-        true;
-
-    game.revealed =
-        false;
-
-    game.submissions =
-        {};
-
-
-    res.json({
-        success:
-            true,
-
-        message:
-            "Round restarted.",
-
-        state:
-            getPublicState()
-
-    });
-
-}
-
-
-app.post(
-    "/api/admin/restart",
-    restartRound
-);
-
-
-/* =========================================================
-   REVEAL ANSWER
-   ========================================================= */
-
-function revealAnswer(
-    req,
-    res
-) {
-
-    if (
-        !game.started
-    ) {
-
-        return res
-            .status(400)
-            .json({
-                error:
-                    "Game is not running."
-            });
-
-    }
-
-
-    const question =
-        getCurrentQuestion();
-
-
-    if (!question) {
-
-        return res
-            .status(404)
-            .json({
-                error:
-                    "Question not found."
-            });
-
-    }
-
-
-    /*
-     * THIS IS THE IMPORTANT FIX.
-     *
-     * We DO NOT restart startedAt.
-     * We simply close answers and reveal.
-     */
-
-    game.submissionsOpen =
-        false;
-
-    game.revealed =
-        true;
-
-
-    res.json({
-
-        success:
-            true,
-
-        revealed:
-            true,
-
-        answer:
-            question.answer,
-
-        state:
-            getPublicState()
-
-    });
-
-}
-
-
-app.post(
-    "/api/admin/reveal",
-    revealAnswer
 );
 
 
@@ -775,37 +922,105 @@ app.post(
    STOP GAME
    ========================================================= */
 
-function stopGame(
-    req,
-    res
-) {
-
-    game.started =
-        false;
-
-    game.submissionsOpen =
-        false;
-
-
-    res.json({
-
-        success:
-            true,
-
-        message:
-            "Game stopped.",
-
-        state:
-            getPublicState()
-
-    });
-
-}
-
-
 app.post(
     "/api/admin/stop",
-    stopGame
+    (
+        req,
+        res
+    ) => {
+
+        game.started =
+            false;
+
+        game.submissionsOpen =
+            false;
+
+
+        res.json({
+
+            success:
+                true,
+
+            message:
+                "Game stopped.",
+
+            state:
+                getPublicState()
+
+        });
+
+    }
+);
+
+
+/* =========================================================
+   RESET GAME
+   ========================================================= */
+
+app.post(
+    "/api/admin/reset",
+    (
+        req,
+        res
+    ) => {
+
+        game.started =
+            false;
+
+        game.finished =
+            false;
+
+        game.question =
+            0;
+
+        game.startedAt =
+            0;
+
+        game.submissionsOpen =
+            false;
+
+        game.revealed =
+            false;
+
+        game.submissions =
+            {};
+
+
+        /*
+         * Reset all team scores.
+         * Keep team names so teams don't
+         * need to join again during testing.
+         */
+
+        Object.values(
+            game.teams
+        ).forEach(
+            team => {
+
+                team.score =
+                    0;
+
+                team.lastCorrectAt =
+                    Date.now();
+
+            }
+        );
+
+
+        res.json({
+
+            success:
+                true,
+
+            message:
+                "Game reset.",
+
+            state:
+                getPublicState()
+
+        });
+
+    }
 );
 
 
@@ -841,19 +1056,26 @@ app.post(
             return res
                 .status(400)
                 .json({
+
                     error:
                         "Enter a team name."
+
                 });
 
         }
 
+
+        /*
+         * Team names are unique.
+         */
 
         const duplicate =
             Object.values(
                 game.teams
             ).some(
                 team =>
-                    team.name.toLowerCase() ===
+                    team.name
+                        .toLowerCase() ===
                     name.toLowerCase()
             );
 
@@ -865,8 +1087,10 @@ app.post(
             return res
                 .status(409)
                 .json({
+
                     error:
                         "That team name is already taken."
+
                 });
 
         }
@@ -936,8 +1160,16 @@ app.post(
                 req.body.answer ||
                 ""
             )
-                .trim();
+                .trim()
+                .slice(
+                    0,
+                    100
+                );
 
+
+        /*
+         * Validate team.
+         */
 
         if (
             !id ||
@@ -947,12 +1179,18 @@ app.post(
             return res
                 .status(403)
                 .json({
+
                     error:
                         "Invalid team."
+
                 });
 
         }
 
+
+        /*
+         * Game must be running.
+         */
 
         if (
             !game.started
@@ -961,12 +1199,18 @@ app.post(
             return res
                 .status(400)
                 .json({
+
                     error:
                         "Game has not started."
+
                 });
 
         }
 
+
+        /*
+         * Check timer before accepting answer.
+         */
 
         checkTimer();
 
@@ -978,8 +1222,10 @@ app.post(
             return res
                 .status(400)
                 .json({
+
                     error:
                         "Time is up. Answers are closed."
+
                 });
 
         }
@@ -990,12 +1236,18 @@ app.post(
             return res
                 .status(400)
                 .json({
+
                     error:
                         "Answer cannot be empty."
+
                 });
 
         }
 
+
+        /*
+         * One submission per team per question.
+         */
 
         const key =
             `${id}:${game.question}`;
@@ -1008,8 +1260,10 @@ app.post(
             return res
                 .status(409)
                 .json({
+
                     error:
                         "Your team has already submitted."
+
                 });
 
         }
@@ -1017,6 +1271,20 @@ app.post(
 
         const question =
             getCurrentQuestion();
+
+
+        if (!question) {
+
+            return res
+                .status(404)
+                .json({
+
+                    error:
+                        "Question not found."
+
+                });
+
+        }
 
 
         const correct =
@@ -1055,6 +1323,10 @@ app.post(
 
         };
 
+
+        /*
+         * Add points only for correct answers.
+         */
 
         if (
             correct
@@ -1116,12 +1388,18 @@ app.get(
         if (!question) {
 
             return res.json({
+
                 revealed:
                     false
+
             });
 
         }
 
+
+        /*
+         * Admin manually revealed.
+         */
 
         if (
             game.revealed
@@ -1139,6 +1417,11 @@ app.get(
 
         }
 
+
+        /*
+         * Automatically reveal after
+         * 30 seconds.
+         */
 
         const elapsed =
             Date.now() -
@@ -1172,8 +1455,100 @@ app.get(
 
 
         res.json({
+
             revealed:
                 false
+
+        });
+
+    }
+);
+
+
+/* =========================================================
+   TEAM STATUS
+   ========================================================= */
+
+app.get(
+    "/api/team/:id",
+    (
+        req,
+        res
+    ) => {
+
+        const id =
+            req.params.id;
+
+
+        const team =
+            game.teams[id];
+
+
+        if (!team) {
+
+            return res
+                .status(404)
+                .json({
+
+                    error:
+                        "Invalid team."
+
+                });
+
+        }
+
+
+        const key =
+            `${id}:${game.question}`;
+
+
+        const submission =
+            game.submissions[key];
+
+
+        res.json({
+
+            success:
+                true,
+
+            team: {
+
+                id:
+                    team.id,
+
+                name:
+                    team.name,
+
+                score:
+                    team.score
+
+            },
+
+            question:
+                game.started
+                    ? game.question + 1
+                    : 0,
+
+            submitted:
+                Boolean(
+                    submission
+                ),
+
+            correct:
+                submission
+                    ? Boolean(
+                        submission.correct
+                    )
+                    : null,
+
+            points:
+                submission
+                    ? submission.points
+                    : 0,
+
+            game:
+                getPublicState()
+
         });
 
     }
@@ -1185,9 +1560,10 @@ app.get(
    =========================================================
 
    VERY IMPORTANT:
-   API errors return JSON, NOT HTML.
+   Every /api error returns JSON.
 
    This prevents:
+
    Unexpected token '<'
 
    ========================================================= */
@@ -1235,11 +1611,21 @@ app.use(
             return res
                 .status(404)
                 .send(`
+
                     <!DOCTYPE html>
 
                     <html>
 
                     <head>
+
+                        <meta
+                            charset="UTF-8"
+                        >
+
+                        <meta
+                            name="viewport"
+                            content="width=device-width,initial-scale=1"
+                        >
 
                         <title>
                             SAMAGRA CONNECT
@@ -1247,13 +1633,58 @@ app.use(
 
                         <style>
 
+                            * {
+                                box-sizing:
+                                    border-box;
+                            }
+
                             body {
-                                background:#050608;
-                                color:white;
-                                font-family:Arial;
-                                display:grid;
-                                place-items:center;
-                                min-height:100vh;
+
+                                margin: 0;
+
+                                min-height:
+                                    100vh;
+
+                                display:
+                                    grid;
+
+                                place-items:
+                                    center;
+
+                                background:
+                                    #050608;
+
+                                color:
+                                    #ffffff;
+
+                                font-family:
+                                    Arial,
+                                    sans-serif;
+
+                            }
+
+                            .box {
+
+                                text-align:
+                                    center;
+
+                            }
+
+                            h1 {
+
+                                font-size:
+                                    42px;
+
+                                margin:
+                                    0 0 10px;
+
+                            }
+
+                            p {
+
+                                color:
+                                    #707783;
+
                             }
 
                         </style>
@@ -1262,13 +1693,23 @@ app.use(
 
                     <body>
 
-                        <h1>
-                            404 • Page Not Found
-                        </h1>
+                        <div class="box">
+
+                            <h1>
+                                404
+                            </h1>
+
+                            <p>
+                                SAMAGRA CONNECT
+                                • Page Not Found
+                            </p>
+
+                        </div>
 
                     </body>
 
                     </html>
+
                 `);
 
         }
@@ -1277,8 +1718,10 @@ app.use(
         res
             .status(404)
             .json({
+
                 error:
                     "Not found."
+
             });
 
     }
@@ -1298,6 +1741,7 @@ app.use(
     ) => {
 
         console.error(
+            "SERVER ERROR:",
             error
         );
 
@@ -1311,8 +1755,10 @@ app.use(
             return res
                 .status(500)
                 .json({
+
                     error:
                         "Internal server error."
+
                 });
 
         }
@@ -1329,54 +1775,80 @@ app.use(
 
 
 /* =========================================================
-   SERVER
+   START SERVER
    ========================================================= */
 
 app.listen(
     PORT,
-    "0.0.0.0",
+    HOST,
     () => {
 
         console.log("");
+
         console.log(
             "================================"
         );
+
         console.log(
             " SAMAGRA CONNECT LIVE"
         );
+
         console.log(
             "================================"
         );
-        console.log(
-            `Local: http://localhost:${PORT}`
-        );
+
         console.log("");
+
+        console.log(
+            `Port: ${PORT}`
+        );
+
         console.log(
             `Questions: ${questions.length}`
         );
+
         console.log(
-            `Duration: 30 seconds`
+            "Duration: 30 seconds"
         );
+
         console.log(
-            `Maximum points: 10`
+            "Maximum points: 10"
         );
+
         console.log("");
+
         console.log(
             "Admin:     /admin.html"
         );
+
         console.log(
             "Projector: /projector.html"
         );
+
         console.log(
             "Teams:     /team.html"
         );
+
+        console.log(
+            "Leaderboard: /leaderboard.html"
+        );
+
         console.log("");
+
+        console.log(
+            "Health:    /api/health"
+        );
+
+        console.log("");
+
         console.log(
             "Game server is running!"
         );
+
         console.log(
             "================================"
         );
+
         console.log("");
 
     }
