@@ -1,0 +1,234 @@
+[
+    {
+        "id": 1,
+        "answer": "GOOGLE",
+        "images": [
+            "/assets/slide-2-img-1.jpg",
+            "/assets/slide-2-img-2.jpg",
+            "/assets/slide-2-img-3.jpg"
+        ]
+    },
+    {
+        "id": 2,
+        "answer": "SHAKESPHERE",
+        "images": [
+            "/assets/slide-3-img-1.jpg",
+            "/assets/slide-3-img-2.jpg",
+            "/assets/slide-3-img-3.jpg",
+            "/assets/slide-3-img-4.jpg"
+        ]
+    },
+    {
+        "id": 3,
+        "answer": "TESLA",
+        "images": [
+            "/assets/slide-4-img-1.jpg",
+            "/assets/slide-4-img-2.jpg",
+            "/assets/slide-4-img-3.jpg",
+            "/assets/slide-4-img-4.jpg"
+        ]
+    },
+    {
+        "id": 4,
+        "answer": "META",
+        "images": [
+            "/assets/slide-5-img-1.jpg",
+            "/assets/slide-5-img-2.jpg",
+            "/assets/slide-5-img-3.jpg",
+            "/assets/slide-5-img-4.jpg"
+        ]
+    },
+    {
+        "id": 5,
+        "answer": "WEBSERIES",
+        "images": [
+            "/assets/slide-6-img-1.jpg",
+            "/assets/slide-6-img-2.jpg",
+            "/assets/slide-6-img-3.jpg",
+            "/assets/slide-6-img-4.jpg"
+        ]
+    },
+    {
+        "id": 6,
+        "answer": "Q06_ANSWER",
+        "images": [
+            "/assets/slide-7-img-1.jpg",
+            "/assets/slide-7-img-2.jpg",
+            "/assets/slide-7-img-3.jpg",
+            "/assets/slide-7-img-4.jpg"
+        ]
+    },
+    {
+        "id": 7,
+        "answer": "FROZEN",
+        "images": [
+            "/assets/slide-8-img-1.jpg",
+            "/assets/slide-8-img-2.jpg",
+            "/assets/slide-8-img-3.jpg",
+            "/assets/slide-8-img-4.jpg"
+        ]
+    },
+    {
+        "id": 8,
+        "answer": "KARNATAKA",
+        "images": [
+            "/assets/slide-9-img-1.jpg",
+            "/assets/slide-9-img-2.jpg",
+            "/assets/slide-9-img-3.jpg",
+            "/assets/slide-9-img-4.jpg"
+        ]
+    },
+    {
+        "id": 9,
+        "answer": "CARDS",
+        "images": [
+            "/assets/slide-10-img-1.jpg",
+            "/assets/slide-10-img-2.jpg",
+            "/assets/slide-10-img-3.jpg",
+            "/assets/slide-10-img-4.jpg"
+        ]
+    },
+    {
+        "id": 10,
+        "answer": "MODI",
+        "images": [
+            "/assets/slide-11-img-1.jpg",
+            "/assets/slide-11-img-2.jpg",
+            "/assets/slide-11-img-3.jpg",
+            "/assets/slide-11-img-4.jpg"
+        ]
+    },
+    {
+        "id": 11,
+        "answer": "COMPASS",
+        "images": [
+            "/assets/slide-12-img-1.jpg",
+            "/assets/slide-12-img-2.jpg",
+            "/assets/slide-12-img-3.jpg"
+        ]
+    },
+    {
+        "id": 12,
+        "answer": "UBER",
+        "images": [
+            "/assets/slide-13-img-1.jpg",
+            "/assets/slide-13-img-2.jpg",
+            "/assets/slide-13-img-3.jpg",
+            "/assets/slide-13-img-4.jpg"
+        ]
+    },
+    {
+        "id": 13,
+        "answer": "RADIOWAVES",
+        "images": [
+            "/assets/slide-14-img-1.jpg",
+            "/assets/slide-14-img-2.jpg",
+            "/assets/slide-14-img-3.jpg",
+            "/assets/slide-14-img-4.jpg"
+        ]
+    },
+    {
+        "id": 14,
+        "answer": "TITANIC",
+        "images": [
+            "/assets/slide-15-img-1.jpg",
+            "/assets/slide-15-img-2.jpg",
+            "/assets/slide-15-img-3.jpg",
+            "/assets/slide-15-img-4.jpg"
+        ]
+    },
+    {
+        "id": 15,
+        "answer": "FIFA",
+        "images": [
+            "/assets/slide-16-img-1.jpg",
+            "/assets/slide-16-img-2.jpg",
+            "/assets/slide-16-img-3.jpg",
+            "/assets/slide-16-img-4.jpg"
+        ]
+    },
+    {
+        "id": 16,
+        "answer": "CIRCULATION",
+        "images": [
+            "/assets/slide-17-img-1.jpg",
+            "/assets/slide-17-img-2.jpg",
+            "/assets/slide-17-img-3.jpg",
+            "/assets/slide-17-img-4.jpg"
+        ]
+    },
+    {
+        "id": 17,
+        "answer": "SHINCHAN",
+        "images": [
+            "/assets/slide-18-img-1.jpg",
+            "/assets/slide-18-img-2.jpg",
+            "/assets/slide-18-img-3.jpg",
+            "/assets/slide-18-img-4.jpg"
+        ]
+    },
+    {
+        "id": 18,
+        "answer": "SLEEP",
+        "images": [
+            "/assets/slide-19-img-1.jpg",
+            "/assets/slide-19-img-2.jpg",
+            "/assets/slide-19-img-3.jpg",
+            "/assets/slide-19-img-4.jpg"
+        ]
+    },
+    {
+        "id": 19,
+        "answer": "BATMAN",
+        "images": [
+            "/assets/slide-20-img-1.jpg",
+            "/assets/slide-20-img-2.jpg",
+            "/assets/slide-20-img-3.jpg",
+            "/assets/slide-20-img-4.jpg"
+        ]
+    },
+    {
+        "id": 20,
+        "answer": "MSDHONI",
+        "images": [
+            "/assets/slide-21-img-1.jpg",
+            "/assets/slide-21-img-2.jpg",
+            "/assets/slide-21-img-3.jpg",
+            "/assets/slide-21-img-4.jpg"
+        ]
+    },
+    {
+        "id": 21,
+        "answer": "RCB",
+        "images": [
+            "/assets/slide-22-img-1.jpg",
+            "/assets/slide-22-img-2.jpg",
+            "/assets/slide-22-img-3.jpg",
+            "/assets/slide-22-img-4.jpg"
+        ]
+    },
+    {
+        "id": 22,
+        "answer": "TECHNOLOGY",
+        "images": [
+            "/assets/slide-23-img-1.jpg",
+            "/assets/slide-23-img-2.jpg",
+            "/assets/slide-23-img-3.jpg"
+        ]
+    },
+    {
+        "id": 23,
+        "answer": "HITLER",
+        "images": [
+            "/assets/slide-24-img-1.jpg",
+            "/assets/slide-24-img-2.jpg",
+            "/assets/slide-24-img-3.jpg",
+            "/assets/slide-24-img-4.jpg"
+        ]
+    },
+    {
+        "id": 24,
+        "answer": "VVIT",
+        "images": []
+    }
+]

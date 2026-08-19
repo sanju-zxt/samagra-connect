@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<meta name="theme-color" content="#050608">
+
+<title>SAMAGRA • CONNECT</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100dvh;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #191c22 0%,
+            #0b0d11 38%,
+            #050608 75%
+        );
+    color: #fff;
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+    opacity: .45;
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app {
+    position: relative;
+
+    width: min(520px, 100%);
+    min-height: 100dvh;
+
+    margin: auto;
+
+    padding:
+        17px
+        15px
+        24px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.brand {
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: .21em;
+}
+
+.live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding:
+        7px 9px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 999px;
+
+    color: #68707d;
+
+    font-size: 6px;
+    font-weight: 900;
+
+    letter-spacing: .13em;
+}
+
+.live-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #67e49a;
+
+    box-shadow:
+        0 0 10px
+        rgba(103,228,154,.7);
+}
+
+
+/* =========================================================
+   JOIN
+   ========================================================= */
+
+.join-screen {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+}
+
+.join-card {
+    width: 100%;
+
+    padding: 26px 21px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.075);
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.35);
+}
+
+.kicker {
+    color: #5f6773;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: .2em;
+}
+
+.join-title {
+    margin-top: 8px;
+
+    color: #fff;
+
+    font-size: 31px;
+    line-height: .95;
+
+    font-weight: 900;
+
+    letter-spacing: -.055em;
+}
+
+.join-text {
+    margin-top: 11px;
+
+    color: #68707d;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+.input {
+    width: 100%;
+    height: 55px;
+
+    margin-top: 22px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius: 13px;
+
+    outline: none;
+
+    background:
+        rgba(0,0,0,.3);
+
+    color: #fff;
+
+    text-align: center;
+
+    font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+.input:focus {
+    border-color:
+        rgba(255,255,255,.3);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,255,255,.025);
+}
+
+.button {
+    width: 100%;
+    height: 53px;
+
+    margin-top: 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.8);
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff,
+            #e5e6e9
+        );
+
+    color: #08090c;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: .1em;
+
+    cursor: pointer;
+}
+
+.button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.error {
+    min-height: 20px;
+
+    margin-top: 10px;
+
+    color: #ff6974;
+
+    text-align: center;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   WAITING
+   ========================================================= */
+
+.waiting-screen {
+    display: none;
+
+    flex: 1;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.waiting-screen.show {
+    display: flex;
+}
+
+.waiting-card {
+    width: 100%;
+
+    padding: 30px 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.loader {
+    width: 54px;
+    height: 54px;
+
+    margin:
+        0 auto 20px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.07);
+
+    border-top-color: #fff;
+
+    border-radius: 50%;
+
+    animation:
+        spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.waiting-title {
+    color: #fff;
+
+    font-size: 22px;
+    font-weight: 900;
+
+    letter-spacing: -.04em;
+}
+
+.waiting-text {
+    margin-top: 8px;
+
+    color: #626a76;
+
+    font-size: 9px;
+
+    line-height: 1.6;
+}
+
+.my-team {
+    margin-top: 15px;
+
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   GAME
+   ========================================================= */
+
+.game-screen {
+    display: none;
+
+    flex: 1;
+}
+
+.game-screen.show {
+    display: block;
+}
+
+
+/* =========================================================
+   GAME HEADER
+   ========================================================= */
+
+.game-head {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 18px;
+}
+
+.team-name {
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.score {
+    color: #777f8b;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+/* =========================================================
+   QUESTION CARD
+   ========================================================= */
+
+.question-card {
+    margin-top: 12px;
+
+    padding: 18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.075);
+
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+}
+
+.question-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.question-label {
+    color: #555d69;
+
+    font-size: 6px;
+    font-weight: 900;
+
+    letter-spacing: .16em;
+}
+
+.question-number {
+    margin-top: 5px;
+
+    color: #fff;
+
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.status {
+    padding:
+        7px 9px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 999px;
+
+    color: #69717e;
+
+    background:
+        rgba(255,255,255,.025);
+
+    font-size: 6px;
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+.timer {
+    margin-top: 22px;
+
+    color: #fff;
+
+    text-align: center;
+
+    font-size: 58px;
+
+    line-height: .85;
+
+    font-weight: 900;
+
+    letter-spacing: -.08em;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.timer.danger {
+    color: #ff6974;
+
+    animation:
+        pulse .7s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .45;
+    }
+}
+
+
+/* =========================================================
+   CLUE PROGRESS
+   ========================================================= */
+
+.progress {
+    display: flex;
+
+    gap: 5px;
+
+    margin-top: 20px;
+}
+
+.progress span {
+    height: 3px;
+
+    flex: 1;
+
+    border-radius: 99px;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.progress span.active {
+    background: #fff;
+}
+
+
+/* =========================================================
+   ANSWER
+   ========================================================= */
+
+.answer-area {
+    margin-top: 13px;
+}
+
+.answer-input {
+    width: 100%;
+    height: 58px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius: 14px;
+
+    outline: none;
+
+    background:
+        rgba(0,0,0,.3);
+
+    color: #fff;
+
+    text-align: center;
+
+    font-family: inherit;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.answer-input:focus {
+    border-color:
+        rgba(255,255,255,.3);
+}
+
+.submit {
+    width: 100%;
+    height: 54px;
+
+    margin-top: 9px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.8);
+
+    border-radius: 13px;
+
+    background:
+        #fff;
+
+    color: #08090c;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+.submit:disabled {
+    opacity: .35;
+}
+
+
+/* =========================================================
+   SUBMITTED
+   ========================================================= */
+
+.submitted {
+    display: none;
+
+    margin-top: 13px;
+
+    padding: 21px;
+
+    border:
+        1px solid
+        rgba(103,228,154,.13);
+
+    border-radius: 16px;
+
+    background:
+        rgba(103,228,154,.035);
+
+    text-align: center;
+}
+
+.submitted.show {
+    display: block;
+}
+
+.check {
+    color: #67e49a;
+
+    font-size: 23px;
+}
+
+.submitted-title {
+    margin-top: 6px;
+
+    color: #67e49a;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.submitted-text {
+    margin-top: 5px;
+
+    color: #59616d;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+.result {
+    display: none;
+
+    margin-top: 13px;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    text-align: center;
+}
+
+.result.show {
+    display: block;
+}
+
+.result-title {
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.result-points {
+    margin-top: 5px;
+
+    color: #67e49a;
+
+    font-size: 29px;
+    font-weight: 900;
+}
+
+.result-total {
+    margin-top: 4px;
+
+    color: #626a76;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+    padding-top: 18px;
+
+    color: #3d444f;
+
+    text-align: center;
+
+    font-size: 6px;
+    font-weight: 900;
+
+    letter-spacing: .16em;
+}
+
+
+@media (max-width: 380px) {
+
+    .app {
+        padding:
+            14px
+            12px
+            20px;
+    }
+
+    .join-title {
+        font-size: 27px;
+    }
+
+    .timer {
+        font-size: 51px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<header class="header">
+
+    <div class="brand">
+        SAMAGRA • CONNECT
+    </div>
+
+    <div class="live">
+        <span class="live-dot"></span>
+        LIVE
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     JOIN
+     ===================================================== -->
+
+<section
+    id="joinScreen"
+    class="join-screen"
+>
+
+    <div class="join-card">
+
+        <div class="kicker">
+            4 IMAGES • 1 ANSWER
+        </div>
+
+        <div class="join-title">
+            Join your team.
+        </div>
+
+        <div class="join-text">
+            Enter the exact team name given by
+            your team captain.
+        </div>
+
+        <input
+            id="teamName"
+            class="input"
+            type="text"
+            maxlength="30"
+            autocomplete="off"
+            placeholder="TEAM NAME"
+        >
+
+        <button
+            id="joinButton"
+            class="button"
+        >
+            JOIN GAME
+        </button>
+
+        <div
+            id="joinError"
+            class="error"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WAITING
+     ===================================================== -->
+
+<section
+    id="waitingScreen"
+    class="waiting-screen"
+>
+
+    <div class="waiting-card">
+
+        <div class="loader"></div>
+
+        <div class="waiting-title">
+            You're in.
+        </div>
+
+        <div class="waiting-text">
+            Keep this page open.
+            The game will start automatically.
+        </div>
+
+        <div
+            id="myTeam"
+            class="my-team"
+        >
+            —
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     GAME
+     ===================================================== -->
+
+<section
+    id="gameScreen"
+    class="game-screen"
+>
+
+
+    <div class="game-head">
+
+        <div
+            id="gameTeam"
+            class="team-name"
+        >
+            TEAM
+        </div>
+
+        <div
+            id="score"
+            class="score"
+        >
+            0.00 POINTS
+        </div>
+
+    </div>
+
+
+    <div class="question-card">
+
+        <div class="question-top">
+
+            <div>
+
+                <div class="question-label">
+                    QUESTION
+                </div>
+
+                <div
+                    id="questionNumber"
+                    class="question-number"
+                >
+                    01 / 23
+                </div>
+
+            </div>
+
+            <div
+                id="status"
+                class="status"
+            >
+                WAITING
+            </div>
+
+        </div>
+
+
+        <div
+            id="timer"
+            class="timer"
+        >
+            30.00
+        </div>
+
+
+        <div
+            id="progress"
+            class="progress"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="answerArea"
+        class="answer-area"
+    >
+
+        <input
+            id="answerInput"
+            class="answer-input"
+            type="text"
+            maxlength="50"
+            autocomplete="off"
+            autocapitalize="characters"
+            placeholder="TYPE ANSWER"
+        >
+
+        <button
+            id="submitButton"
+            class="submit"
+        >
+            SUBMIT ANSWER
+        </button>
+
+    </div>
+
+
+    <div
+        id="submitted"
+        class="submitted"
+    >
+
+        <div class="check">
+            ✓
+        </div>
+
+        <div class="submitted-title">
+            ANSWER SUBMITTED
+        </div>
+
+        <div class="submitted-text">
+            Wait for the host to reveal the answer.
+        </div>
+
+    </div>
+
+
+    <div
+        id="result"
+        class="result"
+    >
+
+        <div
+            id="resultTitle"
+            class="result-title"
+        >
+            RESULT
+        </div>
+
+        <div
+            id="resultPoints"
+            class="result-points"
+        >
+            +0.00
+        </div>
+
+        <div
+            id="resultTotal"
+            class="result-total"
+        >
+            TOTAL SCORE: 0.00
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<footer class="footer">
+    SAMAGRA CONNECT 2026
+</footer>
+
+
+</div>
+
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+let teamId =
+    localStorage.getItem(
+        "samagra_team_id"
+    );
+
+let teamName =
+    localStorage.getItem(
+        "samagra_team_name"
+    );
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let state = null;
+
+let currentQuestion = 0;
+
+let submittedQuestion = 0;
+
+let lastSubmissionResult = null;
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const joinScreen =
+    document.getElementById(
+        "joinScreen"
+    );
+
+const waitingScreen =
+    document.getElementById(
+        "waitingScreen"
+    );
+
+const gameScreen =
+    document.getElementById(
+        "gameScreen"
+    );
+
+const teamNameInput =
+    document.getElementById(
+        "teamName"
+    );
+
+const joinButton =
+    document.getElementById(
+        "joinButton"
+    );
+
+const joinError =
+    document.getElementById(
+        "joinError"
+    );
+
+const myTeam =
+    document.getElementById(
+        "myTeam"
+    );
+
+const gameTeam =
+    document.getElementById(
+        "gameTeam"
+    );
+
+const score =
+    document.getElementById(
+        "score"
+    );
+
+const questionNumber =
+    document.getElementById(
+        "questionNumber"
+    );
+
+const status =
+    document.getElementById(
+        "status"
+    );
+
+const timer =
+    document.getElementById(
+        "timer"
+    );
+
+const progress =
+    document.querySelectorAll(
+        "#progress span"
+    );
+
+const answerArea =
+    document.getElementById(
+        "answerArea"
+    );
+
+const answerInput =
+    document.getElementById(
+        "answerInput"
+    );
+
+const submitButton =
+    document.getElementById(
+        "submitButton"
+    );
+
+const submitted =
+    document.getElementById(
+        "submitted"
+    );
+
+const result =
+    document.getElementById(
+        "result"
+    );
+
+const resultTitle =
+    document.getElementById(
+        "resultTitle"
+    );
+
+const resultPoints =
+    document.getElementById(
+        "resultPoints"
+    );
+
+const resultTotal =
+    document.getElementById(
+        "resultTotal"
+    );
+
+
+/* =========================================================
+   JOIN
+   ========================================================= */
+
+joinButton.addEventListener(
+    "click",
+    joinGame
+);
+
+
+teamNameInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            joinGame();
+
+        }
+
+    }
+);
+
+
+async function joinGame() {
+
+    const name =
+        teamNameInput.value.trim();
+
+
+    if (!name) {
+
+        joinError.textContent =
+            "Enter your team name.";
+
+        return;
+
+    }
+
+
+    joinButton.disabled =
+        true;
+
+    joinError.textContent =
+        "";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/team/join",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            name: name
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to join."
+            );
+
+        }
+
+
+        teamId =
+            data.id;
+
+        teamName =
+            data.name;
+
+
+        localStorage.setItem(
+            "samagra_team_id",
+            teamId
+        );
+
+        localStorage.setItem(
+            "samagra_team_name",
+            teamName
+        );
+
+
+        myTeam.textContent =
+            teamName;
+
+
+        gameTeam.textContent =
+            teamName;
+
+
+        joinScreen.style.display =
+            "none";
+
+        waitingScreen.classList.add(
+            "show"
+        );
+
+        gameScreen.classList.remove(
+            "show"
+        );
+
+
+        update();
+
+    }
+    catch(error) {
+
+        joinError.textContent =
+            error.message;
+
+        joinButton.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   GET STATE
+   ========================================================= */
+
+async function getState() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/state?_=" +
+                Date.now(),
+                {
+                    cache:
+                        "no-store",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+            return null;
+        }
+
+
+        return await response.json();
+
+    }
+    catch(error) {
+
+        console.error(
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =========================================================
+   FIND MY TEAM
+   ========================================================= */
+
+function getMyTeam() {
+
+    if (
+        !state ||
+        !Array.isArray(
+            state.leaderboard
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    return state.leaderboard.find(
+        team =>
+            String(team.id) ===
+            String(teamId)
+    ) || null;
+
+}
+
+
+/* =========================================================
+   MAIN UPDATE
+   ========================================================= */
+
+async function update() {
+
+    const newState =
+        await getState();
+
+
+    if (!newState) {
+        return;
+    }
+
+
+    state =
+        newState;
+
+
+    const mine =
+        getMyTeam();
+
+
+    if (mine) {
+
+        score.textContent =
+            Number(
+                mine.score || 0
+            ).toFixed(2) +
+            " POINTS";
+
+    }
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Once Admin presses START,
+     * state.started becomes true.
+     *
+     * The phone automatically switches
+     * from waiting to the game.
+     */
+
+    if (
+        state.started
+    ) {
+
+        joinScreen.style.display =
+            "none";
+
+        waitingScreen.classList.remove(
+            "show"
+        );
+
+        gameScreen.classList.add(
+            "show"
+        );
+
+        gameTeam.textContent =
+            teamName || "TEAM";
+
+
+        renderGame(
+            mine
+        );
+
+    }
+    else {
+
+        if (
+            teamId
+        ) {
+
+            joinScreen.style.display =
+                "none";
+
+            waitingScreen.classList.add(
+                "show"
+            );
+
+            gameScreen.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   GAME
+   ========================================================= */
+
+function renderGame(
+    mine
+) {
+
+    const q =
+        Number(
+            state.question || 1
+        );
+
+
+    questionNumber.textContent =
+        String(q).padStart(2, "0") +
+        " / " +
+        state.totalQuestions;
+
+
+    /*
+     * New round
+     */
+
+    if (
+        currentQuestion !== q
+    ) {
+
+        currentQuestion =
+            q;
+
+        submittedQuestion =
+            0;
+
+        lastSubmissionResult =
+            null;
+
+        resetAnswerUI();
+
+    }
+
+
+    /*
+     * Server tells us whether this
+     * team has submitted.
+     */
+
+    if (
+        mine &&
+        (
+            mine.answered ||
+            mine.submitted
+        )
+    ) {
+
+        submittedQuestion =
+            q;
+
+        showSubmitted();
+
+    }
+
+
+    /*
+     * If Admin closes the round,
+     * disable answer.
+     */
+
+    if (
+        !state.submissionsOpen
+    ) {
+
+        answerInput.disabled =
+            true;
+
+        submitButton.disabled =
+            true;
+
+        status.textContent =
+            state.revealed
+                ? "ANSWER REVEALED"
+                : "CLOSED";
+
+    }
+    else {
+
+        if (
+            submittedQuestion !== q
+        ) {
+
+            answerInput.disabled =
+                false;
+
+            submitButton.disabled =
+                false;
+
+        }
+
+        status.textContent =
+            "ANSWER OPEN";
+
+    }
+
+
+    updateProgress();
+
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function updateTimer() {
+
+    if (
+        !state ||
+        !state.started
+    ) {
+
+        timer.textContent =
+            "30.00";
+
+        return;
+
+    }
+
+
+    const remaining =
+        Math.max(
+            0,
+            Number(
+                state.remaining || 0
+            )
+        );
+
+
+    const seconds =
+        remaining / 1000;
+
+
+    if (
+        seconds <= 0
+    ) {
+
+        timer.textContent =
+            "00.00";
+
+        timer.classList.add(
+            "danger"
+        );
+
+        answerInput.disabled =
+            true;
+
+        submitButton.disabled =
+            true;
+
+        status.textContent =
+            "TIME UP";
+
+        return;
+
+    }
+
+
+    timer.textContent =
+        seconds.toFixed(2);
+
+
+    timer.classList.toggle(
+        "danger",
+        seconds <= 5
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE PROGRESS
+   ========================================================= */
+
+function updateProgress() {
+
+    if (
+        !state
+    ) {
+        return;
+    }
+
+
+    const remaining =
+        Number(
+            state.remaining || 0
+        );
+
+
+    const elapsed =
+        30000 -
+        remaining;
+
+
+    let count = 1;
+
+
+    if (
+        elapsed >= 22500
+    ) {
+
+        count = 4;
+
+    }
+    else if (
+        elapsed >= 15000
+    ) {
+
+        count = 3;
+
+    }
+    else if (
+        elapsed >= 7500
+    ) {
+
+        count = 2;
+
+    }
+
+
+    progress.forEach(
+        (
+            item,
+            index
+        ) => {
+
+            item.classList.toggle(
+                "active",
+                index < count
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+submitButton.addEventListener(
+    "click",
+    submitAnswer
+);
+
+
+answerInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            submitAnswer();
+
+        }
+
+    }
+);
+
+
+async function submitAnswer() {
+
+    if (
+        !state ||
+        !state.started ||
+        !state.submissionsOpen
+    ) {
+
+        return;
+
+    }
+
+
+    const answer =
+        answerInput.value.trim();
+
+
+    if (!answer) {
+
+        answerInput.focus();
+
+        return;
+
+    }
+
+
+    submitButton.disabled =
+        true;
+
+    answerInput.disabled =
+        true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/team/answer",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            id:
+                                teamId,
+
+                            answer:
+                                answer
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Submission failed."
+            );
+
+        }
+
+
+        submittedQuestion =
+            currentQuestion;
+
+        lastSubmissionResult =
+            data;
+
+
+        showSubmitted();
+
+
+        /*
+         * The server has already calculated
+         * the score.
+         */
+
+        showResult(
+            data
+        );
+
+    }
+    catch(error) {
+
+        answerInput.disabled =
+            false;
+
+        submitButton.disabled =
+            false;
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SUBMITTED
+   ========================================================= */
+
+function showSubmitted() {
+
+    answerArea.style.display =
+        "none";
+
+    submitted.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+function showResult(
+    data
+) {
+
+    submitted.classList.remove(
+        "show"
+    );
+
+    result.classList.add(
+        "show"
+    );
+
+
+    if (
+        data.correct
+    ) {
+
+        resultTitle.textContent =
+            "CORRECT";
+
+        resultPoints.textContent =
+            "+" +
+            Number(
+                data.points || 0
+            ).toFixed(2);
+
+    }
+    else {
+
+        resultTitle.textContent =
+            "NOT QUITE";
+
+        resultPoints.textContent =
+            "+0.00";
+
+    }
+
+
+    resultTotal.textContent =
+        "TOTAL SCORE: " +
+        Number(
+            data.score || 0
+        ).toFixed(2);
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetAnswerUI() {
+
+    answerArea.style.display =
+        "block";
+
+    submitted.classList.remove(
+        "show"
+    );
+
+    result.classList.remove(
+        "show"
+    );
+
+    answerInput.value =
+        "";
+
+    answerInput.disabled =
+        false;
+
+    submitButton.disabled =
+        false;
+
+    status.textContent =
+        "ANSWER OPEN";
+
+}
+
+
+/* =========================================================
+   AUTO UPDATE
+   ========================================================= */
+
+setInterval(
+    update,
+    500
+);
+
+setInterval(
+    updateTimer,
+    50
+);
+
+
+/* =========================================================
+   RESTORE
+   ========================================================= */
+
+if (
+    teamId &&
+    teamName
+) {
+
+    myTeam.textContent =
+        teamName;
+
+    gameTeam.textContent =
+        teamName;
+
+    joinScreen.style.display =
+        "none";
+
+    waitingScreen.classList.add(
+        "show"
+    );
+
+    update();
+
+}
+
+</script>
+
+</body>
+</html>

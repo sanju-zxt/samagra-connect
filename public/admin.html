@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>SAMAGRA • CONNECT • ADMIN</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #181b21 0%,
+            #0a0c10 35%,
+            #050608 75%
+        );
+
+    color: #fff;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        60px 60px;
+
+    opacity: .45;
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app {
+
+    position: relative;
+
+    width:
+        min(
+            1500px,
+            100%
+        );
+
+    min-height: 100vh;
+
+    margin: auto;
+
+    padding:
+        25px
+        25px
+        40px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.brand {
+
+    color: #fff;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: .23em;
+}
+
+.admin-label {
+
+    margin-top: 6px;
+
+    color: #59616d;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .17em;
+}
+
+.connection {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding:
+        8px 11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 999px;
+
+    color: #69717e;
+
+    background:
+        rgba(255,255,255,.025);
+
+    font-size: 6px;
+
+    font-weight: 900;
+
+    letter-spacing: .12em;
+}
+
+.connection-dot {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #67e49a;
+
+    box-shadow:
+        0 0 10px
+        rgba(103,228,154,.6);
+}
+
+
+/* =========================================================
+   TOP GRID
+   ========================================================= */
+
+.top-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(330px, .8fr);
+
+    gap: 15px;
+
+    margin-top: 17px;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.card {
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.04),
+            rgba(255,255,255,.012)
+        );
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:
+        blur(15px);
+}
+
+
+/* =========================================================
+   CONTROL CARD
+   ========================================================= */
+
+.control-card {
+
+    padding: 20px;
+}
+
+.card-title {
+
+    color: #fff;
+
+    font-size: 15px;
+
+    font-weight: 900;
+}
+
+.card-subtitle {
+
+    margin-top: 5px;
+
+    color: #626a76;
+
+    font-size: 9px;
+}
+
+.controls {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 17px;
+}
+
+button {
+
+    min-height: 43px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.75);
+
+    border-radius: 11px;
+
+    background:
+        #fff;
+
+    color: #08090c;
+
+    font-family: inherit;
+
+    font-size: 8px;
+
+    font-weight: 900;
+
+    letter-spacing: .08em;
+
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+button.secondary {
+
+    border-color:
+        rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color: #d9dde3;
+}
+
+button.danger {
+
+    border-color:
+        rgba(255,105,116,.2);
+
+    background:
+        rgba(255,105,116,.07);
+
+    color: #ff858d;
+}
+
+
+/* =========================================================
+   ROUND INFO
+   ========================================================= */
+
+.round-card {
+
+    padding: 20px;
+}
+
+.round-number {
+
+    color: #fff;
+
+    font-size: 36px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: -.06em;
+}
+
+.round-label {
+
+    margin-top: 7px;
+
+    color: #59616d;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .16em;
+}
+
+.admin-timer {
+
+    margin-top: 17px;
+
+    color: #fff;
+
+    font-size: 42px;
+
+    font-weight: 900;
+
+    letter-spacing: -.07em;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.admin-timer.danger {
+    color: #ff6974;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-line {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 14px;
+
+    padding-top: 13px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+.status-label {
+
+    color: #555d69;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .13em;
+}
+
+.status-value {
+
+    color: #67e49a;
+
+    font-size: 8px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   LEADERBOARD
+   ========================================================= */
+
+.leaderboard-card {
+
+    margin-top: 15px;
+
+    padding: 20px;
+}
+
+.leaderboard-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.leaderboard-title {
+
+    color: #fff;
+
+    font-size: 18px;
+
+    font-weight: 900;
+}
+
+.leaderboard-info {
+
+    color: #59616d;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+
+/* =========================================================
+   RANKING
+   ========================================================= */
+
+.table-wrapper {
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    overflow-x: auto;
+}
+
+table {
+
+    width: 100%;
+
+    border-collapse:
+        separate;
+
+    border-spacing:
+        0 6px;
+
+    table-layout: fixed;
+}
+
+th {
+
+    padding:
+        8px 12px;
+
+    color: #4f5763;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .14em;
+
+    text-align: left;
+}
+
+th:nth-child(1) {
+    width: 80px;
+}
+
+th:nth-child(2) {
+    width: auto;
+}
+
+th:nth-child(3) {
+    width: 150px;
+}
+
+th:nth-child(4) {
+    width: 140px;
+}
+
+th:last-child {
+    text-align: right;
+}
+
+td {
+
+    height: 58px;
+
+    padding:
+        9px 12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.035);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.035);
+
+    color: #aeb5bf;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+td:first-child {
+
+    border-radius:
+        11px
+        0
+        0
+        11px;
+}
+
+td:last-child {
+
+    border-radius:
+        0
+        11px
+        11px
+        0;
+
+    text-align: right;
+
+    color: #fff;
+
+    font-size: 14px;
+
+    font-weight: 900;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+tr.rank-one td {
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.085),
+            rgba(255,255,255,.025)
+        );
+
+    color: #fff;
+}
+
+.rank {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    color: #69717e;
+
+    font-size: 9px;
+
+    font-weight: 900;
+}
+
+.rank-one .rank {
+    background:
+        rgba(255,255,255,.1);
+
+    color: #fff;
+}
+
+.team {
+
+    color: #fff;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.team-wrap {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+}
+
+.avatar {
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    color: #fff;
+
+    font-size: 9px;
+
+    font-weight: 900;
+}
+
+.answered {
+
+    color: #67e49a;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+.waiting {
+
+    color: #59616d;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+.correct {
+
+    color: #67e49a;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+.wrong {
+
+    color: #ff6974;
+
+    font-size: 7px;
+
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+.empty {
+
+    height: 150px;
+
+    text-align: center;
+
+    color: #59616d;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.message {
+
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    z-index: 100;
+
+    max-width: 340px;
+
+    padding:
+        13px 16px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius: 12px;
+
+    background:
+        #11141a;
+
+    color: #fff;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.4);
+
+    opacity: 0;
+
+    transform:
+        translateY(10px);
+
+    pointer-events: none;
+
+    transition:
+        .25s ease;
+}
+
+.message.show {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .top-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .app {
+        padding:
+            17px
+            13px
+            30px;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .leaderboard-card {
+        padding: 13px;
+    }
+
+    table {
+        min-width: 650px;
+    }
+
+    .leaderboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="header">
+
+    <div>
+
+        <div class="brand">
+            SAMAGRA • CONNECT
+        </div>
+
+        <div class="admin-label">
+            GAME CONTROL CENTER
+        </div>
+
+    </div>
+
+
+    <div class="connection">
+
+        <span class="connection-dot"></span>
+
+        SERVER CONNECTED
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     TOP
+     ===================================================== -->
+
+<section class="top-grid">
+
+
+    <div class="card control-card">
+
+        <div class="card-title">
+            Game Controls
+        </div>
+
+        <div class="card-subtitle">
+            Control the live round from here.
+        </div>
+
+
+        <div class="controls">
+
+            <button
+                id="startBtn"
+                onclick="api('/api/admin/start')"
+            >
+                START GAME
+            </button>
+
+
+            <button
+                class="secondary"
+                onclick="api('/api/admin/restart')"
+            >
+                RESTART ROUND
+            </button>
+
+
+            <button
+                class="secondary"
+                onclick="api('/api/admin/reveal')"
+            >
+                REVEAL ANSWER
+            </button>
+
+
+            <button
+                class="secondary"
+                onclick="api('/api/admin/next')"
+            >
+                NEXT QUESTION
+            </button>
+
+
+            <button
+                class="danger"
+                onclick="api('/api/admin/stop')"
+            >
+                STOP GAME
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card round-card">
+
+        <div
+            id="roundNumber"
+            class="round-number"
+        >
+            READY
+        </div>
+
+        <div class="round-label">
+            CURRENT QUESTION
+        </div>
+
+
+        <div
+            id="adminTimer"
+            class="admin-timer"
+        >
+            30.00
+        </div>
+
+
+        <div class="status-line">
+
+            <div class="status-label">
+                GAME STATUS
+            </div>
+
+            <div
+                id="gameStatus"
+                class="status-value"
+            >
+                WAITING
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     LEADERBOARD
+     ===================================================== -->
+
+<section class="card leaderboard-card">
+
+
+    <div class="leaderboard-header">
+
+        <div class="leaderboard-title">
+            Live Leaderboard
+        </div>
+
+        <div
+            id="leaderboardInfo"
+            class="leaderboard-info"
+        >
+            0 TEAMS
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        RANK
+                    </th>
+
+                    <th>
+                        TEAM
+                    </th>
+
+                    <th>
+                        ANSWER
+                    </th>
+
+                    <th>
+                        RESULT
+                    </th>
+
+                    <th>
+                        POINTS
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="leaderboard"
+            >
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+                        No teams have joined yet.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</section>
+
+
+</div>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const leaderboard =
+    document.getElementById(
+        "leaderboard"
+    );
+
+const roundNumber =
+    document.getElementById(
+        "roundNumber"
+    );
+
+const adminTimer =
+    document.getElementById(
+        "adminTimer"
+    );
+
+const gameStatus =
+    document.getElementById(
+        "gameStatus"
+    );
+
+const leaderboardInfo =
+    document.getElementById(
+        "leaderboardInfo"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let state = null;
+
+
+/* =========================================================
+   ESCAPE
+   ========================================================= */
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   LOAD STATE
+   ========================================================= */
+
+async function loadState() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/state?_=" +
+                Date.now(),
+                {
+                    cache:
+                        "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+            return;
+        }
+
+
+        state =
+            await response.json();
+
+
+        render();
+
+    }
+    catch(error) {
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+function render() {
+
+    if (!state) {
+        return;
+    }
+
+
+    /* ROUND */
+
+    if (
+        state.started
+    ) {
+
+        roundNumber.textContent =
+            String(
+                state.question
+            ).padStart(
+                2,
+                "0"
+            ) +
+            " / " +
+            state.totalQuestions;
+
+    }
+    else {
+
+        roundNumber.textContent =
+            "READY";
+
+    }
+
+
+    /* STATUS */
+
+    if (
+        state.started &&
+        state.submissionsOpen
+    ) {
+
+        gameStatus.textContent =
+            "ROUND LIVE";
+
+        gameStatus.style.color =
+            "#67e49a";
+
+    }
+    else if (
+        state.started &&
+        state.revealed
+    ) {
+
+        gameStatus.textContent =
+            "ANSWER REVEALED";
+
+        gameStatus.style.color =
+            "#ffffff";
+
+    }
+    else {
+
+        gameStatus.textContent =
+            "WAITING";
+
+        gameStatus.style.color =
+            "#59616d";
+
+    }
+
+
+    /* LEADERBOARD */
+
+    renderLeaderboard(
+        Array.isArray(
+            state.leaderboard
+        )
+            ? state.leaderboard
+            : []
+    );
+
+}
+
+
+/* =========================================================
+   LEADERBOARD
+   ========================================================= */
+
+function renderLeaderboard(
+    teams
+) {
+
+    leaderboardInfo.textContent =
+        teams.length +
+        (
+            teams.length === 1
+                ? " TEAM"
+                : " TEAMS"
+        );
+
+
+    if (
+        teams.length === 0
+    ) {
+
+        leaderboard.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty"
+                >
+                    No teams have joined yet.
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    leaderboard.innerHTML =
+        teams.map(
+            (
+                team,
+                index
+            ) => {
+
+                const rank =
+                    Number(
+                        team.rank ||
+                        index + 1
+                    );
+
+
+                const initial =
+                    (
+                        team.name ||
+                        "T"
+                    )
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                let answerStatus =
+                    "WAITING";
+
+                let answerClass =
+                    "waiting";
+
+
+                if (
+                    team.submitted
+                ) {
+
+                    answerStatus =
+                        "SUBMITTED";
+
+                    answerClass =
+                        "answered";
+
+                }
+
+
+                let result =
+                    "—";
+
+                let resultClass =
+                    "";
+
+
+                if (
+                    team.submitted
+                ) {
+
+                    if (
+                        team.correct
+                    ) {
+
+                        result =
+                            "CORRECT";
+
+                        resultClass =
+                            "correct";
+
+                    }
+                    else {
+
+                        result =
+                            "WRONG";
+
+                        resultClass =
+                            "wrong";
+
+                    }
+
+                }
+
+
+                return `
+
+                    <tr
+                        class="${
+                            rank === 1
+                                ? "rank-one"
+                                : ""
+                        }"
+                    >
+
+                        <td>
+
+                            <span
+                                class="rank"
+                            >
+                                ${
+                                    String(
+                                        rank
+                                    ).padStart(
+                                        2,
+                                        "0"
+                                    )
+                                }
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div
+                                class="team-wrap"
+                            >
+
+                                <div
+                                    class="avatar"
+                                >
+                                    ${escapeHTML(
+                                        initial
+                                    )}
+                                </div>
+
+                                <div
+                                    class="team"
+                                >
+                                    ${escapeHTML(
+                                        team.name
+                                    )}
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="${
+                                    answerClass
+                                }"
+                            >
+                                ${answerStatus}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="${
+                                    resultClass
+                                }"
+                            >
+                                ${result}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${Number(
+                                team.score || 0
+                            ).toFixed(2)}
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function updateTimer() {
+
+    if (
+        !state ||
+        !state.started
+    ) {
+
+        adminTimer.textContent =
+            "30.00";
+
+        adminTimer.classList.remove(
+            "danger"
+        );
+
+        return;
+
+    }
+
+
+    const remaining =
+        Math.max(
+            0,
+            Number(
+                state.remaining || 0
+            )
+        );
+
+
+    adminTimer.textContent =
+        (
+            remaining / 1000
+        ).toFixed(2);
+
+
+    adminTimer.classList.toggle(
+        "danger",
+        remaining <= 5000
+    );
+
+}
+
+
+/* =========================================================
+   API ACTION
+   ========================================================= */
+
+async function api(
+    endpoint
+) {
+
+    try {
+
+        const response =
+            await fetch(
+                endpoint,
+                {
+                    method:
+                        "POST",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Request failed."
+            );
+
+        }
+
+
+        showMessage(
+            data.message ||
+            "Done."
+        );
+
+
+        /*
+         * Immediately refresh state.
+         */
+
+        await loadState();
+
+    }
+    catch(error) {
+
+        showMessage(
+            error.message,
+            true
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+let messageTimer;
+
+
+function showMessage(
+    text,
+    error = false
+) {
+
+    message.textContent =
+        text;
+
+    message.style.borderColor =
+        error
+            ? "rgba(255,105,116,.25)"
+            : "rgba(103,228,154,.18)";
+
+    message.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        messageTimer
+    );
+
+
+    messageTimer =
+        setTimeout(
+            () => {
+
+                message.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================================
+   LIVE
+   ========================================================= */
+
+loadState();
+
+
+setInterval(
+    loadState,
+    700
+);
+
+
+setInterval(
+    updateTimer,
+    50
+);
+
+</script>
+
+</body>
+</html>

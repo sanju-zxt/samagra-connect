@@ -1,0 +1,3552 @@
+/* =========================================================
+   SAMAGRA CONNECT
+   COMPLETE GAME SYSTEM UI
+   TEAM + ADMIN + PROJECTOR
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #171a21 0%,
+            #0b0d11 32%,
+            #050608 75%
+        );
+
+    color: #e7e9ed;
+
+    font-family:
+        "Inter",
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+
+    --bg:
+        #050608;
+
+    --bg-soft:
+        #090b0f;
+
+    --panel:
+        #0c0f14;
+
+    --panel-2:
+        #10141b;
+
+    --panel-3:
+        #141820;
+
+    --white:
+        #f6f7f9;
+
+    --text:
+        #e7e9ed;
+
+    --soft:
+        #b7bdc8;
+
+    --muted:
+        #7c8492;
+
+    --dim:
+        #555d6b;
+
+    --very-dim:
+        #3d444f;
+
+    --line:
+        rgba(255,255,255,.075);
+
+    --line-strong:
+        rgba(255,255,255,.14);
+
+    --line-bright:
+        rgba(255,255,255,.22);
+
+    --success:
+        #67e49a;
+
+    --danger:
+        #ff6974;
+
+    --warning:
+        #f3c969;
+
+    --shadow:
+        rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        60px 60px;
+
+    mask-image:
+        radial-gradient(
+            ellipse at center,
+            black 0%,
+            rgba(0,0,0,.8) 45%,
+            transparent 85%
+        );
+
+    opacity: .7;
+
+    z-index: -10;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background:
+        #06070a;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background:
+        #272d37;
+
+    border-radius:
+        999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:
+        #3a424f;
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+
+    background:
+        rgba(255,255,255,.18);
+
+    color:
+        #ffffff;
+}
+
+
+/* =========================================================
+   MAIN WRAPPER
+   ========================================================= */
+
+.wrap {
+
+    width:
+        min(1500px, 100%);
+
+    min-height:
+        100vh;
+
+    margin:
+        auto;
+
+    padding:
+        28px 38px;
+}
+
+
+/* =========================================================
+   TOP HEADER
+   ========================================================= */
+
+.top {
+
+    min-height:
+        52px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    padding-bottom:
+        18px;
+
+    border-bottom:
+        1px solid var(--line);
+}
+
+
+.brand {
+
+    color:
+        #f4f5f7;
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .24em;
+}
+
+
+.status,
+.pill {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    padding:
+        8px 12px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:
+        #8b93a1;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .14em;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   STATUS DOT
+   ========================================================= */
+
+.status::before {
+
+    content: "";
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    border-radius:
+        50%;
+
+    background:
+        #6ee7a0;
+
+    box-shadow:
+        0 0 12px
+        rgba(110,231,160,.7);
+
+    animation:
+        statusPulse
+        1.8s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+
+        opacity:
+            1;
+
+        transform:
+            scale(1);
+    }
+
+    50% {
+
+        opacity:
+            .4;
+
+        transform:
+            scale(.7);
+    }
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+
+    position:
+        relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.015)
+        );
+
+    border:
+        1px solid var(--line);
+
+    border-radius:
+        22px;
+
+    padding:
+        24px;
+
+    box-shadow:
+
+        0 25px 80px
+        rgba(0,0,0,.28),
+
+        inset 0 1px
+        rgba(255,255,255,.035);
+
+    backdrop-filter:
+        blur(18px);
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1.7fr)
+        minmax(330px, .8fr);
+
+    gap:
+        18px;
+
+    margin-top:
+        18px;
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+h1,
+h2,
+h3 {
+
+    color:
+        var(--white);
+
+    letter-spacing:
+        -.025em;
+}
+
+
+h1 {
+
+    font-weight:
+        900;
+}
+
+
+h2 {
+
+    font-size:
+        18px;
+
+    font-weight:
+        800;
+}
+
+
+h3 {
+
+    font-size:
+        14px;
+
+    font-weight:
+        800;
+}
+
+
+.muted {
+
+    color:
+        var(--muted);
+
+    font-size:
+        12px;
+
+    line-height:
+        1.6;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+
+    appearance:
+        none;
+
+    border:
+        1px solid
+        rgba(255,255,255,.75);
+
+    border-radius:
+        12px;
+
+    padding:
+        12px 17px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #e5e6e9
+        );
+
+    color:
+        #08090c;
+
+    font-family:
+        inherit;
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .08em;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+}
+
+
+.btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.35);
+}
+
+
+.btn:active {
+
+    transform:
+        translateY(0);
+}
+
+
+.btn:disabled {
+
+    cursor:
+        not-allowed;
+
+    opacity:
+        .4;
+
+    transform:
+        none;
+
+    box-shadow:
+        none;
+}
+
+
+.btn.secondary {
+
+    border-color:
+        var(--line-strong);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color:
+        #dce0e6;
+}
+
+
+.btn.secondary:hover {
+
+    background:
+        rgba(255,255,255,.075);
+
+    border-color:
+        var(--line-bright);
+}
+
+
+.btn.danger {
+
+    border-color:
+        rgba(255,105,116,.25);
+
+    background:
+        rgba(255,105,116,.08);
+
+    color:
+        #ff8c94;
+}
+
+
+.btn.danger:hover {
+
+    background:
+        rgba(255,105,116,.13);
+}
+
+
+.btn.big {
+
+    padding:
+        14px 19px;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.actions {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        10px;
+
+    margin-top:
+        18px;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.input {
+
+    width:
+        100%;
+
+    min-height:
+        48px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        var(--line-strong);
+
+    border-radius:
+        12px;
+
+    outline:
+        none;
+
+    background:
+        rgba(0,0,0,.28);
+
+    color:
+        var(--white);
+
+    font-family:
+        inherit;
+
+    font-size:
+        13px;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+
+.input::placeholder {
+
+    color:
+        #555d69;
+}
+
+
+.input:focus {
+
+    border-color:
+        rgba(255,255,255,.32);
+
+    background:
+        rgba(0,0,0,.4);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,255,255,.035);
+}
+
+
+/* =========================================================
+   PROJECTOR IMAGE AREA - BASE
+   ========================================================= */
+
+.clue {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    min-height:
+        570px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        17px;
+
+    background:
+        #050608;
+
+    box-shadow:
+        inset 0 0 80px
+        rgba(0,0,0,.55);
+}
+
+
+.clue::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    pointer-events:
+        none;
+
+    border:
+        1px solid
+        rgba(255,255,255,.025);
+
+    border-radius:
+        inherit;
+}
+
+
+.clue img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    max-height:
+        570px;
+
+    object-fit:
+        contain;
+
+    display:
+        block;
+
+    animation:
+        clueReveal .5s ease;
+}
+
+
+@keyframes clueReveal {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            scale(.985);
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   TIMER - BASE
+   ========================================================= */
+
+.timer {
+
+    margin:
+        0 0 12px;
+
+    text-align:
+        center;
+
+    font-size:
+        clamp(42px, 5vw, 70px);
+
+    line-height:
+        1;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.06em;
+
+    font-variant-numeric:
+        tabular-nums;
+
+    color:
+        #f5f6f8;
+
+    text-shadow:
+        0 10px 40px
+        rgba(255,255,255,.06);
+
+    transition:
+        color .2s ease;
+}
+
+
+.timer.danger {
+
+    color:
+        #ff727c;
+
+    animation:
+        timerPulse .8s infinite;
+}
+
+
+@keyframes timerPulse {
+
+    50% {
+
+        opacity:
+            .6;
+    }
+}
+
+
+/* =========================================================
+   LEADERBOARD - BASE
+   ========================================================= */
+
+.leader {
+
+    width:
+        100%;
+
+    border-collapse:
+        separate;
+
+    border-spacing:
+        0 6px;
+
+    margin-top:
+        12px;
+}
+
+
+.leader th {
+
+    padding:
+        8px 10px;
+
+    color:
+        #555d6a;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .15em;
+
+    text-transform:
+        uppercase;
+
+    text-align:
+        left;
+}
+
+
+.leader td {
+
+    padding:
+        12px 10px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.035);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.035);
+
+    font-size:
+        11px;
+
+    font-weight:
+        600;
+}
+
+
+.leader td:first-child {
+
+    border-radius:
+        10px 0 0 10px;
+
+    color:
+        #858c99;
+
+    width:
+        45px;
+}
+
+
+.leader td:last-child {
+
+    border-radius:
+        0 10px 10px 0;
+
+    text-align:
+        right;
+
+    font-weight:
+        900;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+.leader tr {
+
+    transition:
+        transform .25s ease;
+}
+
+
+.leader tr:hover {
+
+    transform:
+        translateX(3px);
+}
+
+
+.leader .rank1 td {
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    color:
+        #ffffff;
+}
+
+
+.leader .rank1 td:first-child {
+
+    color:
+        #ffffff;
+}
+
+
+/* =========================================================
+   RESULT / STATUS
+   ========================================================= */
+
+.result {
+
+    margin-top:
+        16px;
+
+    padding:
+        14px 16px;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:
+        #969eac;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+}
+
+
+.ok {
+
+    color:
+        var(--success);
+}
+
+
+.bad {
+
+    color:
+        var(--danger);
+}
+
+
+/* =========================================================
+   HIDDEN
+   ========================================================= */
+
+.hidden {
+
+    display:
+        none !important;
+}
+
+
+/* =========================================================
+   ADMIN
+   ========================================================= */
+
+body:has(#board) .card {
+
+    overflow:
+        hidden;
+}
+
+
+body:has(#board) .card:first-of-type {
+
+    margin-top:
+        18px;
+}
+
+
+body:has(#board) .card:first-of-type h2 {
+
+    margin-bottom:
+        5px;
+}
+
+
+body:has(#board) .card:last-of-type {
+
+    margin-top:
+        18px;
+}
+
+
+body:has(#board) .card:last-of-type h2 {
+
+    margin-bottom:
+        10px;
+}
+
+
+/* =========================================================
+   PREMIUM PROJECTOR
+   ========================================================= */
+
+.projector-page {
+
+    overflow:
+        hidden;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #151820 0%,
+            #080a0e 42%,
+            #030406 100%
+        );
+}
+
+
+.projector-shell {
+
+    width:
+        100vw;
+
+    height:
+        100vh;
+
+    padding:
+        20px 28px 14px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+}
+
+
+/* =========================================================
+   PROJECTOR HEADER
+   ========================================================= */
+
+.projector-header {
+
+    height:
+        52px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+
+.projector-brand {
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .25em;
+}
+
+
+.projector-brand span {
+
+    margin:
+        0 7px;
+
+    color:
+        #59606d;
+}
+
+
+.round-badge {
+
+    padding:
+        8px 13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:
+        #9da4b1;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .15em;
+}
+
+
+/* =========================================================
+   PROJECTOR MAIN
+   ========================================================= */
+
+.projector-main {
+
+    flex:
+        1;
+
+    min-height:
+        0;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        340px;
+
+    gap:
+        18px;
+
+    padding-top:
+        18px;
+}
+
+
+/* =========================================================
+   PROJECTOR CLUE PANEL
+   ========================================================= */
+
+.clue-panel {
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.35),
+
+        inset 0 1px
+        rgba(255,255,255,.035);
+}
+
+
+/* =========================================================
+   PROJECTOR QUESTION HEADER
+   ========================================================= */
+
+.question-header {
+
+    height:
+        62px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+}
+
+
+.question-label {
+
+    color:
+        #59616f;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .22em;
+}
+
+
+.question-number {
+
+    margin-top:
+        2px;
+
+    font-size:
+        20px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.04em;
+}
+
+
+.projector-timer {
+
+    font-size:
+        clamp(32px, 4vw, 56px);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.07em;
+
+    font-variant-numeric:
+        tabular-nums;
+
+    color:
+        #f5f6f8;
+
+    text-shadow:
+        0 8px 30px
+        rgba(255,255,255,.06);
+}
+
+
+.projector-timer.danger {
+
+    color:
+        #ff6874;
+
+    animation:
+        projectorTimerPulse
+        .75s
+        infinite;
+}
+
+
+@keyframes projectorTimerPulse {
+
+    50% {
+
+        opacity:
+            .55;
+    }
+}
+
+
+/* =========================================================
+   PROJECTOR IMAGE WRAPPER
+   ========================================================= */
+
+.projector-image-wrap {
+
+    position:
+        relative;
+
+    flex:
+        1;
+
+    min-height:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,.055);
+
+    border-radius:
+        15px;
+
+    background:
+        #030405;
+
+    box-shadow:
+        inset 0 0 100px
+        rgba(0,0,0,.6);
+}
+
+
+.projector-image-wrap::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    pointer-events:
+        none;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 40%,
+            rgba(0,0,0,.45) 100%
+        );
+
+    z-index:
+        1;
+}
+
+
+.projector-image-wrap img {
+
+    position:
+        relative;
+
+    z-index:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        contain;
+}
+
+
+.image-enter {
+
+    animation:
+        projectorImageIn
+        .55s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+
+@keyframes projectorImageIn {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            scale(.94);
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   CLUE COUNTER
+   ========================================================= */
+
+.clue-counter {
+
+    position:
+        absolute;
+
+    left:
+        16px;
+
+    top:
+        16px;
+
+    z-index:
+        3;
+
+    padding:
+        7px 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(0,0,0,.55);
+
+    backdrop-filter:
+        blur(12px);
+
+    color:
+        #b9bec8;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .17em;
+}
+
+
+/* =========================================================
+   PROJECTOR WAITING
+   ========================================================= */
+
+.waiting-message {
+
+    position:
+        absolute;
+
+    z-index:
+        3;
+
+    color:
+        #626a78;
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .05em;
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   TIME UP
+   ========================================================= */
+
+.time-up {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        25px;
+
+    z-index:
+        4;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        10px 18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(0,0,0,.7);
+
+    backdrop-filter:
+        blur(12px);
+
+    color:
+        #ff7a84;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .2em;
+}
+
+
+/* =========================================================
+   PROJECTOR PROGRESS
+   ========================================================= */
+
+.clue-progress {
+
+    height:
+        20px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        7px;
+
+    margin-top:
+        12px;
+}
+
+
+.progress-dot {
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    border:
+        1px solid
+        #414754;
+
+    background:
+        transparent;
+
+    transition:
+        .3s ease;
+}
+
+
+.progress-dot.active {
+
+    border-color:
+        #ffffff;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 0 12px
+        rgba(255,255,255,.35);
+}
+
+
+.progress-line {
+
+    width:
+        28px;
+
+    height:
+        1px;
+
+    background:
+        #292e37;
+
+    transition:
+        .3s ease;
+}
+
+
+.progress-line.active {
+
+    background:
+        #737b89;
+}
+
+
+/* =========================================================
+   PROJECTOR ANSWER
+   ========================================================= */
+
+.answer-reveal {
+
+    margin-top:
+        10px;
+
+    padding:
+        11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:
+        12px;
+
+    text-align:
+        center;
+
+    background:
+        rgba(255,255,255,.035);
+
+    animation:
+        answerReveal
+        .5s ease;
+}
+
+
+@keyframes answerReveal {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(7px);
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+.answer-label {
+
+    color:
+        #656d7b;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .2em;
+}
+
+
+.answer-text {
+
+    margin-top:
+        3px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        18px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .02em;
+}
+
+
+/* =========================================================
+   PROJECTOR RANKING
+   ========================================================= */
+
+.ranking-panel {
+
+    min-height:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.35);
+}
+
+
+.ranking-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    padding-bottom:
+        15px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+
+.ranking-kicker {
+
+    color:
+        #626a78;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .2em;
+}
+
+
+.ranking-header h2 {
+
+    margin-top:
+        4px;
+
+    font-size:
+        17px;
+
+    letter-spacing:
+        -.03em;
+}
+
+
+.ranking-icon {
+
+    width:
+        34px;
+
+    height:
+        34px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:
+        10px;
+
+    color:
+        #a8afbb;
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+}
+
+
+.leaderboard {
+
+    flex:
+        1;
+
+    min-height:
+        0;
+
+    overflow:
+        hidden;
+
+    padding-top:
+        9px;
+}
+
+
+.ranking-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        34px 1fr auto;
+
+    align-items:
+        center;
+
+    min-height:
+        48px;
+
+    padding:
+        0 10px;
+
+    margin-bottom:
+        5px;
+
+    border:
+        1px solid transparent;
+
+    border-radius:
+        11px;
+
+    transition:
+        .25s ease;
+}
+
+
+.ranking-row:hover {
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+.ranking-row.top-rank {
+
+    background:
+        rgba(255,255,255,.025);
+
+    border-color:
+        rgba(255,255,255,.045);
+}
+
+
+.ranking-row.first-place {
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.02)
+        );
+
+    border-color:
+        rgba(255,255,255,.1);
+}
+
+
+.rank-number {
+
+    color:
+        #69717f;
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+.first-place .rank-number {
+
+    color:
+        #ffffff;
+}
+
+
+.team-name {
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+    color:
+        #cbd0d8;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+}
+
+
+.first-place .team-name {
+
+    color:
+        #ffffff;
+}
+
+
+.team-score {
+
+    color:
+        #8f97a5;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+.first-place .team-score {
+
+    color:
+        #ffffff;
+}
+
+
+.empty-ranking {
+
+    height:
+        100%;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    color:
+        #505865;
+
+    font-size:
+        10px;
+
+    font-weight:
+        600;
+}
+
+
+/* =========================================================
+   RANKING FOOTER
+   ========================================================= */
+
+.ranking-footer {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    padding-top:
+        13px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+    color:
+        #505866;
+
+    font-size:
+        6px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .13em;
+}
+
+
+/* =========================================================
+   PROJECTOR FOOTER
+   ========================================================= */
+
+.projector-footer {
+
+    height:
+        26px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    color:
+        #3f4652;
+
+    font-size:
+        6px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .16em;
+}
+
+
+/* =========================================================
+   TEAM MOBILE SYSTEM
+   ========================================================= */
+
+body.team-page {
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #191c23 0%,
+            #090b0f 38%,
+            #050608 80%
+        );
+}
+
+
+.team-shell {
+
+    width:
+        100%;
+
+    min-height:
+        100vh;
+
+    min-height:
+        100dvh;
+
+    padding:
+        18px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+}
+
+
+/* =========================================================
+   TEAM HEADER
+   ========================================================= */
+
+.team-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    padding-bottom:
+        15px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+
+.team-brand {
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .22em;
+}
+
+
+.team-status {
+
+    padding:
+        7px 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:
+        999px;
+
+    color:
+        #777f8d;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .13em;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   TEAM MAIN
+   ========================================================= */
+
+.team-main {
+
+    flex:
+        1;
+
+    width:
+        min(480px, 100%);
+
+    margin:
+        auto;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        center;
+
+    padding:
+        25px 0;
+}
+
+
+/* =========================================================
+   TEAM TYPOGRAPHY
+   ========================================================= */
+
+.team-kicker {
+
+    color:
+        #626a78;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .2em;
+
+    text-align:
+        center;
+}
+
+
+.team-name-display {
+
+    margin-top:
+        8px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        24px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.04em;
+
+    text-align:
+        center;
+
+    word-break:
+        break-word;
+}
+
+
+.team-waiting {
+
+    margin-top:
+        12px;
+
+    color:
+        #777f8d;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.6;
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   QUESTION BADGE
+   ========================================================= */
+
+.team-question {
+
+    margin-top:
+        18px;
+
+    padding:
+        8px 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:
+        #aab0ba;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .16em;
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   TEAM ANSWER
+   ========================================================= */
+
+.team-answer-area {
+
+    margin-top:
+        18px;
+}
+
+
+.team-answer-input {
+
+    width:
+        100%;
+
+    min-height:
+        58px;
+
+    padding:
+        0 17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:
+        15px;
+
+    outline:
+        none;
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:
+        #ffffff;
+
+    font-family:
+        inherit;
+
+    font-size:
+        16px;
+
+    font-weight:
+        600;
+
+    text-align:
+        center;
+
+    box-shadow:
+        inset 0 1px
+        rgba(255,255,255,.025);
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+
+.team-answer-input::placeholder {
+
+    color:
+        #555d6a;
+}
+
+
+.team-answer-input:focus {
+
+    border-color:
+        rgba(255,255,255,.3);
+
+    background:
+        rgba(255,255,255,.045);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,255,255,.035);
+}
+
+
+.team-answer-input:disabled {
+
+    opacity:
+        .55;
+}
+
+
+/* =========================================================
+   TEAM SUBMIT
+   ========================================================= */
+
+.team-submit {
+
+    width:
+        100%;
+
+    min-height:
+        58px;
+
+    margin-top:
+        10px;
+
+    border:
+        1px solid #ffffff;
+
+    border-radius:
+        15px;
+
+    background:
+        #ffffff;
+
+    color:
+        #07080b;
+
+    font-family:
+        inherit;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .15em;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .25s ease,
+        opacity .25s ease;
+}
+
+
+.team-submit:hover {
+
+    box-shadow:
+        0 15px 35px
+        rgba(255,255,255,.08);
+}
+
+
+.team-submit:active {
+
+    transform:
+        scale(.985);
+}
+
+
+.team-submit:disabled {
+
+    opacity:
+        .35;
+
+    cursor:
+        not-allowed;
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   TEAM RESULT
+   ========================================================= */
+
+.team-result {
+
+    margin-top:
+        12px;
+
+    padding:
+        15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    text-align:
+        center;
+
+    animation:
+        resultIn
+        .35s ease;
+}
+
+
+@keyframes resultIn {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+            translateY(8px);
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+.team-result.correct {
+
+    border-color:
+        rgba(103,228,154,.18);
+
+    background:
+        rgba(103,228,154,.045);
+}
+
+
+.team-result.wrong {
+
+    border-color:
+        rgba(255,105,116,.18);
+
+    background:
+        rgba(255,105,116,.045);
+}
+
+
+.team-result-title {
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+}
+
+
+.team-result.correct .team-result-title {
+
+    color:
+        var(--success);
+}
+
+
+.team-result.wrong .team-result-title {
+
+    color:
+        var(--danger);
+}
+
+
+.team-result-points {
+
+    margin-top:
+        4px;
+
+    color:
+        #929aa8;
+
+    font-size:
+        9px;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   TEAM FOOTER
+   ========================================================= */
+
+.team-footer {
+
+    padding-top:
+        12px;
+
+    color:
+        #414854;
+
+    font-size:
+        6px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .15em;
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   ADMIN DASHBOARD ENHANCEMENTS
+   ========================================================= */
+
+.admin-control-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        10px;
+
+    margin-top:
+        15px;
+}
+
+
+.admin-stat {
+
+    min-height:
+        92px;
+
+    padding:
+        16px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+.admin-stat-label {
+
+    color:
+        #5f6775;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .17em;
+}
+
+
+.admin-stat-value {
+
+    margin-top:
+        8px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        24px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.04em;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+/* =========================================================
+   ADMIN CONTROL BAR
+   ========================================================= */
+
+.control-bar {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+
+    margin-top:
+        16px;
+
+    padding-top:
+        16px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+
+/* =========================================================
+   ADMIN LIVE INDICATOR
+   ========================================================= */
+
+.live-indicator {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    color:
+        #777f8d;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .14em;
+}
+
+
+.live-indicator::before {
+
+    content:
+        "";
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--success);
+
+    box-shadow:
+        0 0 10px
+        rgba(103,228,154,.6);
+}
+
+
+/* =========================================================
+   ADMIN TABLE
+   ========================================================= */
+
+.admin-table-wrap {
+
+    width:
+        100%;
+
+    overflow-x:
+        auto;
+
+    margin-top:
+        15px;
+}
+
+
+.admin-table {
+
+    width:
+        100%;
+
+    border-collapse:
+        collapse;
+
+    min-width:
+        500px;
+}
+
+
+.admin-table th {
+
+    padding:
+        10px;
+
+    color:
+        #555d6a;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .15em;
+
+    text-align:
+        left;
+}
+
+
+.admin-table td {
+
+    padding:
+        12px 10px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.04);
+
+    color:
+        #c4c9d2;
+
+    font-size:
+        10px;
+
+    font-weight:
+        600;
+}
+
+
+.admin-table td:last-child {
+
+    color:
+        #ffffff;
+
+    font-weight:
+        900;
+
+    font-variant-numeric:
+        tabular-nums;
+
+    text-align:
+        right;
+}
+
+
+/* =========================================================
+   DESKTOP PROJECTOR SAFETY
+   ========================================================= */
+
+@media (min-width: 1200px) {
+
+    .projector-main {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            360px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .wrap {
+
+        padding:
+            20px;
+    }
+
+
+    .projector-shell {
+
+        padding:
+            15px;
+    }
+
+
+    .projector-main {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            300px;
+    }
+
+
+    .ranking-panel {
+
+        padding:
+            15px;
+    }
+
+}
+
+
+/* =========================================================
+   PROJECTOR MOBILE / SMALL SCREEN
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .projector-page {
+
+        overflow:
+            auto;
+    }
+
+
+    .projector-shell {
+
+        width:
+            100%;
+
+        height:
+            auto;
+
+        min-height:
+            100vh;
+    }
+
+
+    .projector-main {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            12px;
+    }
+
+
+    .projector-image-wrap {
+
+        min-height:
+            420px;
+    }
+
+
+    .ranking-panel {
+
+        min-height:
+            350px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .wrap {
+
+        padding:
+            15px;
+    }
+
+
+    .top {
+
+        min-height:
+            46px;
+
+        padding-bottom:
+            13px;
+    }
+
+
+    .brand {
+
+        font-size:
+            10px;
+    }
+
+
+    .status,
+    .pill {
+
+        padding:
+            7px 9px;
+
+        font-size:
+            7px;
+    }
+
+
+    .grid {
+
+        gap:
+            12px;
+    }
+
+
+    .card {
+
+        padding:
+            17px;
+
+        border-radius:
+            17px;
+    }
+
+
+    .actions {
+
+        flex-direction:
+            column;
+    }
+
+
+    .actions .btn {
+
+        width:
+            100%;
+    }
+
+
+    .clue {
+
+        min-height:
+            340px;
+
+        border-radius:
+            13px;
+    }
+
+
+    .leader td {
+
+        padding:
+            10px 7px;
+    }
+
+
+    #join,
+    #game {
+
+        margin-top:
+            45px;
+    }
+
+
+    /* TEAM */
+
+    .team-shell {
+
+        padding:
+            14px;
+    }
+
+
+    .team-main {
+
+        padding:
+            20px 0;
+    }
+
+
+    .team-name-display {
+
+        font-size:
+            22px;
+    }
+
+
+    .team-answer-input {
+
+        min-height:
+            56px;
+
+        font-size:
+            16px;
+    }
+
+
+    .team-submit {
+
+        min-height:
+            56px;
+    }
+
+
+    /* PROJECTOR */
+
+    .projector-shell {
+
+        padding:
+            12px;
+    }
+
+
+    .projector-header {
+
+        height:
+            46px;
+    }
+
+
+    .projector-brand {
+
+        font-size:
+            9px;
+    }
+
+
+    .projector-timer {
+
+        font-size:
+            34px;
+    }
+
+
+    .projector-image-wrap {
+
+        min-height:
+            340px;
+    }
+
+
+    .ranking-panel {
+
+        min-height:
+            320px;
+    }
+
+
+    .ranking-row {
+
+        min-height:
+            44px;
+    }
+
+
+    .projector-footer {
+
+        font-size:
+            5px;
+
+        letter-spacing:
+            .1em;
+    }
+
+
+    /* ADMIN */
+
+    .admin-control-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .team-shell {
+
+        padding:
+            12px;
+    }
+
+
+    .team-name-display {
+
+        font-size:
+            20px;
+    }
+
+
+    .team-waiting {
+
+        font-size:
+            11px;
+    }
+
+
+    .team-answer-input {
+
+        min-height:
+            53px;
+    }
+
+
+    .team-submit {
+
+        min-height:
+            53px;
+    }
+
+
+    .team-footer {
+
+        font-size:
+            5px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+
+        transition-duration:
+            .01ms !important;
+    }
+
+}
+/* =========================================================
+   ADMIN PREMIUM EXTENSIONS
+   ========================================================= */
+
+.admin-hero {
+    margin-top: 18px;
+}
+
+.admin-hero-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.admin-hero-top h1 {
+    margin-top: 5px;
+    font-size: clamp(25px, 4vw, 36px);
+    letter-spacing: -.045em;
+}
+
+.admin-kicker {
+    color: #626a78;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: .2em;
+}
+
+.admin-game-badge {
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 999px;
+    background: rgba(255,255,255,.025);
+    color: #777f8d;
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: .14em;
+    white-space: nowrap;
+}
+
+.admin-game-badge.live {
+    border-color: rgba(103,228,154,.18);
+    background: rgba(103,228,154,.05);
+    color: #67e49a;
+}
+
+.admin-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.admin-section-header h2 {
+    margin-top: 4px;
+}
+
+.admin-mini-label {
+    color: #555d6b;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: .17em;
+}
+
+.admin-question-card {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.admin-question-card > div {
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 13px;
+    background: rgba(255,255,255,.025);
+}
+
+.admin-question-number {
+    margin-top: 7px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-answer-box {
+    margin-top: 14px;
+    padding: 17px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px;
+    background: rgba(255,255,255,.035);
+    text-align: center;
+}
+
+.admin-answer {
+    margin-top: 7px;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.admin-host-note {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.admin-host-note p {
+    margin-top: 9px;
+    color: #666e7c;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.admin-status-answered,
+.admin-status-waiting {
+    display: inline-flex;
+    padding: 5px 7px;
+    border-radius: 999px;
+    font-size: 6px;
+    font-weight: 900;
+    letter-spacing: .1em;
+}
+
+.admin-status-answered {
+    color: #67e49a;
+    background: rgba(103,228,154,.06);
+    border: 1px solid rgba(103,228,154,.13);
+}
+
+.admin-status-waiting {
+    color: #6d7582;
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.admin-first td {
+    background: rgba(255,255,255,.045);
+    color: #fff !important;
+}
+
+.admin-footer {
+    padding: 18px 0 5px;
+    text-align: center;
+    color: #414854;
+    font-size: 6px;
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+.admin-footer span {
+    margin: 0 6px;
+}
+
+.status.offline {
+    color: #ff6974;
+}
+
+.status.offline::before {
+    background: #ff6974;
+    box-shadow: 0 0 10px rgba(255,105,116,.5);
+}
+
+.pill.open {
+    color: #67e49a;
+    border-color: rgba(103,228,154,.16);
+    background: rgba(103,228,154,.045);
+}
+
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #777f8d;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+
+.live-indicator::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #67e49a;
+    box-shadow: 0 0 10px rgba(103,228,154,.6);
+}
+
+
+/* ADMIN RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .admin-hero-top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-game-badge {
+        align-self: flex-start;
+    }
+
+    .admin-question-card {
+        grid-template-columns: 1fr;
+    }
+
+    .control-bar {
+        flex-direction: column;
+    }
+
+    .control-bar .btn {
+        width: 100%;
+    }
+
+}

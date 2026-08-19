@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#06070b"
+    >
+
+    <title>SAMAGRA • CONNECT</title>
+
+    <link
+        rel="stylesheet"
+        href="/index.css"
+    >
+</head>
+
+<body>
+
+    <div class="background-grid"></div>
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+    <div class="particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    <main class="landing">
+
+        <!-- HEADER -->
+
+        <header class="navbar">
+
+            <div class="brand-wrap">
+
+                <div class="brand-mark">
+                    S
+                </div>
+
+                <div>
+
+                    <div class="brand">
+                        SAMAGRA
+                    </div>
+
+                    <div class="brand-sub">
+                        STUDENT BODY
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="live-status">
+
+                <span class="status-dot"></span>
+
+                LIVE GAME
+
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="eyebrow">
+
+                <span class="eyebrow-line"></span>
+
+                SAMAGRA PRESENTS
+
+                <span class="eyebrow-line"></span>
+
+            </div>
+
+
+            <h1 class="title">
+
+                <span class="title-small">
+                    4 IMAGES
+                </span>
+
+                <span class="title-main">
+                    CONNECT
+                </span>
+
+                <span class="title-small">
+                    1 ANSWER
+                </span>
+
+            </h1>
+
+
+            <p class="description">
+
+                Think fast.
+                Connect the clues.
+                Beat the clock.
+
+            </p>
+
+
+            <!-- TIMER -->
+
+            <div class="timer-preview">
+
+                <div class="timer-number">
+                    30
+                </div>
+
+                <div class="timer-info">
+
+                    <span>
+                        SECONDS
+                    </span>
+
+                    <small>
+                        PER QUESTION
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- ONLY PARTICIPANT BUTTON -->
+
+            <a
+                href="/team.html"
+                class="join-button"
+            >
+
+                <span class="join-icon">
+                    📱
+                </span>
+
+                <span class="join-content">
+
+                    <strong>
+                        JOIN GAME
+                    </strong>
+
+                    <small>
+                        Enter your team
+                    </small>
+
+                </span>
+
+                <span class="join-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <!-- GAME INFO -->
+
+            <div class="game-meta">
+
+                <div class="meta-item">
+
+                    <strong>
+                        23
+                    </strong>
+
+                    <span>
+                        QUESTIONS
+                    </span>
+
+                </div>
+
+
+                <div class="meta-divider"></div>
+
+
+                <div class="meta-item">
+
+                    <strong>
+                        10
+                    </strong>
+
+                    <span>
+                        MAX POINTS
+                    </span>
+
+                </div>
+
+
+                <div class="meta-divider"></div>
+
+
+                <div class="meta-item">
+
+                    <strong>
+                        30s
+                    </strong>
+
+                    <span>
+                        EACH ROUND
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer class="footer">
+
+            SAMAGRA
+            <span>•</span>
+            CONNECT 2026
+            <span>•</span>
+            PLAY SMART
+
+        </footer>
+
+    </main>
+
+
+    <script>
+
+        document.body.classList.add("loaded");
+
+        document.addEventListener(
+            "mousemove",
+            function (event) {
+
+                const x =
+                    (event.clientX /
+                        window.innerWidth -
+                        0.5) * 2;
+
+                const y =
+                    (event.clientY /
+                        window.innerHeight -
+                        0.5) * 2;
+
+                document.documentElement
+                    .style.setProperty(
+                        "--mouse-x",
+                        `${x * 12}px`
+                    );
+
+                document.documentElement
+                    .style.setProperty(
+                        "--mouse-y",
+                        `${y * 12}px`
+                    );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
