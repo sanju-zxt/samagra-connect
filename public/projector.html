@@ -14,13 +14,582 @@
         rel="stylesheet"
         href="/style.css"
     >
+
+    <style>
+        /* =====================================================
+           PROJECTOR OVERRIDES
+        ===================================================== */
+
+        .projector-page {
+            min-height: 100vh;
+            margin: 0;
+            background:
+                radial-gradient(
+                    circle at 50% 15%,
+                    rgba(255,255,255,.035),
+                    transparent 42%
+                ),
+                #050608;
+            overflow: hidden;
+        }
+
+        .projector-shell {
+            width: 100%;
+            min-height: 100vh;
+            padding: 28px 30px;
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .projector-header {
+            width: 100%;
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 2px 18px;
+
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .projector-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .projector-logo {
+            width: 48px;
+            height: 48px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            border: 1px solid rgba(255,255,255,.14);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.08),
+                    rgba(255,255,255,.025)
+                );
+
+            color: #fff;
+
+            font-size: 20px;
+            font-weight: 900;
+
+            box-shadow:
+                inset 0 1px rgba(255,255,255,.08),
+                0 15px 40px rgba(0,0,0,.35);
+        }
+
+        .projector-title {
+            color: #f4f5f7;
+
+            font-size: 13px;
+            font-weight: 900;
+
+            letter-spacing: .24em;
+        }
+
+        .projector-subtitle {
+            margin-top: 4px;
+
+            color: #596273;
+
+            font-size: 8px;
+            font-weight: 800;
+
+            letter-spacing: .25em;
+        }
+
+        .projector-live {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 14px;
+
+            border-radius: 999px;
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            background: rgba(255,255,255,.025);
+
+            color: #a4adba;
+
+            font-size: 8px;
+            font-weight: 900;
+
+            letter-spacing: .16em;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #67e49a;
+
+            box-shadow:
+                0 0 0 4px rgba(103,228,154,.08),
+                0 0 18px rgba(103,228,154,.6);
+
+            animation: livePulse 1.8s infinite;
+        }
+
+        @keyframes livePulse {
+            50% {
+                opacity: .45;
+            }
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .projector-main {
+            width: min(1400px, 100%);
+            margin: 22px auto 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .round-label {
+            margin-top: 2px;
+
+            color: #5d6879;
+
+            font-size: 9px;
+            font-weight: 900;
+
+            letter-spacing: .25em;
+            text-transform: uppercase;
+        }
+
+        .projector-question {
+            margin-top: 8px;
+
+            color: #f4f5f7;
+
+            font-size: clamp(20px, 2vw, 28px);
+            font-weight: 900;
+
+            letter-spacing: .08em;
+        }
+
+        /* =====================================================
+           IMAGE STAGE
+        ===================================================== */
+
+        .image-stage {
+            position: relative;
+
+            width: min(1200px, 92vw);
+            height: min(62vh, 680px);
+
+            margin-top: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 24px;
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(255,255,255,.025),
+                    transparent 60%
+                ),
+                #020304;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.55),
+                inset 0 0 100px rgba(0,0,0,.65);
+        }
+
+        .image-stage::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.015) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    rgba(255,255,255,.015) 1px,
+                    transparent 1px
+                );
+
+            background-size: 50px 50px;
+
+            mask-image:
+                radial-gradient(
+                    circle at center,
+                    black,
+                    transparent 80%
+                );
+        }
+
+        .projector-waiting {
+            position: relative;
+            z-index: 2;
+
+            text-align: center;
+        }
+
+        .waiting-big {
+            color: #f1f3f6;
+
+            font-size: clamp(40px, 6vw, 78px);
+            font-weight: 900;
+
+            letter-spacing: -.06em;
+        }
+
+        .waiting-small {
+            margin-top: 10px;
+
+            color: #667080;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            letter-spacing: .05em;
+        }
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo-image {
+            position: relative;
+            z-index: 3;
+
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            padding: 42px;
+
+            object-fit: contain;
+
+            opacity: 1;
+
+            transform: scale(1);
+
+            transition:
+                filter .15s linear,
+                opacity .25s ease,
+                transform .35s ease;
+        }
+
+        .logo-image:not(.hidden) {
+            animation: logoEnter .45s ease;
+        }
+
+        @keyframes logoEnter {
+            from {
+                opacity: 0;
+                transform: scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .logo-image.clear-reveal {
+            filter: blur(0) !important;
+        }
+
+        /* =====================================================
+           HUD
+        ===================================================== */
+
+        .projector-hud {
+            width: min(1200px, 92vw);
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(180px, .8fr)
+                minmax(300px, 1.4fr)
+                minmax(180px, .8fr);
+
+            gap: 12px;
+
+            margin-top: 14px;
+        }
+
+        .hud-card {
+            min-height: 78px;
+
+            padding: 15px 18px;
+
+            border-radius: 15px;
+
+            border: 1px solid rgba(255,255,255,.075);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.012)
+                );
+
+            box-shadow:
+                inset 0 1px rgba(255,255,255,.025);
+        }
+
+        .hud-card.center {
+            text-align: center;
+        }
+
+        .hud-label {
+            color: #566173;
+
+            font-size: 8px;
+            font-weight: 900;
+
+            letter-spacing: .18em;
+        }
+
+        .projector-timer {
+            margin-top: 7px;
+
+            color: #f5f6f8;
+
+            font-size: 30px;
+            line-height: 1;
+
+            font-weight: 900;
+
+            font-variant-numeric: tabular-nums;
+        }
+
+        .projector-timer.urgent {
+            color: #ff6974;
+
+            animation: timerDanger .6s infinite;
+        }
+
+        @keyframes timerDanger {
+            50% {
+                opacity: .45;
+            }
+        }
+
+        .hud-value {
+            margin-top: 8px;
+
+            color: #e8ebef;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        /* =====================================================
+           ANSWER
+        ===================================================== */
+
+        .answer-reveal {
+            margin-top: 14px;
+
+            min-width: 210px;
+
+            padding: 13px 24px;
+
+            text-align: center;
+
+            border-radius: 16px;
+
+            border: 1px solid rgba(103,228,154,.25);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(103,228,154,.07),
+                    rgba(103,228,154,.015)
+                );
+
+            box-shadow:
+                0 15px 50px rgba(0,0,0,.3),
+                inset 0 1px rgba(255,255,255,.035);
+
+            animation: answerEnter .4s ease;
+        }
+
+        .reveal-label {
+            color: #67e49a;
+
+            font-size: 8px;
+            font-weight: 900;
+
+            letter-spacing: .2em;
+        }
+
+        .reveal-answer {
+            margin-top: 4px;
+
+            color: #f4f7f8;
+
+            font-size: clamp(22px, 3vw, 34px);
+            font-weight: 900;
+
+            letter-spacing: .04em;
+        }
+
+        @keyframes answerEnter {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================================
+           MOBILE / SMALL SCREENS
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .projector-shell {
+                padding: 16px;
+            }
+
+            .projector-header {
+                height: 62px;
+            }
+
+            .projector-logo {
+                width: 40px;
+                height: 40px;
+
+                border-radius: 11px;
+
+                font-size: 17px;
+            }
+
+            .projector-title {
+                font-size: 10px;
+            }
+
+            .projector-subtitle {
+                font-size: 7px;
+            }
+
+            .projector-live {
+                padding: 7px 10px;
+            }
+
+            .image-stage {
+                width: 100%;
+                height: 52vh;
+
+                margin-top: 18px;
+
+                border-radius: 17px;
+            }
+
+            .logo-image {
+                padding: 20px;
+            }
+
+            .projector-hud {
+                width: 100%;
+
+                grid-template-columns: 1fr 1fr;
+
+                gap: 8px;
+            }
+
+            .hud-card.center {
+                grid-column: 1 / -1;
+                grid-row: 1;
+            }
+
+            .hud-card {
+                min-height: 65px;
+                padding: 12px;
+            }
+
+            .projector-timer {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .projector-question {
+                font-size: 18px;
+            }
+
+            .round-label {
+                font-size: 7px;
+            }
+
+            .image-stage {
+                height: 45vh;
+            }
+
+            .projector-hud {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hud-card.center {
+                grid-column: 1 / -1;
+            }
+
+            .projector-live {
+                font-size: 7px;
+            }
+        }
+
+        /* =====================================================
+           UTILITY
+        ===================================================== */
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body class="projector-page">
 
 <div class="projector-shell">
 
-    <!-- TOP BAR -->
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
     <header class="projector-header">
 
@@ -31,6 +600,7 @@
             </div>
 
             <div>
+
                 <div class="projector-title">
                     SAMAGRA
                 </div>
@@ -38,10 +608,10 @@
                 <div class="projector-subtitle">
                     CONNECT
                 </div>
+
             </div>
 
         </div>
-
 
         <div class="projector-live">
 
@@ -54,14 +624,15 @@
     </header>
 
 
-    <!-- MAIN -->
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
     <main class="projector-main">
 
         <div class="round-label">
             LOGO CHALLENGE
         </div>
-
 
         <div
             id="questionNumber"
@@ -71,7 +642,9 @@
         </div>
 
 
-        <!-- IMAGE -->
+        <!-- =================================================
+             IMAGE
+        ================================================== -->
 
         <div
             id="imageStage"
@@ -99,12 +672,14 @@
                 class="logo-image hidden"
                 src=""
                 alt="Logo clue"
-            />
+            >
 
         </div>
 
 
-        <!-- BOTTOM HUD -->
+        <!-- =================================================
+             HUD
+        ================================================== -->
 
         <div class="projector-hud">
 
@@ -158,7 +733,9 @@
         </div>
 
 
-        <!-- REVEAL -->
+        <!-- =================================================
+             ANSWER
+        ================================================== -->
 
         <div
             id="answerReveal"
@@ -187,122 +764,506 @@
 
 <script>
 
-const socket = io();
+    const socket = io();
 
 
-const logoImage =
-    document.getElementById(
-        "logoImage"
-    );
+    /* =====================================================
+       DOM
+    ===================================================== */
 
-const waitingMessage =
-    document.getElementById(
-        "waitingMessage"
-    );
+    const logoImage =
+        document.getElementById("logoImage");
 
-const questionNumber =
-    document.getElementById(
-        "questionNumber"
-    );
+    const waitingMessage =
+        document.getElementById("waitingMessage");
 
-const timer =
-    document.getElementById(
-        "timer"
-    );
+    const questionNumber =
+        document.getElementById("questionNumber");
 
-const clarityText =
-    document.getElementById(
-        "clarityText"
-    );
+    const timer =
+        document.getElementById("timer");
 
-const playerCount =
-    document.getElementById(
-        "playerCount"
-    );
+    const clarityText =
+        document.getElementById("clarityText");
 
-const answerReveal =
-    document.getElementById(
-        "answerReveal"
-    );
+    const playerCount =
+        document.getElementById("playerCount");
 
-const answerText =
-    document.getElementById(
-        "answerText"
-    );
+    const answerReveal =
+        document.getElementById("answerReveal");
+
+    const answerText =
+        document.getElementById("answerText");
 
 
-let currentImage = "";
-let currentRound = -1;
-let roundStart = null;
-let roundEnd = null;
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let currentQuestionIndex = -1;
+
+    let currentImage = "";
+
+    let gameStarted = false;
 
 
-/* =========================================================
-   GAME STATE
-========================================================= */
+    /* =====================================================
+       IMAGE PATH
 
-socket.on(
-    "game-state",
-    state => {
+       IMPORTANT:
 
-        playerCount.textContent =
-            state.players.length;
+       New assets are:
 
+       /assets/img1.jpeg
+       /assets/img2.jpeg
+       ...
+       /assets/img19.jpeg
+
+       The server question index is zero-based.
+
+       Therefore:
+
+       questionIndex 0 -> img1.jpeg
+       questionIndex 1 -> img2.jpeg
+       ...
+       questionIndex 18 -> img19.jpeg
+    ===================================================== */
+
+    function getImagePath(questionIndex) {
+
+        const imageNumber =
+            Number(questionIndex) + 1;
 
         if (
-            !state.running ||
-            !state.question
+            imageNumber < 1 ||
+            imageNumber > 19
         ) {
-
-            questionNumber.textContent =
-                "WAITING";
-
-            waitingMessage.classList.remove(
-                "hidden"
+            console.error(
+                "Invalid image number:",
+                imageNumber
             );
 
-            logoImage.classList.add(
-                "hidden"
-            );
+            return "";
+        }
 
-            answerReveal.classList.add(
-                "hidden"
-            );
+        return `/assets/img${imageNumber}.jpeg`;
+    }
 
+
+    /* =====================================================
+       LOAD IMAGE
+    ===================================================== */
+
+    function loadQuestionImage(questionIndex) {
+
+        const imagePath =
+            getImagePath(questionIndex);
+
+        if (!imagePath) {
             return;
         }
 
-
-        waitingMessage.classList.add(
-            "hidden"
+        console.log(
+            "Loading projector image:",
+            imagePath
         );
+
+        currentImage =
+            imagePath;
+
+        currentQuestionIndex =
+            Number(questionIndex);
+
+        logoImage.src =
+            imagePath;
+
+        logoImage.onerror =
+            () => {
+
+                console.error(
+                    "FAILED TO LOAD IMAGE:",
+                    imagePath
+                );
+
+                clarityText.textContent =
+                    "IMAGE LOAD ERROR";
+            };
+
+        logoImage.onload =
+            () => {
+
+                console.log(
+                    "IMAGE LOADED:",
+                    imagePath
+                );
+
+                clarityText.textContent =
+                    "STARTING BLURRED";
+            };
 
         logoImage.classList.remove(
             "hidden"
         );
 
+        waitingMessage.classList.add(
+            "hidden"
+        );
 
-        if (
-            currentImage !==
-            state.question.image
-        ) {
+        answerReveal.classList.add(
+            "hidden"
+        );
 
-            currentImage =
-                state.question.image;
+        logoImage.classList.remove(
+            "clear-reveal"
+        );
 
-            logoImage.src =
-                currentImage;
+        logoImage.style.filter =
+            "blur(18px)";
+    }
 
-            currentRound =
-                state.questionIndex;
+
+    /* =====================================================
+       GAME STATE
+    ===================================================== */
+
+    socket.on(
+        "game-state",
+        state => {
+
+            console.log(
+                "GAME STATE:",
+                state
+            );
+
+
+            /* PLAYER COUNT */
+
+            if (
+                state &&
+                Array.isArray(state.players)
+            ) {
+
+                playerCount.textContent =
+                    state.players.length;
+
+            }
+
+
+            /* WAITING */
+
+            if (
+                !state ||
+                !state.running ||
+                !state.question
+            ) {
+
+                gameStarted = false;
+
+                questionNumber.textContent =
+                    "WAITING";
+
+                waitingMessage.classList.remove(
+                    "hidden"
+                );
+
+                logoImage.classList.add(
+                    "hidden"
+                );
+
+                answerReveal.classList.add(
+                    "hidden"
+                );
+
+                clarityText.textContent =
+                    "WAITING FOR HOST";
+
+                timer.textContent =
+                    "30";
+
+                return;
+            }
+
+
+            gameStarted = true;
+
+            waitingMessage.classList.add(
+                "hidden"
+            );
+
+            logoImage.classList.remove(
+                "hidden"
+            );
+
+
+            /* =============================================
+               IMPORTANT FIX
+
+               DO NOT USE:
+
+               state.question.image
+
+               Instead use:
+
+               state.questionIndex
+            ============================================== */
+
+            const index =
+                Number(
+                    state.questionIndex
+                );
+
+
+            if (
+                Number.isInteger(index) &&
+                index !== currentQuestionIndex
+            ) {
+
+                loadQuestionImage(index);
+            }
+
+
+            /* =============================================
+               IF PAGE LOADED MID-QUESTION
+
+               We still need to load the image.
+            ============================================== */
+
+            if (
+                Number.isInteger(index) &&
+                !currentImage
+            ) {
+
+                loadQuestionImage(index);
+            }
+
+
+            /* QUESTION NUMBER */
+
+            questionNumber.textContent =
+                String(index + 1)
+                    .padStart(2, "0") +
+                " / " +
+                String(
+                    state.question.total || 19
+                ).padStart(2, "0");
+
+
+            /* REVEAL STATE */
+
+            if (state.revealed) {
+
+                logoImage.style.filter =
+                    "blur(0px)";
+
+                logoImage.classList.add(
+                    "clear-reveal"
+                );
+
+                clarityText.textContent =
+                    "ANSWER REVEALED";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       TIMER
+    ===================================================== */
+
+    socket.on(
+        "timer",
+        data => {
+
+            const remaining =
+                Math.max(
+                    0,
+                    Number(data.remaining || 0)
+                );
+
+
+            timer.textContent =
+                Math.ceil(
+                    remaining
+                );
+
+
+            /* =============================================
+               BLUR PROGRESSION
+
+               30 sec -> 18px
+               15 sec -> 8px
+               0 sec  -> 0px
+            ============================================== */
+
+            let blur;
+
+
+            if (remaining > 15) {
+
+                const progress =
+                    (30 - remaining) / 15;
+
+                blur =
+                    18 -
+                    (
+                        progress * 10
+                    );
+
+                clarityText.textContent =
+                    "HEAVILY BLURRED";
+
+            }
+
+            else {
+
+                const progress =
+                    (15 - remaining) / 15;
+
+                blur =
+                    8 -
+                    (
+                        progress * 8
+                    );
+
+
+                if (remaining > 7) {
+
+                    clarityText.textContent =
+                        "GETTING CLEARER";
+
+                }
+
+                else if (remaining > 0) {
+
+                    clarityText.textContent =
+                        "ALMOST CLEAR";
+
+                }
+
+                else {
+
+                    blur = 0;
+
+                    clarityText.textContent =
+                        "FULLY CLEAR";
+                }
+
+            }
+
+
+            logoImage.style.filter =
+                `blur(${Math.max(0, blur)}px)`;
+
+
+            /* URGENT TIMER */
+
+            if (remaining <= 5) {
+
+                timer.classList.add(
+                    "urgent"
+                );
+
+            }
+
+            else {
+
+                timer.classList.remove(
+                    "urgent"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       NEW QUESTION
+    ===================================================== */
+
+    socket.on(
+        "new-question",
+        data => {
+
+            console.log(
+                "NEW QUESTION:",
+                data
+            );
+
+
+            let index = -1;
+
+
+            /* =============================================
+               SUPPORT BOTH POSSIBLE SERVER FORMATS
+            ============================================== */
+
+            if (
+                data &&
+                Number.isInteger(
+                    Number(data.questionIndex)
+                )
+            ) {
+
+                index =
+                    Number(
+                        data.questionIndex
+                    );
+
+            }
+
+            else if (
+                data &&
+                data.question &&
+                Number.isInteger(
+                    Number(
+                        data.question.id
+                    )
+                )
+            ) {
+
+                /*
+                    If server sends question id:
+
+                    id 1 -> image 1
+                    id 2 -> image 2
+                    ...
+                */
+
+                index =
+                    Number(
+                        data.question.id
+                    ) - 1;
+
+            }
+
+
+            if (index >= 0) {
+
+                loadQuestionImage(
+                    index
+                );
+
+                questionNumber.textContent =
+                    String(index + 1)
+                        .padStart(2, "0") +
+                    " / 19";
+            }
+
+
+            logoImage.classList.remove(
+                "hidden"
+            );
+
+            waitingMessage.classList.add(
+                "hidden"
+            );
 
             answerReveal.classList.add(
                 "hidden"
             );
-
-            /*
-                Reset blur immediately.
-            */
 
             logoImage.style.filter =
                 "blur(18px)";
@@ -310,268 +1271,188 @@ socket.on(
             logoImage.classList.remove(
                 "clear-reveal"
             );
-        }
 
-
-        questionNumber.textContent =
-            String(
-                state.questionIndex + 1
-            ).padStart(2, "0") +
-            " / " +
-            String(
-                state.question.total
-            ).padStart(2, "0");
-
-
-        roundStart =
-            state.roundStartedAt;
-
-        roundEnd =
-            state.roundEndsAt;
-
-
-        if (state.revealed) {
-
-            logoImage.style.filter =
-                "blur(0px)";
-
-            clarityText.textContent =
-                "ANSWER REVEALED";
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-socket.on(
-    "timer",
-    data => {
-
-        const remaining =
-            Math.max(
-                0,
-                data.remaining
-            );
-
-        timer.textContent =
-            Math.ceil(
-                remaining
-            );
-
-
-        /*
-            BLUR LOGIC
-
-            30 sec:
-                18px blur
-
-            15 sec:
-                around 8px blur
-
-            0 sec:
-                0px blur
-        */
-
-        const progress =
-            Math.min(
-                1,
-                Math.max(
-                    0,
-                    (30 - remaining) / 30
-                )
-            );
-
-
-        let blur;
-
-
-        if (remaining > 15) {
-
-            /*
-                First half:
-                18px -> 8px
-            */
-
-            const firstHalf =
-                (30 - remaining) / 15;
-
-            blur =
-                18 -
-                (firstHalf * 10);
-
-            clarityText.textContent =
-                "HEAVILY BLURRED";
-
-        } else {
-
-            /*
-                Second half:
-                8px -> 0px
-            */
-
-            const secondHalf =
-                (15 - remaining) / 15;
-
-            blur =
-                8 -
-                (secondHalf * 8);
-
-            if (remaining > 7) {
-
-                clarityText.textContent =
-                    "GETTING CLEARER";
-
-            } else if (remaining > 0) {
-
-                clarityText.textContent =
-                    "ALMOST CLEAR";
-
-            } else {
-
-                clarityText.textContent =
-                    "FULLY CLEAR";
-            }
-
-        }
-
-
-        logoImage.style.filter =
-            `blur(${Math.max(0, blur)}px)`;
-
-
-        if (remaining <= 5) {
-
-            timer.classList.add(
-                "urgent"
-            );
-
-        } else {
+            timer.textContent =
+                "30";
 
             timer.classList.remove(
                 "urgent"
             );
 
+            clarityText.textContent =
+                "STARTING BLURRED";
+
         }
-
-    }
-);
+    );
 
 
-/* =========================================================
-   NEW QUESTION
-========================================================= */
+    /* =====================================================
+       ANSWER REVEALED
+    ===================================================== */
 
-socket.on(
-    "new-question",
-    data => {
+    socket.on(
+        "answer-revealed",
+        data => {
 
-        currentImage =
-            data.question.image;
-
-        logoImage.src =
-            currentImage;
-
-        logoImage.classList.remove(
-            "hidden"
-        );
-
-        waitingMessage.classList.add(
-            "hidden"
-        );
-
-        answerReveal.classList.add(
-            "hidden"
-        );
-
-        logoImage.style.filter =
-            "blur(18px)";
-
-        clarityText.textContent =
-            "STARTING BLURRED";
-
-    }
-);
+            console.log(
+                "ANSWER REVEALED:",
+                data
+            );
 
 
-/* =========================================================
-   ANSWER REVEAL
-========================================================= */
+            logoImage.style.filter =
+                "blur(0px)";
 
-socket.on(
-    "answer-revealed",
-    data => {
+            logoImage.classList.add(
+                "clear-reveal"
+            );
 
-        logoImage.style.filter =
-            "blur(0px)";
-
-        clarityText.textContent =
-            "ANSWER REVEALED";
-
-        answerText.textContent =
-            data.answer;
-
-        answerReveal.classList.remove(
-            "hidden"
-        );
-
-    }
-);
+            clarityText.textContent =
+                "ANSWER REVEALED";
 
 
-/* =========================================================
-   GAME FINISHED
-========================================================= */
+            if (
+                data &&
+                data.answer
+            ) {
 
-socket.on(
-    "game-finished",
-    () => {
+                answerText.textContent =
+                    data.answer;
 
-        logoImage.style.filter =
-            "blur(0px)";
+            }
 
-        clarityText.textContent =
-            "GAME COMPLETE";
+            else {
 
-    }
-);
+                answerText.textContent =
+                    "ANSWER";
+
+            }
 
 
-/* =========================================================
-   RESET
-========================================================= */
+            answerReveal.classList.remove(
+                "hidden"
+            );
 
-socket.on(
-    "game-reset",
-    () => {
+        }
+    );
 
-        currentImage = "";
-        currentRound = -1;
 
-        logoImage.classList.add(
-            "hidden"
-        );
+    /* =====================================================
+       GAME FINISHED
+    ===================================================== */
 
-        waitingMessage.classList.remove(
-            "hidden"
-        );
+    socket.on(
+        "game-finished",
+        data => {
 
-        answerReveal.classList.add(
-            "hidden"
-        );
+            console.log(
+                "GAME FINISHED"
+            );
 
-        questionNumber.textContent =
-            "WAITING";
 
-        timer.textContent =
-            "30";
+            logoImage.style.filter =
+                "blur(0px)";
 
-    }
-);
+            logoImage.classList.add(
+                "clear-reveal"
+            );
+
+            clarityText.textContent =
+                "GAME COMPLETE";
+
+        }
+    );
+
+
+    /* =====================================================
+       GAME RESET
+    ===================================================== */
+
+    socket.on(
+        "game-reset",
+        () => {
+
+            console.log(
+                "GAME RESET"
+            );
+
+
+            currentImage = "";
+
+            currentQuestionIndex = -1;
+
+            gameStarted = false;
+
+
+            logoImage.classList.add(
+                "hidden"
+            );
+
+            logoImage.removeAttribute(
+                "src"
+            );
+
+
+            waitingMessage.classList.remove(
+                "hidden"
+            );
+
+
+            answerReveal.classList.add(
+                "hidden"
+            );
+
+
+            questionNumber.textContent =
+                "WAITING";
+
+
+            timer.textContent =
+                "30";
+
+
+            timer.classList.remove(
+                "urgent"
+            );
+
+
+            clarityText.textContent =
+                "WAITING FOR HOST";
+
+        }
+    );
+
+
+    /* =====================================================
+       CONNECTION STATUS
+    ===================================================== */
+
+    socket.on(
+        "connect",
+        () => {
+
+            console.log(
+                "Projector connected:",
+                socket.id
+            );
+
+        }
+    );
+
+
+    socket.on(
+        "disconnect",
+        () => {
+
+            console.warn(
+                "Projector disconnected"
+            );
+
+            clarityText.textContent =
+                "CONNECTION LOST";
+
+        }
+    );
 
 </script>
 
