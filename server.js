@@ -1,793 +1,1248 @@
 const express = require("express");
-const http = require("http");
 const path = require("path");
-const fs = require("fs");
-const { Server } = require("socket.io");
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 
-const PUBLIC_DIR = path.join(__dirname, "public");
-const QUESTIONS_FILE = path.join(__dirname, "questions.json");
-
-const ROUND_DURATION = 30;
+const GAME_DURATION = 30 * 1000;
 const MAX_POINTS = 10;
 
-let questions = [];
+// ============================================================
+// LOAD QUESTIONS
+// ============================================================
+
+let questions;
 
 try {
-    questions = JSON.parse(
-        fs.readFileSync(QUESTIONS_FILE, "utf8")
-    );
+    questions = require("./questions.json");
 } catch (error) {
-    console.error("Could not load questions.json");
+    console.error("Failed to load questions.json");
     console.error(error);
     process.exit(1);
 }
 
-/* =========================================================
-   GAME STATE
-========================================================= */
+if (!Array.isArray(questions) || questions.length === 0) {
+    console.error("questions.json is empty or invalid.");
+    process.exit(1);
+}
+
+// ============================================================
+// EXPRESS CONFIGURATION
+// ============================================================
+
+app.use(express.json());
+
+app.use(
+    express.urlencoded({
+        extended: true
+    })
+);
+
+// Serve everything inside /public
+app.use(
+    express.static(
+        path.join(__dirname, "public")
+    )
+);
+
+// ============================================================
+// GAME STATE
+// ============================================================
 
 const game = {
     running: false,
-    questionIndex: -1,
-    roundStartedAt: null,
-    roundEndsAt: null,
-    locked: true,
+
+    questionIndex: 0,
+
+    roundStartedAt: 0,
+
+    roundEndsAt: 0,
+
+    submissionsOpen: false,
+
     revealed: false,
-    stopped: false
+
+    stopped: false,
+
+    players: {},
+
+    submissions: {}
 };
 
-/* =========================================================
-   PLAYERS
-========================================================= */
+// ============================================================
+// QUESTION HELPERS
+// ============================================================
 
-const players = new Map();
-
-/*
-player structure:
-
-{
-    id,
-    name,
-    socketId,
-    score,
-    connected,
-    answeredQuestion,
-    lastAnswer,
-    lastAnswerCorrect,
-    lastPoints,
-    answerTime
+function getCurrentQuestion() {
+    return (
+        questions[game.questionIndex] ||
+        null
+    );
 }
-*/
 
-/* =========================================================
-   NORMALIZATION
-========================================================= */
+function getQuestionImage(question) {
+    if (!question) {
+        return null;
+    }
 
-function normalize(value) {
+    return (
+        question.image ||
+        null
+    );
+}
+
+// ============================================================
+// ANSWER NORMALIZATION
+//
+// Spaces don't matter.
+// Capital/lowercase doesn't matter.
+// Symbols don't matter.
+//
+// Examples:
+//
+// "ALLEN SOLLY"
+// "allen solly"
+// "ALLENSOLLY"
+// "Allen-Solly"
+//
+// all become:
+// "allensolly"
+// ============================================================
+
+function normalizeAnswer(value) {
     return String(value || "")
-        .toLowerCase()
         .trim()
+        .toLowerCase()
         .replace(/[^a-z0-9]/g, "");
 }
 
-function getAcceptedAnswers(question) {
-    return [
-        question.answer,
-        ...(Array.isArray(question.aliases)
-            ? question.aliases
-            : [])
-    ];
-}
+// ============================================================
+// CHECK ANSWER
+// ============================================================
 
-function isCorrectAnswer(question, submittedAnswer) {
-    const submitted = normalize(submittedAnswer);
+function isCorrectAnswer(
+    submittedAnswer,
+    question
+) {
+    if (!question) {
+        return false;
+    }
+
+    const submitted =
+        normalizeAnswer(
+            submittedAnswer
+        );
 
     if (!submitted) {
         return false;
     }
 
-    return getAcceptedAnswers(question).some(
-        answer => normalize(answer) === submitted
+    const accepted = [];
+
+    if (question.answer) {
+        accepted.push(
+            question.answer
+        );
+    }
+
+    if (
+        Array.isArray(
+            question.aliases
+        )
+    ) {
+        accepted.push(
+            ...question.aliases
+        );
+    }
+
+    if (
+        Array.isArray(
+            question.answers
+        )
+    ) {
+        accepted.push(
+            ...question.answers
+        );
+    }
+
+    return accepted.some(
+        answer =>
+            normalizeAnswer(
+                answer
+            ) === submitted
     );
 }
 
-/* =========================================================
-   SCORE
-========================================================= */
+// ============================================================
+// POINT CALCULATION
+//
+// 0 sec  = 10 points
+// 5 sec  = 8.33
+// 10 sec = 6.67
+// 15 sec = 5
+// 20 sec = 3.33
+// 25 sec = 1.67
+// 30 sec = 0
+// ============================================================
 
 function calculatePoints() {
-    if (!game.roundStartedAt) {
-        return 0;
-    }
-
-    const elapsed = (Date.now() - game.roundStartedAt) / 1000;
-
-    if (elapsed >= ROUND_DURATION) {
-        return 0;
-    }
-
-    /*
-        0 seconds  = 10 points
-        5 seconds  = 9 points
-        10 seconds = 7 points
-        15 seconds = 5 points
-        20 seconds = 4 points
-        25 seconds = 2 points
-        30 seconds = 0 points
-
-        Integer score based on remaining time.
-    */
-
-    const remaining = ROUND_DURATION - elapsed;
-
-    return Math.max(
-        0,
-        Math.min(
-            MAX_POINTS,
-            Math.ceil((remaining / ROUND_DURATION) * MAX_POINTS)
-        )
-    );
-}
-
-/* =========================================================
-   SAFE PUBLIC QUESTION
-   NEVER SEND ANSWER TO STUDENTS
-========================================================= */
-
-function getPublicQuestion() {
     if (
-        game.questionIndex < 0 ||
-        game.questionIndex >= questions.length
+        !game.running ||
+        !game.roundStartedAt
     ) {
-        return null;
+        return 0;
     }
 
-    const q = questions[game.questionIndex];
+    const elapsed =
+        Date.now() -
+        game.roundStartedAt;
 
-    return {
-        id: q.id,
-        number: game.questionIndex + 1,
-        total: questions.length,
-        image: q.image
-    };
+    if (
+        elapsed <= 0
+    ) {
+        return MAX_POINTS;
+    }
+
+    if (
+        elapsed >=
+        GAME_DURATION
+    ) {
+        return 0;
+    }
+
+    const remaining =
+        GAME_DURATION -
+        elapsed;
+
+    const points =
+        (
+            remaining /
+            GAME_DURATION
+        ) *
+        MAX_POINTS;
+
+    return Math.round(
+        points * 100
+    ) / 100;
 }
 
-/* =========================================================
-   PUBLIC STATE
-========================================================= */
+// ============================================================
+// TIMER
+// ============================================================
 
-function getPublicState() {
-    return {
-        running: game.running,
-        questionIndex: game.questionIndex,
-        question: getPublicQuestion(),
-        roundStartedAt: game.roundStartedAt,
-        roundEndsAt: game.roundEndsAt,
-        duration: ROUND_DURATION,
-        locked: game.locked,
-        revealed: game.revealed,
-        stopped: game.stopped,
-        players: Array.from(players.values())
-            .map(player => ({
-                id: player.id,
-                name: player.name,
-                score: player.score,
-                connected: player.connected,
-                answered:
-                    player.answeredQuestion === game.questionIndex
-            }))
-            .sort((a, b) => b.score - a.score)
-    };
-}
-
-/* =========================================================
-   ADMIN STATE
-========================================================= */
-
-function getAdminState() {
-    const publicState = getPublicState();
-
-    return {
-        ...publicState,
-        answer:
-            game.questionIndex >= 0
-                ? questions[game.questionIndex].answer
-                : null,
-        acceptedAnswers:
-            game.questionIndex >= 0
-                ? getAcceptedAnswers(
-                      questions[game.questionIndex]
-                  )
-                : []
-    };
-}
-
-/* =========================================================
-   BROADCAST
-========================================================= */
-
-function broadcastState() {
-    io.emit("game-state", getPublicState());
-    io.emit("leaderboard", getLeaderboard());
-}
-
-/* =========================================================
-   LEADERBOARD
-========================================================= */
-
-function getLeaderboard() {
-    return Array.from(players.values())
-        .map(player => ({
-            id: player.id,
-            name: player.name,
-            score: player.score,
-            connected: player.connected
-        }))
-        .sort((a, b) => {
-            if (b.score !== a.score) {
-                return b.score - a.score;
-            }
-
-            return a.name.localeCompare(b.name);
-        })
-        .map((player, index) => ({
-            rank: index + 1,
-            ...player
-        }));
-}
-
-/* =========================================================
-   ROUND END
-========================================================= */
-
-function finishRound() {
-    if (!game.running || game.locked) {
+function updateTimer() {
+    if (
+        !game.running ||
+        !game.submissionsOpen
+    ) {
         return;
     }
 
-    game.locked = true;
-
-    io.emit("round-ended", {
-        questionNumber: game.questionIndex + 1,
-        answer: game.revealed
-            ? questions[game.questionIndex].answer
-            : null
-    });
-
-    broadcastState();
+    if (
+        Date.now() >=
+        game.roundEndsAt
+    ) {
+        game.submissionsOpen = false;
+    }
 }
 
-/* =========================================================
-   AUTOMATIC TIMER
-========================================================= */
-
-setInterval(() => {
-    if (!game.running) {
-        return;
-    }
-
-    if (!game.roundStartedAt) {
-        return;
-    }
-
-    if (Date.now() >= game.roundEndsAt) {
-        finishRound();
-    }
-
-    io.emit("timer", {
-        remaining: Math.max(
-            0,
-            (game.roundEndsAt - Date.now()) / 1000
-        )
-    });
-}, 100);
-
-/* =========================================================
-   EXPRESS
-========================================================= */
-
-app.use(express.json());
-
-app.use(
-    express.static(PUBLIC_DIR)
+setInterval(
+    updateTimer,
+    100
 );
 
-/* =========================================================
-   MAIN PAGE
-========================================================= */
+// ============================================================
+// LEADERBOARD
+// ============================================================
 
-app.get("/", (req, res) => {
-    res.sendFile(
-        path.join(PUBLIC_DIR, "index.html")
-    );
-});
+function getLeaderboard() {
+    const players =
+        Object.values(
+            game.players
+        );
 
-/* =========================================================
-   API - HEALTH
-========================================================= */
+    players.sort(
+        (a, b) => {
+            if (
+                b.score !==
+                a.score
+            ) {
+                return (
+                    b.score -
+                    a.score
+                );
+            }
 
-app.get("/api/health", (req, res) => {
-    res.json({
-        ok: true,
-        game: "SAMAGRA CONNECT",
-        mode: "INDIVIDUAL LOGO QUIZ",
-        questions: questions.length,
-        duration: ROUND_DURATION,
-        maxPoints: MAX_POINTS,
-        players: players.size,
-        time: new Date().toISOString()
-    });
-});
-
-/* =========================================================
-   API - PUBLIC STATE
-========================================================= */
-
-app.get("/api/state", (req, res) => {
-    res.json(getPublicState());
-});
-
-/* =========================================================
-   API - LEADERBOARD
-========================================================= */
-
-app.get("/api/leaderboard", (req, res) => {
-    res.json(getLeaderboard());
-});
-
-/* =========================================================
-   API - ADMIN STATE
-========================================================= */
-
-app.get("/api/admin/state", (req, res) => {
-    res.json(getAdminState());
-});
-
-/* =========================================================
-   JOIN PLAYER
-========================================================= */
-
-app.post("/api/join", (req, res) => {
-    const name = String(req.body?.name || "")
-        .trim()
-        .replace(/\s+/g, " ");
-
-    if (!name) {
-        return res.status(400).json({
-            ok: false,
-            error: "Please enter your name."
-        });
-    }
-
-    if (name.length > 30) {
-        return res.status(400).json({
-            ok: false,
-            error: "Name must be 30 characters or less."
-        });
-    }
-
-    /*
-        Case-insensitive duplicate prevention.
-    */
-
-    const duplicate = Array.from(players.values()).find(
-        player =>
-            player.name.toLowerCase() ===
-            name.toLowerCase()
-    );
-
-    if (duplicate) {
-        return res.status(409).json({
-            ok: false,
-            error: "That name is already in use."
-        });
-    }
-
-    const id =
-        "p_" +
-        Date.now().toString(36) +
-        "_" +
-        Math.random()
-            .toString(36)
-            .substring(2, 8);
-
-    players.set(id, {
-        id,
-        name,
-        socketId: null,
-        score: 0,
-        connected: true,
-        answeredQuestion: -1,
-        lastAnswer: "",
-        lastAnswerCorrect: false,
-        lastPoints: 0,
-        answerTime: null
-    });
-
-    broadcastState();
-
-    res.json({
-        ok: true,
-        player: {
-            id,
-            name,
-            score: 0
+            return (
+                a.lastCorrectAt -
+                b.lastCorrectAt
+            );
         }
-    });
-});
-
-/* =========================================================
-   SUBMIT ANSWER
-========================================================= */
-
-app.post("/api/answer", (req, res) => {
-    const playerId = String(req.body?.playerId || "");
-    const answer = String(req.body?.answer || "");
-
-    const player = players.get(playerId);
-
-    if (!player) {
-        return res.status(404).json({
-            ok: false,
-            error: "Player not found."
-        });
-    }
-
-    if (!game.running) {
-        return res.status(400).json({
-            ok: false,
-            error: "The game has not started."
-        });
-    }
-
-    if (game.locked) {
-        return res.status(400).json({
-            ok: false,
-            error: "This question is locked."
-        });
-    }
-
-    if (game.questionIndex < 0) {
-        return res.status(400).json({
-            ok: false,
-            error: "No question is active."
-        });
-    }
-
-    /*
-        Prevent multiple submissions for the same question.
-    */
-
-    if (player.answeredQuestion === game.questionIndex) {
-        return res.status(400).json({
-            ok: false,
-            error: "You have already submitted."
-        });
-    }
-
-    /*
-        Prevent answers after timer.
-    */
-
-    if (Date.now() >= game.roundEndsAt) {
-        finishRound();
-
-        return res.status(400).json({
-            ok: false,
-            error: "Time is up."
-        });
-    }
-
-    const question = questions[game.questionIndex];
-
-    const correct = isCorrectAnswer(
-        question,
-        answer
     );
 
-    const points = correct
-        ? calculatePoints()
-        : 0;
+    return players.map(
+        (player, index) => {
+            const key =
+                `${player.id}:${game.questionIndex}`;
 
-    player.answeredQuestion = game.questionIndex;
-    player.lastAnswer = answer;
-    player.lastAnswerCorrect = correct;
-    player.lastPoints = points;
-    player.answerTime = Date.now();
+            const submission =
+                game.submissions[key];
 
-    if (correct) {
-        player.score += points;
-    }
+            return {
+                id: player.id,
 
-    io.emit("answer-update", {
-        playerId: player.id,
-        answered: true
-    });
+                name: player.name,
 
-    broadcastState();
+                score: Number(
+                    player.score
+                ),
 
-    res.json({
-        ok: true,
-        correct,
-        points,
-        totalScore: player.score,
-        message: correct
-            ? `Correct! +${points} points`
-            : "Incorrect answer."
-    });
-});
+                rank:
+                    index + 1,
 
-/* =========================================================
-   ADMIN START
-========================================================= */
+                answered:
+                    Boolean(
+                        submission
+                    ),
 
-app.post("/api/admin/start", (req, res) => {
-    game.running = true;
-    game.stopped = false;
-    game.questionIndex = 0;
-    game.revealed = false;
-    game.locked = false;
+                correct:
+                    submission
+                        ? Boolean(
+                            submission.correct
+                        )
+                        : false,
 
-    game.roundStartedAt = Date.now();
-    game.roundEndsAt =
-        game.roundStartedAt +
-        ROUND_DURATION * 1000;
+                status:
+                    submission
+                        ? (
+                            submission.correct
+                                ? "CORRECT"
+                                : "ANSWERED"
+                        )
+                        : (
+                            game.submissionsOpen
+                                ? "PLAYING"
+                                : "WAITING"
+                        )
+            };
+        }
+    );
+}
 
-    for (const player of players.values()) {
-        player.answeredQuestion = -1;
-        player.lastAnswer = "";
-        player.lastAnswerCorrect = false;
-        player.lastPoints = 0;
-        player.answerTime = null;
-    }
+// ============================================================
+// PUBLIC GAME STATE
+// ============================================================
 
-    io.emit("game-started");
+function getPublicState() {
+    updateTimer();
 
-    broadcastState();
+    const question =
+        getCurrentQuestion();
 
-    res.json({
-        ok: true,
-        state: getAdminState()
-    });
-});
+    let remaining = 0;
 
-/* =========================================================
-   ADMIN NEXT
-========================================================= */
-
-app.post("/api/admin/next", (req, res) => {
-    if (!game.running) {
-        return res.status(400).json({
-            ok: false,
-            error: "Game is not running."
-        });
-    }
-
-    const nextIndex = game.questionIndex + 1;
-
-    if (nextIndex >= questions.length) {
-        game.locked = true;
-        game.revealed = true;
-
-        io.emit("game-finished");
-
-        broadcastState();
-
-        return res.json({
-            ok: true,
-            finished: true
-        });
-    }
-
-    game.questionIndex = nextIndex;
-    game.revealed = false;
-    game.locked = false;
-
-    game.roundStartedAt = Date.now();
-    game.roundEndsAt =
-        game.roundStartedAt +
-        ROUND_DURATION * 1000;
-
-    for (const player of players.values()) {
-        player.answeredQuestion = -1;
-        player.lastAnswer = "";
-        player.lastAnswerCorrect = false;
-        player.lastPoints = 0;
-        player.answerTime = null;
-    }
-
-    io.emit("new-question", {
-        question: getPublicQuestion()
-    });
-
-    broadcastState();
-
-    res.json({
-        ok: true,
-        state: getAdminState()
-    });
-});
-
-/* =========================================================
-   ADMIN REVEAL
-========================================================= */
-
-app.post("/api/admin/reveal", (req, res) => {
     if (
-        game.questionIndex < 0 ||
-        game.questionIndex >= questions.length
+        game.running &&
+        game.roundEndsAt
     ) {
-        return res.status(400).json({
-            ok: false,
-            error: "No active question."
+        remaining =
+            Math.max(
+                0,
+                game.roundEndsAt -
+                Date.now()
+            );
+    }
+
+    return {
+        running:
+            game.running,
+
+        started:
+            game.running,
+
+        questionIndex:
+            game.running
+                ? game.questionIndex
+                : 0,
+
+        question:
+            game.running
+                ? {
+                    id:
+                        question?.id ||
+                        null,
+
+                    number:
+                        game.questionIndex +
+                        1,
+
+                    total:
+                        questions.length,
+
+                    image:
+                        getQuestionImage(
+                            question
+                        )
+                }
+                : null,
+
+        total:
+            questions.length,
+
+        roundStartedAt:
+            game.roundStartedAt,
+
+        roundEndsAt:
+            game.roundEndsAt,
+
+        remaining,
+
+        duration:
+            GAME_DURATION,
+
+        durationSeconds:
+            GAME_DURATION / 1000,
+
+        locked:
+            !game.submissionsOpen,
+
+        submissionsOpen:
+            game.submissionsOpen,
+
+        revealed:
+            game.revealed,
+
+        stopped:
+            game.stopped,
+
+        players:
+            getLeaderboard(),
+
+        playerCount:
+            Object.keys(
+                game.players
+            ).length,
+
+        leaderboard:
+            getLeaderboard(),
+
+        answer:
+            game.revealed &&
+            question
+                ? question.answer
+                : null
+    };
+}
+
+// ============================================================
+// HOME
+// ============================================================
+
+app.get(
+    "/",
+    (req, res) => {
+        res.sendFile(
+            path.join(
+                __dirname,
+                "public",
+                "index.html"
+            )
+        );
+    }
+);
+
+// ============================================================
+// HEALTH
+// ============================================================
+
+app.get(
+    "/api/health",
+    (req, res) => {
+        res.json({
+            success: true,
+
+            status: "ok",
+
+            game:
+                game.running,
+
+            questions:
+                questions.length,
+
+            duration:
+                GAME_DURATION / 1000
         });
     }
+);
 
-    game.locked = true;
-    game.revealed = true;
+// ============================================================
+// CURRENT STATE
+// ============================================================
 
-    const answer =
-        questions[game.questionIndex].answer;
-
-    io.emit("answer-revealed", {
-        answer
-    });
-
-    broadcastState();
-
-    res.json({
-        ok: true,
-        answer
-    });
-});
-
-/* =========================================================
-   ADMIN STOP
-========================================================= */
-
-app.post("/api/admin/stop", (req, res) => {
-    game.running = false;
-    game.locked = true;
-    game.stopped = true;
-
-    io.emit("game-stopped");
-
-    broadcastState();
-
-    res.json({
-        ok: true,
-        state: getAdminState()
-    });
-});
-
-/* =========================================================
-   ADMIN RESET
-========================================================= */
-
-app.post("/api/admin/reset", (req, res) => {
-    game.running = false;
-    game.questionIndex = -1;
-    game.roundStartedAt = null;
-    game.roundEndsAt = null;
-    game.locked = true;
-    game.revealed = false;
-    game.stopped = false;
-
-    for (const player of players.values()) {
-        player.score = 0;
-        player.answeredQuestion = -1;
-        player.lastAnswer = "";
-        player.lastAnswerCorrect = false;
-        player.lastPoints = 0;
-        player.answerTime = null;
+app.get(
+    "/api/state",
+    (req, res) => {
+        res.json(
+            getPublicState()
+        );
     }
+);
 
-    io.emit("game-reset");
+// ============================================================
+// ADMIN — START GAME
+// ============================================================
 
-    broadcastState();
+app.post(
+    "/api/admin/start",
+    (req, res) => {
 
-    res.json({
-        ok: true,
-        state: getAdminState()
-    });
-});
+        game.running = true;
 
-/* =========================================================
-   SOCKET.IO
-========================================================= */
+        game.questionIndex = 0;
 
-io.on("connection", socket => {
-    console.log(
-        "Socket connected:",
-        socket.id
-    );
+        game.roundStartedAt =
+            Date.now();
 
-    socket.emit(
-        "game-state",
-        getPublicState()
-    );
+        game.roundEndsAt =
+            Date.now() +
+            GAME_DURATION;
 
-    socket.emit(
-        "leaderboard",
-        getLeaderboard()
-    );
+        game.submissionsOpen =
+            true;
 
-    socket.on("identify-player", playerId => {
-        const player = players.get(
-            String(playerId || "")
-        );
+        game.revealed =
+            false;
 
-        if (!player) {
-            return;
+        game.stopped =
+            false;
+
+        game.submissions = {};
+
+        res.json({
+            success: true,
+
+            message:
+                "Game started.",
+
+            state:
+                getPublicState()
+        });
+    }
+);
+
+// ============================================================
+// ADMIN — NEXT QUESTION
+// ============================================================
+
+app.post(
+    "/api/admin/next",
+    (req, res) => {
+
+        if (!game.running) {
+            return res
+                .status(400)
+                .json({
+                    error:
+                        "Game is not running."
+                });
         }
 
-        player.socketId = socket.id;
-        player.connected = true;
+        if (
+            game.questionIndex >=
+            questions.length - 1
+        ) {
+            game.running =
+                false;
 
-        broadcastState();
-    });
+            game.submissionsOpen =
+                false;
 
-    socket.on("disconnect", () => {
-        const player = Array.from(
-            players.values()
-        ).find(
-            item =>
-                item.socketId === socket.id
+            game.revealed =
+                true;
+
+            return res.json({
+                success: true,
+
+                finished: true,
+
+                message:
+                    "All questions completed.",
+
+                state:
+                    getPublicState()
+            });
+        }
+
+        game.questionIndex++;
+
+        game.roundStartedAt =
+            Date.now();
+
+        game.roundEndsAt =
+            Date.now() +
+            GAME_DURATION;
+
+        game.submissionsOpen =
+            true;
+
+        game.revealed =
+            false;
+
+        game.submissions = {};
+
+        res.json({
+            success: true,
+
+            message:
+                `Question ${
+                    game.questionIndex + 1
+                } started.`,
+
+            state:
+                getPublicState()
+        });
+    }
+);
+
+// ============================================================
+// ADMIN — RESTART CURRENT ROUND
+// ============================================================
+
+app.post(
+    "/api/admin/restart",
+    (req, res) => {
+
+        if (!game.running) {
+            return res
+                .status(400)
+                .json({
+                    error:
+                        "Game is not running."
+                });
+        }
+
+        game.roundStartedAt =
+            Date.now();
+
+        game.roundEndsAt =
+            Date.now() +
+            GAME_DURATION;
+
+        game.submissionsOpen =
+            true;
+
+        game.revealed =
+            false;
+
+        game.submissions = {};
+
+        res.json({
+            success: true,
+
+            message:
+                "Round restarted.",
+
+            state:
+                getPublicState()
+        });
+    }
+);
+
+// ============================================================
+// ADMIN — REVEAL ANSWER
+// ============================================================
+
+app.post(
+    "/api/admin/reveal",
+    (req, res) => {
+
+        if (!game.running) {
+            return res
+                .status(400)
+                .json({
+                    error:
+                        "Game is not running."
+                });
+        }
+
+        const question =
+            getCurrentQuestion();
+
+        if (!question) {
+            return res
+                .status(404)
+                .json({
+                    error:
+                        "Question not found."
+                });
+        }
+
+        game.submissionsOpen =
+            false;
+
+        game.revealed =
+            true;
+
+        res.json({
+            success: true,
+
+            revealed: true,
+
+            answer:
+                question.answer,
+
+            state:
+                getPublicState()
+        });
+    }
+);
+
+// ============================================================
+// ADMIN — STOP GAME
+// ============================================================
+
+app.post(
+    "/api/admin/stop",
+    (req, res) => {
+
+        game.running =
+            false;
+
+        game.submissionsOpen =
+            false;
+
+        game.stopped =
+            true;
+
+        res.json({
+            success: true,
+
+            message:
+                "Game stopped.",
+
+            state:
+                getPublicState()
+        });
+    }
+);
+
+// ============================================================
+// ADMIN — RESET GAME
+// ============================================================
+
+app.post(
+    "/api/admin/reset",
+    (req, res) => {
+
+        game.running =
+            false;
+
+        game.questionIndex =
+            0;
+
+        game.roundStartedAt =
+            0;
+
+        game.roundEndsAt =
+            0;
+
+        game.submissionsOpen =
+            false;
+
+        game.revealed =
+            false;
+
+        game.stopped =
+            false;
+
+        game.submissions =
+            {};
+
+        // Keep player names,
+        // but reset scores.
+        Object.values(
+            game.players
+        ).forEach(
+            player => {
+                player.score = 0;
+                player.lastCorrectAt =
+                    Date.now();
+            }
         );
 
-        if (player) {
-            player.connected = false;
-            player.socketId = null;
+        res.json({
+            success: true,
 
-            broadcastState();
+            message:
+                "Game reset.",
+
+            state:
+                getPublicState()
+        });
+    }
+);
+
+// ============================================================
+// STUDENT — JOIN
+// ============================================================
+
+app.post(
+    "/api/team/join",
+    (req, res) => {
+
+        const name =
+            String(
+                req.body.name ||
+                ""
+            )
+                .trim()
+                .replace(
+                    /\s+/g,
+                    " "
+                )
+                .slice(
+                    0,
+                    40
+                );
+
+        if (!name) {
+            return res
+                .status(400)
+                .json({
+                    error:
+                        "Enter your name."
+                });
         }
+
+        const duplicate =
+            Object.values(
+                game.players
+            ).some(
+                player =>
+                    player.name
+                        .toLowerCase() ===
+                    name.toLowerCase()
+            );
+
+        if (duplicate) {
+            return res
+                .status(409)
+                .json({
+                    error:
+                        "That name is already playing."
+                });
+        }
+
+        const id =
+            "player_" +
+            Math.random()
+                .toString(36)
+                .slice(
+                    2,
+                    10
+                );
+
+        game.players[id] = {
+            id,
+
+            name,
+
+            score: 0,
+
+            lastCorrectAt:
+                Date.now()
+        };
+
+        res.json({
+            success: true,
+
+            id,
+
+            name
+        });
+    }
+);
+
+// ============================================================
+// STUDENT — SUBMIT ANSWER
+// ============================================================
+
+app.post(
+    "/api/team/answer",
+    (req, res) => {
+
+        const id =
+            req.body.id;
+
+        const answer =
+            String(
+                req.body.answer ||
+                ""
+            ).trim();
+
+        if (
+            !id ||
+            !game.players[id]
+        ) {
+            return res
+                .status(403)
+                .json({
+                    error:
+                        "Invalid player."
+                });
+        }
+
+        if (!game.running) {
+            return res
+                .status(400)
+                .json({
+                    error:
+                        "Game has not started."
+                });
+        }
+
+        updateTimer();
+
+        if (
+            !game.submissionsOpen
+        ) {
+            return res
+                .status(400)
+                .json({
+                    error:
+                        "Question is locked."
+                });
+        }
+
+        if (!answer) {
+            return res
+                .status(400)
+                .json({
+                    error:
+                        "Answer cannot be empty."
+                });
+        }
+
+        const key =
+            `${id}:${game.questionIndex}`;
+
+        if (
+            game.submissions[key]
+        ) {
+            return res
+                .status(409)
+                .json({
+                    error:
+                        "You have already submitted this question."
+                });
+        }
+
+        const question =
+            getCurrentQuestion();
+
+        const correct =
+            isCorrectAnswer(
+                answer,
+                question
+            );
+
+        const points =
+            correct
+                ? calculatePoints()
+                : 0;
+
+        game.submissions[key] = {
+            answer,
+
+            correct,
+
+            points,
+
+            submittedAt:
+                Date.now()
+        };
+
+        if (correct) {
+
+            game.players[id].score =
+                Math.round(
+                    (
+                        game.players[id]
+                            .score +
+                        points
+                    ) * 100
+                ) / 100;
+
+            game.players[id]
+                .lastCorrectAt =
+                Date.now();
+        }
+
+        res.json({
+            success: true,
+
+            correct,
+
+            points,
+
+            score:
+                game.players[id]
+                    .score
+        });
+    }
+);
+
+// ============================================================
+// PROJECTOR — ANSWER
+// ============================================================
+
+app.get(
+    "/api/projector-answer",
+    (req, res) => {
+
+        updateTimer();
+
+        const question =
+            getCurrentQuestion();
+
+        if (!question) {
+            return res.json({
+                revealed: false
+            });
+        }
+
+        if (
+            game.revealed
+        ) {
+            return res.json({
+                revealed: true,
+
+                answer:
+                    question.answer
+            });
+        }
+
+        if (
+            game.running &&
+            Date.now() >=
+            game.roundEndsAt
+        ) {
+            game.submissionsOpen =
+                false;
+
+            game.revealed =
+                true;
+
+            return res.json({
+                revealed: true,
+
+                answer:
+                    question.answer
+            });
+        }
+
+        res.json({
+            revealed: false
+        });
+    }
+);
+
+// ============================================================
+// API 404
+// Always return JSON for /api
+// Prevents:
+//
+// Unexpected token '<'
+// ============================================================
+
+app.use(
+    "/api",
+    (req, res) => {
+
+        res
+            .status(404)
+            .json({
+                error:
+                    "API endpoint not found.",
+
+                method:
+                    req.method,
+
+                path:
+                    req.originalUrl
+            });
+    }
+);
+
+// ============================================================
+// GENERAL 404
+// ============================================================
+
+app.use(
+    (req, res) => {
+
+        if (
+            req.accepts("html")
+        ) {
+            return res
+                .status(404)
+                .send(`
+                    <!DOCTYPE html>
+
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>
+                            Samagra Connect
+                        </title>
+
+                        <style>
+                            body {
+                                margin: 0;
+                                min-height: 100vh;
+                                display: grid;
+                                place-items: center;
+                                background: #050608;
+                                color: white;
+                                font-family: Arial, sans-serif;
+                            }
+
+                            h1 {
+                                font-size: 32px;
+                            }
+                        </style>
+                    </head>
+
+                    <body>
+                        <h1>
+                            404 • Page Not Found
+                        </h1>
+                    </body>
+                    </html>
+                `);
+        }
+
+        res
+            .status(404)
+            .json({
+                error:
+                    "Not found."
+            });
+    }
+);
+
+// ============================================================
+// ERROR HANDLER
+// ============================================================
+
+app.use(
+    (
+        error,
+        req,
+        res,
+        next
+    ) => {
+
+        console.error(
+            "SERVER ERROR:",
+            error
+        );
+
+        if (
+            req.path.startsWith(
+                "/api"
+            )
+        ) {
+            return res
+                .status(500)
+                .json({
+                    error:
+                        "Internal server error."
+                });
+        }
+
+        res
+            .status(500)
+            .send(
+                "Internal server error."
+            );
+    }
+);
+
+// ============================================================
+// START SERVER
+// ============================================================
+
+app.listen(
+    PORT,
+    "0.0.0.0",
+    () => {
+
+        console.log("");
+        console.log(
+            "================================"
+        );
+        console.log(
+            " SAMAGRA CONNECT LIVE"
+        );
+        console.log(
+            "================================"
+        );
+        console.log("");
 
         console.log(
-            "Socket disconnected:",
-            socket.id
+            `Local: http://localhost:${PORT}`
         );
-    });
-});
 
-/* =========================================================
-   FALLBACK
-========================================================= */
+        console.log("");
 
-app.use((req, res) => {
-    res.status(404).json({
-        error: "Not found"
-    });
-});
+        console.log(
+            `Questions: ${questions.length}`
+        );
 
-/* =========================================================
-   SERVER
-========================================================= */
+        console.log(
+            "Duration: 30 seconds"
+        );
 
-server.listen(PORT, () => {
-    console.log("");
-    console.log("================================");
-    console.log(" SAMAGRA CONNECT LIVE");
-    console.log("================================");
-    console.log("");
-    console.log(`Port: ${PORT}`);
-    console.log(`Questions: ${questions.length}`);
-    console.log(`Duration: ${ROUND_DURATION} seconds`);
-    console.log(`Maximum points: ${MAX_POINTS}`);
-    console.log("");
-    console.log("Admin:        /admin.html");
-    console.log("Projector:    /projector.html");
-    console.log("Students:     /team.html");
-    console.log("Leaderboard:  /leaderboard.html");
-    console.log("");
-    console.log("Health:       /api/health");
-    console.log("");
-    console.log("Game server is running!");
-    console.log("================================");
-    console.log("");
-});
+        console.log(
+            "Maximum points: 10"
+        );
+
+        console.log("");
+
+        console.log(
+            "Admin:       /admin.html"
+        );
+
+        console.log(
+            "Projector:   /projector.html"
+        );
+
+        console.log(
+            "Students:    /team.html"
+        );
+
+        console.log(
+            "Leaderboard: /leaderboard.html"
+        );
+
+        console.log("");
+
+        console.log(
+            "Health:      /api/health"
+        );
+
+        console.log("");
+
+        console.log(
+            "Game server is running!"
+        );
+
+        console.log(
+            "================================"
+        );
+
+        console.log("");
+    }
+);
