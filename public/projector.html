@@ -8,1629 +8,569 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>SAMAGRA • CONNECT</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            background: #050608;
-            color: #fff;
-            font-family:
-                Inter,
-                Arial,
-                Helvetica,
-                sans-serif;
-        }
-
-        /* =====================================================
-           MAIN
-           ===================================================== */
-
-        .screen {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    #191c22 0%,
-                    #0a0c10 38%,
-                    #050608 75%
-                );
-        }
-
-        .screen::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-
-            background-image:
-                linear-gradient(
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                );
-
-            background-size: 65px 65px;
-            opacity: .45;
-        }
-
-
-        /* =====================================================
-           HEADER
-           ===================================================== */
-
-        .header {
-            position: absolute;
-            z-index: 10;
-
-            top: 0;
-            left: 0;
-            right: 0;
-
-            height: 82px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 38px;
-
-            border-bottom:
-                1px solid
-                rgba(255,255,255,.07);
-
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(5,6,8,.95),
-                    rgba(5,6,8,.55),
-                    transparent
-                );
-        }
-
-        .brand {
-            color: #fff;
-            font-size: 12px;
-            font-weight: 900;
-            letter-spacing: .24em;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .question-label {
-            color: #626a76;
-            font-size: 7px;
-            font-weight: 900;
-            letter-spacing: .16em;
-        }
-
-        .question-number {
-            margin-left: 8px;
-            color: #fff;
-            font-size: 14px;
-            font-weight: 900;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .live {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-
-            padding: 8px 11px;
-
-            border:
-                1px solid
-                rgba(255,255,255,.08);
-
-            border-radius: 999px;
-
-            color: #68707d;
-
-            font-size: 7px;
-            font-weight: 900;
-            letter-spacing: .13em;
-        }
-
-        .live-dot {
-            width: 6px;
-            height: 6px;
-
-            border-radius: 50%;
-
-            background: #67e49a;
-
-            box-shadow:
-                0 0 12px
-                rgba(103,228,154,.7);
-        }
-
-
-        /* =====================================================
-           CONTENT
-           ===================================================== */
-
-        .content {
-            position: absolute;
-
-            top: 82px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            display: grid;
-
-            grid-template-columns:
-                minmax(0, 1fr)
-                280px;
-
-            gap: 20px;
-
-            padding:
-                22px 28px 25px;
-        }
-
-
-        /* =====================================================
-           IMAGE AREA
-           ===================================================== */
-
-        .clue-panel {
-            min-width: 0;
-            min-height: 0;
-
-            display: flex;
-            flex-direction: column;
-
-            border:
-                1px solid
-                rgba(255,255,255,.075);
-
-            border-radius: 20px;
-
-            overflow: hidden;
-
-            background:
-                rgba(255,255,255,.018);
-
-            box-shadow:
-                0 30px 100px
-                rgba(0,0,0,.35);
-        }
-
-        .clue-top {
-            height: 48px;
-            flex: 0 0 48px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 17px;
-
-            border-bottom:
-                1px solid
-                rgba(255,255,255,.06);
-        }
-
-        .clue-title {
-            color: #69717e;
-            font-size: 7px;
-            font-weight: 900;
-            letter-spacing: .18em;
-        }
-
-        .clue-count {
-            color: #535b67;
-            font-size: 7px;
-            font-weight: 900;
-            letter-spacing: .12em;
-        }
-
-
-        /* =====================================================
-           4 IMAGE GRID
-           ===================================================== */
-
-        .images {
-            flex: 1;
-            min-height: 0;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            grid-template-rows:
-                repeat(2, 1fr);
-
-            gap: 9px;
-
-            padding: 9px;
-        }
-
-        .image-box {
-            position: relative;
-
-            min-width: 0;
-            min-height: 0;
-
-            overflow: hidden;
-
-            border:
-                1px solid
-                rgba(255,255,255,.07);
-
-            border-radius: 14px;
-
-            background:
-                #080a0d;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .image-box img {
-            width: 100%;
-            height: 100%;
-
-            object-fit: contain;
-
-            opacity: 0;
-
-            transform: scale(.96);
-
-            transition:
-                opacity .5s ease,
-                transform .55s ease;
-        }
-
-        .image-box.revealed img {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .image-box.hidden::before {
-            content: "?";
-
-            position: absolute;
-            z-index: 2;
-
-            left: 50%;
-            top: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            color:
-                rgba(255,255,255,.08);
-
-            font-size:
-                clamp(50px, 7vw, 90px);
-
-            font-weight: 900;
-        }
-
-        .image-box.hidden::after {
-            content: "";
-
-            position: absolute;
-            inset: 0;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(255,255,255,.025),
-                    transparent 70%
-                );
-        }
-
-        .image-number {
-            position: absolute;
-            z-index: 5;
-
-            top: 9px;
-            left: 9px;
-
-            width: 26px;
-            height: 26px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 8px;
-
-            background:
-                rgba(0,0,0,.62);
-
-            border:
-                1px solid
-                rgba(255,255,255,.08);
-
-            color: #fff;
-
-            font-size: 7px;
-            font-weight: 900;
-        }
-
-
-        /* =====================================================
-           IMAGE PROGRESS
-           ===================================================== */
-
-        .clue-bottom {
-            height: 42px;
-            flex: 0 0 42px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-top:
-                1px solid
-                rgba(255,255,255,.06);
-        }
-
-        .progress {
-            width: 50%;
-            max-width: 500px;
-
-            display: flex;
-            gap: 5px;
-        }
-
-        .progress span {
-            height: 3px;
-            flex: 1;
-
-            border-radius: 99px;
-
-            background:
-                rgba(255,255,255,.08);
-
-            transition:
-                background .3s ease,
-                box-shadow .3s ease;
-        }
-
-        .progress span.active {
-            background: #fff;
-
-            box-shadow:
-                0 0 10px
-                rgba(255,255,255,.25);
-        }
-
-
-        /* =====================================================
-           SIDE
-           ===================================================== */
-
-        .side {
-            min-height: 0;
-
-            display: flex;
-            flex-direction: column;
-
-            gap: 12px;
-        }
-
-
-        /* =====================================================
-           TIMER
-           ===================================================== */
-
-        .timer-card {
-            padding: 20px 15px;
-
-            border:
-                1px solid
-                rgba(255,255,255,.075);
-
-            border-radius: 19px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.045),
-                    rgba(255,255,255,.012)
-                );
-
-            text-align: center;
-        }
-
-        .timer-label {
-            color: #555d69;
-            font-size: 7px;
-            font-weight: 900;
-            letter-spacing: .17em;
-        }
-
-        .timer {
-            margin-top: 10px;
-
-            color: #fff;
-
-            font-size:
-                clamp(54px, 7vw, 78px);
-
-            line-height: .85;
-
-            font-weight: 900;
-
-            letter-spacing: -.08em;
-
-            font-variant-numeric:
-                tabular-nums;
-        }
-
-        .timer.danger {
-            color: #ff6974;
-
-            animation:
-                timerPulse .7s infinite;
-        }
-
-        @keyframes timerPulse {
-            50% {
-                opacity: .45;
-            }
-        }
-
-
-        /* =====================================================
-           SUBMISSION
-           ===================================================== */
-
-        .status-card {
-            padding: 15px;
-
-            border:
-                1px solid
-                rgba(255,255,255,.06);
-
-            border-radius: 15px;
-
-            background:
-                rgba(255,255,255,.02);
-
-            text-align: center;
-        }
-
-        .status-label {
-            color: #555d69;
-            font-size: 6px;
-            font-weight: 900;
-            letter-spacing: .16em;
-        }
-
-        .status-value {
-            margin-top: 7px;
-
-            color: #fff;
-
-            font-size: 13px;
-            font-weight: 900;
-        }
-
-
-        /* =====================================================
-           ANSWER
-           ===================================================== */
-
-        .answer-card {
-            display: none;
-
-            padding: 18px 14px;
-
-            border:
-                1px solid
-                rgba(103,228,154,.15);
-
-            border-radius: 16px;
-
-            background:
-                rgba(103,228,154,.035);
-
-            text-align: center;
-        }
-
-        .answer-card.show {
-            display: block;
-
-            animation:
-                answerReveal .45s ease;
-        }
-
-        .answer-label {
-            color: #67e49a;
-            font-size: 6px;
-            font-weight: 900;
-            letter-spacing: .16em;
-        }
-
-        .answer {
-            margin-top: 8px;
-
-            color: #fff;
-
-            font-size: 25px;
-            font-weight: 900;
-
-            word-break: break-word;
-        }
-
-        @keyframes answerReveal {
-            from {
-                opacity: 0;
-                transform:
-                    translateY(8px)
-                    scale(.97);
-            }
-
-            to {
-                opacity: 1;
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
-        }
-
-
-        /* =====================================================
-           SCORE
-           ===================================================== */
-
-        .score-card {
-            margin-top: auto;
-
-            padding: 15px;
-
-            border:
-                1px solid
-                rgba(255,255,255,.06);
-
-            border-radius: 15px;
-
-            background:
-                rgba(255,255,255,.02);
-
-            text-align: center;
-        }
-
-        .score-label {
-            color: #555d69;
-            font-size: 6px;
-            font-weight: 900;
-            letter-spacing: .15em;
-        }
-
-        .score-value {
-            margin-top: 7px;
-
-            color: #fff;
-
-            font-size: 23px;
-            font-weight: 900;
-        }
-
-
-        /* =====================================================
-           READY SCREEN
-           ===================================================== */
-
-        .overlay {
-            position: absolute;
-            z-index: 100;
-
-            inset: 0;
-
-            display: none;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    #181b21,
-                    #050608 70%
-                );
-        }
-
-        .overlay.show {
-            display: flex;
-        }
-
-        .overlay-kicker {
-            color: #626a76;
-            font-size: 8px;
-            font-weight: 900;
-            letter-spacing: .25em;
-        }
-
-        .overlay-title {
-            margin-top: 13px;
-
-            color: #fff;
-
-            font-size:
-                clamp(
-                    45px,
-                    8vw,
-                    90px
-                );
-
-            line-height: .9;
-
-            font-weight: 900;
-
-            letter-spacing: -.07em;
-        }
-
-        .overlay-text {
-            margin-top: 15px;
-
-            color: #626a76;
-
-            font-size: 11px;
-        }
-
-
-        /* =====================================================
-           MOBILE / SMALL PROJECTOR
-           ===================================================== */
-
-        @media (max-width: 850px) {
-
-            .content {
-                grid-template-columns: 1fr;
-            }
-
-            .side {
-                display: none;
-            }
-
-            .header {
-                padding: 0 20px;
-            }
-        }
-
-    </style>
+    <title>Samagra Connect • Projector</title>
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
 </head>
 
+<body class="projector-page">
 
-<body>
+<div class="projector-shell">
 
-<div class="screen">
+    <!-- TOP BAR -->
 
+    <header class="projector-header">
 
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+        <div class="projector-brand">
 
-    <header class="header">
-
-        <div class="brand">
-            SAMAGRA • CONNECT
-        </div>
-
-        <div class="header-right">
+            <div class="projector-logo">
+                S
+            </div>
 
             <div>
+                <div class="projector-title">
+                    SAMAGRA
+                </div>
 
-                <span class="question-label">
-                    QUESTION
-                </span>
-
-                <span
-                    id="questionNumber"
-                    class="question-number"
-                >
-                    READY
-                </span>
-
+                <div class="projector-subtitle">
+                    CONNECT
+                </div>
             </div>
 
-            <div class="live">
+        </div>
 
-                <span class="live-dot"></span>
 
-                LIVE
+        <div class="projector-live">
 
-            </div>
+            <span class="live-dot"></span>
+
+            LIVE
 
         </div>
 
     </header>
 
 
-    <!-- =====================================================
-         CONTENT
-         ===================================================== -->
+    <!-- MAIN -->
 
-    <main class="content">
+    <main class="projector-main">
 
-
-        <!-- =================================================
-             IMAGE PANEL
-             ================================================= -->
-
-        <section class="clue-panel">
+        <div class="round-label">
+            LOGO CHALLENGE
+        </div>
 
 
-            <div class="clue-top">
+        <div
+            id="questionNumber"
+            class="projector-question"
+        >
+            WAITING
+        </div>
 
-                <div class="clue-title">
-                    CONNECT THE CLUES
+
+        <!-- IMAGE -->
+
+        <div
+            id="imageStage"
+            class="image-stage"
+        >
+
+            <div
+                id="waitingMessage"
+                class="projector-waiting"
+            >
+
+                <div class="waiting-big">
+                    READY?
                 </div>
 
-                <div
-                    id="clueCount"
-                    class="clue-count"
-                >
-                    0 / 4 REVEALED
-                </div>
-
-            </div>
-
-
-            <div class="images">
-
-
-                <div
-                    class="image-box hidden"
-                    id="imageBox0"
-                >
-
-                    <div class="image-number">
-                        01
-                    </div>
-
-                    <img
-                        id="image0"
-                        alt="Clue 1"
-                    >
-
-                </div>
-
-
-                <div
-                    class="image-box hidden"
-                    id="imageBox1"
-                >
-
-                    <div class="image-number">
-                        02
-                    </div>
-
-                    <img
-                        id="image1"
-                        alt="Clue 2"
-                    >
-
-                </div>
-
-
-                <div
-                    class="image-box hidden"
-                    id="imageBox2"
-                >
-
-                    <div class="image-number">
-                        03
-                    </div>
-
-                    <img
-                        id="image2"
-                        alt="Clue 3"
-                    >
-
-                </div>
-
-
-                <div
-                    class="image-box hidden"
-                    id="imageBox3"
-                >
-
-                    <div class="image-number">
-                        04
-                    </div>
-
-                    <img
-                        id="image3"
-                        alt="Clue 4"
-                    >
-
-                </div>
-
-
-            </div>
-
-
-            <div class="clue-bottom">
-
-                <div
-                    id="progress"
-                    class="progress"
-                >
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
+                <div class="waiting-small">
+                    Waiting for the host to start.
                 </div>
 
             </div>
 
 
-        </section>
+            <img
+                id="logoImage"
+                class="logo-image hidden"
+                src=""
+                alt="Logo clue"
+            />
+
+        </div>
 
 
-        <!-- =================================================
-             SIDE PANEL
-             ================================================= -->
+        <!-- BOTTOM HUD -->
 
-        <aside class="side">
+        <div class="projector-hud">
 
+            <div class="hud-card">
 
-            <div class="timer-card">
-
-                <div class="timer-label">
-                    TIME REMAINING
+                <div class="hud-label">
+                    TIME
                 </div>
 
                 <div
                     id="timer"
-                    class="timer"
+                    class="projector-timer"
                 >
-                    30.00
+                    30
                 </div>
 
             </div>
 
 
-            <div class="status-card">
+            <div class="hud-card center">
 
-                <div class="status-label">
-                    SUBMISSIONS
+                <div class="hud-label">
+                    CLUE
                 </div>
 
                 <div
-                    id="submissionStatus"
-                    class="status-value"
+                    id="clarityText"
+                    class="hud-value"
                 >
-                    WAITING
+                    STARTING BLURRED
                 </div>
 
             </div>
 
 
-            <div
-                id="answerCard"
-                class="answer-card"
-            >
+            <div class="hud-card">
 
-                <div class="answer-label">
-                    CORRECT ANSWER
+                <div class="hud-label">
+                    PLAYERS
                 </div>
 
                 <div
-                    id="answer"
-                    class="answer"
+                    id="playerCount"
+                    class="hud-value"
                 >
-                    —
+                    0
                 </div>
 
-            </div>
-
-
-            <div class="score-card">
-
-                <div class="score-label">
-                    MAXIMUM SCORE
-                </div>
-
-                <div class="score-value">
-                    10
-                </div>
-
-            </div>
-
-
-        </aside>
-
-
-    </main>
-
-
-    <!-- =====================================================
-         READY / FINISHED OVERLAY
-         ===================================================== -->
-
-    <section
-        id="overlay"
-        class="overlay show"
-    >
-
-        <div>
-
-            <div class="overlay-kicker">
-                SAMAGRA • CONNECT
-            </div>
-
-            <div
-                id="overlayTitle"
-                class="overlay-title"
-            >
-                READY
-            </div>
-
-            <div
-                id="overlayText"
-                class="overlay-text"
-            >
-                Waiting for the game to begin.
             </div>
 
         </div>
 
-    </section>
 
+        <!-- REVEAL -->
+
+        <div
+            id="answerReveal"
+            class="answer-reveal hidden"
+        >
+
+            <div class="reveal-label">
+                ANSWER
+            </div>
+
+            <div
+                id="answerText"
+                class="reveal-answer"
+            >
+                —
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
 
 
+<script src="/socket.io/socket.io.js"></script>
+
 <script>
 
-"use strict";
+const socket = io();
 
 
-/* =========================================================
-   ELEMENTS
-   ========================================================= */
+const logoImage =
+    document.getElementById(
+        "logoImage"
+    );
+
+const waitingMessage =
+    document.getElementById(
+        "waitingMessage"
+    );
 
 const questionNumber =
     document.getElementById(
         "questionNumber"
     );
 
-const clueCount =
-    document.getElementById(
-        "clueCount"
-    );
-
-const timerElement =
+const timer =
     document.getElementById(
         "timer"
     );
 
-const submissionStatus =
+const clarityText =
     document.getElementById(
-        "submissionStatus"
+        "clarityText"
     );
 
-const answerCard =
+const playerCount =
     document.getElementById(
-        "answerCard"
+        "playerCount"
     );
 
-const answerElement =
+const answerReveal =
     document.getElementById(
-        "answer"
+        "answerReveal"
     );
 
-const overlay =
+const answerText =
     document.getElementById(
-        "overlay"
-    );
-
-const overlayTitle =
-    document.getElementById(
-        "overlayTitle"
-    );
-
-const overlayText =
-    document.getElementById(
-        "overlayText"
+        "answerText"
     );
 
 
-const imageBoxes = [
-    document.getElementById("imageBox0"),
-    document.getElementById("imageBox1"),
-    document.getElementById("imageBox2"),
-    document.getElementById("imageBox3")
-];
-
-
-const images = [
-    document.getElementById("image0"),
-    document.getElementById("image1"),
-    document.getElementById("image2"),
-    document.getElementById("image3")
-];
-
-
-const progressBars =
-    document.querySelectorAll(
-        "#progress span"
-    );
+let currentImage = "";
+let currentRound = -1;
+let roundStart = null;
+let roundEnd = null;
 
 
 /* =========================================================
-   VARIABLES
-   ========================================================= */
+   GAME STATE
+========================================================= */
 
-let state = null;
+socket.on(
+    "game-state",
+    state => {
 
-let previousQuestion = 0;
+        playerCount.textContent =
+            state.players.length;
 
-let currentImageCount = -1;
-
-
-/* =========================================================
-   FETCH STATE
-   ========================================================= */
-
-async function fetchState() {
-
-    try {
-
-        const response =
-            await fetch(
-                "/api/state?_=" +
-                Date.now(),
-                {
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "HTTP " +
-                response.status
-            );
-
-        }
-
-
-        state =
-            await response.json();
-
-
-        render();
-
-    }
-    catch (error) {
-
-        console.error(
-            "Projector error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   MAIN RENDER
-   ========================================================= */
-
-function render() {
-
-    if (!state) {
-        return;
-    }
-
-
-    /* =====================================================
-       GAME NOT STARTED
-       ===================================================== */
-
-    if (!state.started) {
-
-        questionNumber.textContent =
-            "READY";
-
-        submissionStatus.textContent =
-            "WAITING";
-
-        timerElement.textContent =
-            "30.00";
-
-        timerElement.classList.remove(
-            "danger"
-        );
-
-        answerCard.classList.remove(
-            "show"
-        );
-
-        hideAllImages();
-
-        showOverlay(
-            "READY",
-            "Waiting for the game to begin."
-        );
-
-        previousQuestion = 0;
-
-        return;
-    }
-
-
-    /* =====================================================
-       GAME RUNNING
-       ===================================================== */
-
-    hideOverlay();
-
-
-    const question =
-        Number(
-            state.question
-        );
-
-
-    questionNumber.textContent =
-        String(question).padStart(2, "0") +
-        " / " +
-        state.totalQuestions;
-
-
-    /* =====================================================
-       NEW QUESTION
-       ===================================================== */
-
-    if (
-        question !==
-        previousQuestion
-    ) {
-
-        previousQuestion =
-            question;
-
-        currentImageCount =
-            -1;
-
-        hideAllImages();
-
-        answerCard.classList.remove(
-            "show"
-        );
-
-        answerElement.textContent =
-            "—";
-
-    }
-
-
-    /* =====================================================
-       LOAD FOUR IMAGES
-       ===================================================== */
-
-    if (
-        Array.isArray(
-            state.images
-        )
-    ) {
-
-        state.images
-            .slice(0, 4)
-            .forEach(
-                (
-                    src,
-                    index
-                ) => {
-
-                    if (
-                        images[index].src !==
-                        new URL(
-                            src,
-                            window.location.origin
-                        ).href
-                    ) {
-
-                        images[index].src =
-                            src;
-
-                    }
-
-                }
-            );
-
-    }
-
-
-    /* =====================================================
-       CALCULATE IMAGE REVEAL
-       ===================================================== */
-
-    const revealed =
-        calculateRevealedImages();
-
-
-    if (
-        revealed !==
-        currentImageCount
-    ) {
-
-        currentImageCount =
-            revealed;
-
-        revealImages(
-            revealed
-        );
-
-    }
-
-
-    clueCount.textContent =
-        revealed +
-        " / 4 REVEALED";
-
-
-    /* =====================================================
-       SUBMISSIONS
-       ===================================================== */
-
-    submissionStatus.textContent =
-        state.submissionsOpen
-            ? "OPEN"
-            : "CLOSED";
-
-
-    /* =====================================================
-       ANSWER
-       ===================================================== */
-
-    if (
-        state.revealed
-    ) {
-
-        answerElement.textContent =
-            state.answer ||
-            "—";
-
-        answerCard.classList.add(
-            "show"
-        );
-
-    }
-    else {
-
-        answerCard.classList.remove(
-            "show"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   IMAGE REVEAL CALCULATION
-   =========================================================
-
-   30 seconds total:
-
-   0.00  → image 1
-   7.50  → image 2
-   15.00 → image 3
-   22.50 → image 4
-
-   Uses server's `remaining` value.
-   ========================================================= */
-
-function calculateRevealedImages() {
-
-    if (!state.started) {
-        return 0;
-    }
-
-
-    const remaining =
-        Number(
-            state.remaining
-        );
-
-
-    if (
-        !Number.isFinite(
-            remaining
-        )
-    ) {
-
-        return 1;
-
-    }
-
-
-    const elapsed =
-        30000 -
-        remaining;
-
-
-    if (
-        elapsed >= 22500
-    ) {
-        return 4;
-    }
-
-    if (
-        elapsed >= 15000
-    ) {
-        return 3;
-    }
-
-    if (
-        elapsed >= 7500
-    ) {
-        return 2;
-    }
-
-    return 1;
-
-}
-
-
-/* =========================================================
-   REVEAL IMAGES
-   ========================================================= */
-
-function revealImages(
-    count
-) {
-
-    for (
-        let i = 0;
-        i < 4;
-        i++
-    ) {
 
         if (
-            i < count
+            !state.running ||
+            !state.question
         ) {
 
-            imageBoxes[i]
-                .classList
-                .remove(
-                    "hidden"
-                );
+            questionNumber.textContent =
+                "WAITING";
 
-            imageBoxes[i]
-                .classList
-                .add(
-                    "revealed"
-                );
-
-            progressBars[i]
-                .classList
-                .add(
-                    "active"
-                );
-
-        }
-        else {
-
-            imageBoxes[i]
-                .classList
-                .add(
-                    "hidden"
-                );
-
-            imageBoxes[i]
-                .classList
-                .remove(
-                    "revealed"
-                );
-
-            progressBars[i]
-                .classList
-                .remove(
-                    "active"
-                );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   HIDE ALL
-   ========================================================= */
-
-function hideAllImages() {
-
-    for (
-        let i = 0;
-        i < 4;
-        i++
-    ) {
-
-        imageBoxes[i]
-            .classList
-            .add(
+            waitingMessage.classList.remove(
                 "hidden"
             );
 
-        imageBoxes[i]
-            .classList
-            .remove(
-                "revealed"
+            logoImage.classList.add(
+                "hidden"
             );
 
-        progressBars[i]
-            .classList
-            .remove(
-                "active"
+            answerReveal.classList.add(
+                "hidden"
             );
 
-    }
-
-}
-
-
-/* =========================================================
-   TIMER
-   ========================================================= */
-
-function updateTimer() {
-
-    if (
-        !state ||
-        !state.started
-    ) {
-
-        return;
-
-    }
+            return;
+        }
 
 
-    const remaining =
-        Math.max(
-            0,
-            Number(
-                state.remaining
-            )
+        waitingMessage.classList.add(
+            "hidden"
+        );
+
+        logoImage.classList.remove(
+            "hidden"
         );
 
 
-    const seconds =
-        remaining / 1000;
+        if (
+            currentImage !==
+            state.question.image
+        ) {
+
+            currentImage =
+                state.question.image;
+
+            logoImage.src =
+                currentImage;
+
+            currentRound =
+                state.questionIndex;
+
+            answerReveal.classList.add(
+                "hidden"
+            );
+
+            /*
+                Reset blur immediately.
+            */
+
+            logoImage.style.filter =
+                "blur(18px)";
+
+            logoImage.classList.remove(
+                "clear-reveal"
+            );
+        }
 
 
-    if (
-        seconds <= 0
-    ) {
+        questionNumber.textContent =
+            String(
+                state.questionIndex + 1
+            ).padStart(2, "0") +
+            " / " +
+            String(
+                state.question.total
+            ).padStart(2, "0");
 
-        timerElement.textContent =
-            "00.00";
 
-        timerElement.classList.add(
-            "danger"
-        );
+        roundStart =
+            state.roundStartedAt;
 
-        return;
+        roundEnd =
+            state.roundEndsAt;
+
+
+        if (state.revealed) {
+
+            logoImage.style.filter =
+                "blur(0px)";
+
+            clarityText.textContent =
+                "ANSWER REVEALED";
+
+        }
 
     }
-
-
-    timerElement.textContent =
-        seconds.toFixed(2);
-
-
-    if (
-        seconds <= 5
-    ) {
-
-        timerElement.classList.add(
-            "danger"
-        );
-
-    }
-    else {
-
-        timerElement.classList.remove(
-            "danger"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   OVERLAY
-   ========================================================= */
-
-function showOverlay(
-    title,
-    text
-) {
-
-    overlayTitle.textContent =
-        title;
-
-    overlayText.textContent =
-        text;
-
-    overlay.classList.add(
-        "show"
-    );
-
-}
-
-
-function hideOverlay() {
-
-    overlay.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
-   START
-   ========================================================= */
-
-fetchState();
-
-
-/* =========================================================
-   LIVE SERVER STATE
-   ========================================================= */
-
-setInterval(
-    fetchState,
-    250
 );
 
 
 /* =========================================================
-   SMOOTH TIMER
-   ========================================================= */
+   TIMER
+========================================================= */
 
-setInterval(
-    updateTimer,
-    50
+socket.on(
+    "timer",
+    data => {
+
+        const remaining =
+            Math.max(
+                0,
+                data.remaining
+            );
+
+        timer.textContent =
+            Math.ceil(
+                remaining
+            );
+
+
+        /*
+            BLUR LOGIC
+
+            30 sec:
+                18px blur
+
+            15 sec:
+                around 8px blur
+
+            0 sec:
+                0px blur
+        */
+
+        const progress =
+            Math.min(
+                1,
+                Math.max(
+                    0,
+                    (30 - remaining) / 30
+                )
+            );
+
+
+        let blur;
+
+
+        if (remaining > 15) {
+
+            /*
+                First half:
+                18px -> 8px
+            */
+
+            const firstHalf =
+                (30 - remaining) / 15;
+
+            blur =
+                18 -
+                (firstHalf * 10);
+
+            clarityText.textContent =
+                "HEAVILY BLURRED";
+
+        } else {
+
+            /*
+                Second half:
+                8px -> 0px
+            */
+
+            const secondHalf =
+                (15 - remaining) / 15;
+
+            blur =
+                8 -
+                (secondHalf * 8);
+
+            if (remaining > 7) {
+
+                clarityText.textContent =
+                    "GETTING CLEARER";
+
+            } else if (remaining > 0) {
+
+                clarityText.textContent =
+                    "ALMOST CLEAR";
+
+            } else {
+
+                clarityText.textContent =
+                    "FULLY CLEAR";
+            }
+
+        }
+
+
+        logoImage.style.filter =
+            `blur(${Math.max(0, blur)}px)`;
+
+
+        if (remaining <= 5) {
+
+            timer.classList.add(
+                "urgent"
+            );
+
+        } else {
+
+            timer.classList.remove(
+                "urgent"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   NEW QUESTION
+========================================================= */
+
+socket.on(
+    "new-question",
+    data => {
+
+        currentImage =
+            data.question.image;
+
+        logoImage.src =
+            currentImage;
+
+        logoImage.classList.remove(
+            "hidden"
+        );
+
+        waitingMessage.classList.add(
+            "hidden"
+        );
+
+        answerReveal.classList.add(
+            "hidden"
+        );
+
+        logoImage.style.filter =
+            "blur(18px)";
+
+        clarityText.textContent =
+            "STARTING BLURRED";
+
+    }
+);
+
+
+/* =========================================================
+   ANSWER REVEAL
+========================================================= */
+
+socket.on(
+    "answer-revealed",
+    data => {
+
+        logoImage.style.filter =
+            "blur(0px)";
+
+        clarityText.textContent =
+            "ANSWER REVEALED";
+
+        answerText.textContent =
+            data.answer;
+
+        answerReveal.classList.remove(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   GAME FINISHED
+========================================================= */
+
+socket.on(
+    "game-finished",
+    () => {
+
+        logoImage.style.filter =
+            "blur(0px)";
+
+        clarityText.textContent =
+            "GAME COMPLETE";
+
+    }
+);
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+socket.on(
+    "game-reset",
+    () => {
+
+        currentImage = "";
+        currentRound = -1;
+
+        logoImage.classList.add(
+            "hidden"
+        );
+
+        waitingMessage.classList.remove(
+            "hidden"
+        );
+
+        answerReveal.classList.add(
+            "hidden"
+        );
+
+        questionNumber.textContent =
+            "WAITING";
+
+        timer.textContent =
+            "30";
+
+    }
 );
 
 </script>
