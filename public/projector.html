@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -8,35 +9,40 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Samagra Connect • Projector</title>
-
-    <link
-        rel="stylesheet"
-        href="/style.css"
-    >
+    <title>SAMAGRA CONNECT • Projector</title>
 
     <style>
-        /* =====================================================
-           PROJECTOR OVERRIDES
-        ===================================================== */
 
-        .projector-page {
-            min-height: 100vh;
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             margin: 0;
-            background:
-                radial-gradient(
-                    circle at 50% 15%,
-                    rgba(255,255,255,.035),
-                    transparent 42%
-                ),
-                #050608;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background: #050608;
+            color: #ffffff;
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
             overflow: hidden;
         }
 
         .projector-shell {
-            width: 100%;
+            width: 100vw;
             min-height: 100vh;
-            padding: 28px 30px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
         }
 
         /* =====================================================
@@ -44,16 +50,27 @@
         ===================================================== */
 
         .projector-header {
-            width: 100%;
-            height: 72px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 2px 18px;
+            padding: 18px 24px;
 
-            border-bottom: 1px solid rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.015)
+                );
+
+            box-shadow:
+                0 20px 70px rgba(0,0,0,0.35);
+
+            backdrop-filter: blur(18px);
         }
 
         .projector-brand {
@@ -69,86 +86,69 @@
             display: grid;
             place-items: center;
 
-            border-radius: 14px;
+            border-radius: 15px;
 
-            border: 1px solid rgba(255,255,255,.14);
+            background: #ffffff;
+            color: #050608;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.08),
-                    rgba(255,255,255,.025)
-                );
-
-            color: #fff;
-
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 900;
-
-            box-shadow:
-                inset 0 1px rgba(255,255,255,.08),
-                0 15px 40px rgba(0,0,0,.35);
         }
 
         .projector-title {
-            color: #f4f5f7;
-
-            font-size: 13px;
+            font-size: 22px;
             font-weight: 900;
-
-            letter-spacing: .24em;
+            letter-spacing: 0.14em;
         }
 
         .projector-subtitle {
-            margin-top: 4px;
+            margin-top: 3px;
 
-            color: #596273;
+            font-size: 11px;
+            letter-spacing: 0.3em;
 
-            font-size: 8px;
-            font-weight: 800;
-
-            letter-spacing: .25em;
+            color: rgba(255,255,255,0.45);
         }
 
         .projector-live {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 9px;
 
-            padding: 9px 14px;
+            padding: 10px 15px;
 
             border-radius: 999px;
 
-            border: 1px solid rgba(255,255,255,.09);
+            border: 1px solid rgba(255,255,255,0.08);
 
-            background: rgba(255,255,255,.025);
-
-            color: #a4adba;
-
-            font-size: 8px;
-            font-weight: 900;
-
-            letter-spacing: .16em;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
         }
 
         .live-dot {
-            width: 7px;
-            height: 7px;
+            width: 9px;
+            height: 9px;
 
             border-radius: 50%;
 
-            background: #67e49a;
+            background: #35ff8b;
 
             box-shadow:
-                0 0 0 4px rgba(103,228,154,.08),
-                0 0 18px rgba(103,228,154,.6);
+                0 0 14px rgba(53,255,139,0.8);
 
-            animation: livePulse 1.8s infinite;
+            animation: livePulse 1.2s infinite;
         }
 
         @keyframes livePulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
             50% {
-                opacity: .45;
+                opacity: 0.35;
             }
         }
 
@@ -157,48 +157,59 @@
         ===================================================== */
 
         .projector-main {
-            width: min(1400px, 100%);
-            margin: 22px auto 0;
+            flex: 1;
 
             display: flex;
             flex-direction: column;
-            align-items: center;
+
+            padding-top: 22px;
         }
 
         .round-label {
-            margin-top: 2px;
+            text-align: center;
 
-            color: #5d6879;
+            color: rgba(255,255,255,0.45);
 
-            font-size: 9px;
-            font-weight: 900;
+            font-size: 12px;
+            font-weight: 800;
 
-            letter-spacing: .25em;
-            text-transform: uppercase;
+            letter-spacing: 0.25em;
         }
 
         .projector-question {
             margin-top: 8px;
 
-            color: #f4f5f7;
+            text-align: center;
 
-            font-size: clamp(20px, 2vw, 28px);
-            font-weight: 900;
+            font-size: clamp(
+                25px,
+                4vw,
+                52px
+            );
 
-            letter-spacing: .08em;
+            font-weight: 950;
+
+            letter-spacing: 0.05em;
         }
 
         /* =====================================================
-           IMAGE STAGE
+           IMAGE AREA
         ===================================================== */
 
         .image-stage {
             position: relative;
 
-            width: min(1200px, 92vw);
-            height: min(62vh, 680px);
+            width: min(
+                76vw,
+                900px
+            );
 
-            margin-top: 24px;
+            height: min(
+                58vh,
+                590px
+            );
+
+            margin: 22px auto 0;
 
             display: flex;
             align-items: center;
@@ -206,21 +217,19 @@
 
             overflow: hidden;
 
-            border-radius: 24px;
+            border-radius: 30px;
 
-            border: 1px solid rgba(255,255,255,.09);
+            border: 1px solid rgba(255,255,255,0.09);
 
             background:
                 radial-gradient(
                     circle at center,
-                    rgba(255,255,255,.025),
-                    transparent 60%
-                ),
-                #020304;
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.01) 65%
+                );
 
             box-shadow:
-                0 30px 100px rgba(0,0,0,.55),
-                inset 0 0 100px rgba(0,0,0,.65);
+                0 30px 100px rgba(0,0,0,0.55);
         }
 
         .image-stage::before {
@@ -233,97 +242,69 @@
 
             background:
                 linear-gradient(
-                    90deg,
-                    rgba(255,255,255,.015) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    rgba(255,255,255,.015) 1px,
-                    transparent 1px
-                );
-
-            background-size: 50px 50px;
-
-            mask-image:
-                radial-gradient(
-                    circle at center,
-                    black,
-                    transparent 80%
+                    120deg,
+                    transparent,
+                    rgba(255,255,255,0.035),
+                    transparent
                 );
         }
 
-        .projector-waiting {
+        .logo-image {
             position: relative;
-            z-index: 2;
 
+            max-width: 82%;
+            max-height: 82%;
+
+            object-fit: contain;
+
+            border-radius: 18px;
+
+            opacity: 1;
+
+            transition:
+                filter 0.35s ease,
+                transform 0.35s ease,
+                opacity 0.25s ease;
+
+            filter: blur(12px);
+
+            transform: scale(1.01);
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+        }
+
+        .logo-image.visible {
+            opacity: 1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .projector-waiting {
             text-align: center;
         }
 
         .waiting-big {
-            color: #f1f3f6;
+            font-size: clamp(
+                38px,
+                7vw,
+                80px
+            );
 
-            font-size: clamp(40px, 6vw, 78px);
-            font-weight: 900;
+            font-weight: 950;
 
-            letter-spacing: -.06em;
+            letter-spacing: 0.05em;
         }
 
         .waiting-small {
             margin-top: 10px;
 
-            color: #667080;
+            color: rgba(255,255,255,0.4);
 
-            font-size: 12px;
-            font-weight: 600;
-
-            letter-spacing: .05em;
-        }
-
-        /* =====================================================
-           LOGO
-        ===================================================== */
-
-        .logo-image {
-            position: relative;
-            z-index: 3;
-
-            display: block;
-
-            width: 100%;
-            height: 100%;
-
-            padding: 42px;
-
-            object-fit: contain;
-
-            opacity: 1;
-
-            transform: scale(1);
-
-            transition:
-                filter .15s linear,
-                opacity .25s ease,
-                transform .35s ease;
-        }
-
-        .logo-image:not(.hidden) {
-            animation: logoEnter .45s ease;
-        }
-
-        @keyframes logoEnter {
-            from {
-                opacity: 0;
-                transform: scale(.97);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .logo-image.clear-reveal {
-            filter: blur(0) !important;
+            font-size: 15px;
         }
 
         /* =====================================================
@@ -331,85 +312,82 @@
         ===================================================== */
 
         .projector-hud {
-            width: min(1200px, 92vw);
+            width: min(
+                100%,
+                1000px
+            );
+
+            margin: 18px auto 0;
 
             display: grid;
 
             grid-template-columns:
-                minmax(180px, .8fr)
-                minmax(300px, 1.4fr)
-                minmax(180px, .8fr);
+                1fr
+                1.5fr
+                1fr;
 
-            gap: 12px;
-
-            margin-top: 14px;
+            gap: 14px;
         }
 
         .hud-card {
-            min-height: 78px;
+            min-height: 80px;
 
-            padding: 15px 18px;
+            padding: 14px 20px;
 
-            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
-            border: 1px solid rgba(255,255,255,.075);
+            border-radius: 18px;
+
+            border: 1px solid rgba(255,255,255,0.08);
 
             background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.035),
-                    rgba(255,255,255,.012)
-                );
-
-            box-shadow:
-                inset 0 1px rgba(255,255,255,.025);
-        }
-
-        .hud-card.center {
-            text-align: center;
+                rgba(255,255,255,0.025);
         }
 
         .hud-label {
-            color: #566173;
+            font-size: 10px;
 
-            font-size: 8px;
-            font-weight: 900;
+            color: rgba(255,255,255,0.4);
 
-            letter-spacing: .18em;
-        }
+            letter-spacing: 0.2em;
 
-        .projector-timer {
-            margin-top: 7px;
-
-            color: #f5f6f8;
-
-            font-size: 30px;
-            line-height: 1;
-
-            font-weight: 900;
-
-            font-variant-numeric: tabular-nums;
-        }
-
-        .projector-timer.urgent {
-            color: #ff6974;
-
-            animation: timerDanger .6s infinite;
-        }
-
-        @keyframes timerDanger {
-            50% {
-                opacity: .45;
-            }
+            font-weight: 800;
         }
 
         .hud-value {
-            margin-top: 8px;
+            margin-top: 5px;
 
-            color: #e8ebef;
+            font-size: 20px;
 
-            font-size: 13px;
-            font-weight: 800;
+            font-weight: 900;
+        }
+
+        .projector-timer {
+            margin-top: 2px;
+
+            font-size: 38px;
+
+            line-height: 1;
+
+            font-weight: 950;
+
+            font-variant-numeric:
+                tabular-nums;
+
+            transition:
+                transform 0.15s ease;
+        }
+
+        .projector-timer.urgent {
+            transform: scale(1.1);
+
+            color: #ff5757;
+
+            text-shadow:
+                0 0 20px rgba(255,87,87,0.65);
         }
 
         /* =====================================================
@@ -417,173 +395,88 @@
         ===================================================== */
 
         .answer-reveal {
-            margin-top: 14px;
+            width: min(
+                850px,
+                90vw
+            );
 
-            min-width: 210px;
+            margin: 18px auto 0;
 
-            padding: 13px 24px;
+            padding: 18px 24px;
 
             text-align: center;
 
-            border-radius: 16px;
+            border-radius: 20px;
 
-            border: 1px solid rgba(103,228,154,.25);
+            border: 1px solid rgba(255,255,255,0.1);
 
             background:
-                linear-gradient(
-                    145deg,
-                    rgba(103,228,154,.07),
-                    rgba(103,228,154,.015)
-                );
-
-            box-shadow:
-                0 15px 50px rgba(0,0,0,.3),
-                inset 0 1px rgba(255,255,255,.035);
-
-            animation: answerEnter .4s ease;
+                rgba(255,255,255,0.05);
         }
 
         .reveal-label {
-            color: #67e49a;
+            font-size: 10px;
 
-            font-size: 8px;
-            font-weight: 900;
+            color: rgba(255,255,255,0.45);
 
-            letter-spacing: .2em;
+            letter-spacing: 0.25em;
+
+            font-weight: 800;
         }
 
         .reveal-answer {
-            margin-top: 4px;
+            margin-top: 6px;
 
-            color: #f4f7f8;
+            font-size: clamp(
+                25px,
+                4vw,
+                45px
+            );
 
-            font-size: clamp(22px, 3vw, 34px);
-            font-weight: 900;
-
-            letter-spacing: .04em;
-        }
-
-        @keyframes answerEnter {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            font-weight: 950;
         }
 
         /* =====================================================
-           MOBILE / SMALL SCREENS
+           MOBILE
         ===================================================== */
 
         @media (max-width: 800px) {
 
+            body {
+                overflow: auto;
+            }
+
             .projector-shell {
-                padding: 16px;
-            }
-
-            .projector-header {
-                height: 62px;
-            }
-
-            .projector-logo {
-                width: 40px;
-                height: 40px;
-
-                border-radius: 11px;
-
-                font-size: 17px;
-            }
-
-            .projector-title {
-                font-size: 10px;
-            }
-
-            .projector-subtitle {
-                font-size: 7px;
-            }
-
-            .projector-live {
-                padding: 7px 10px;
-            }
-
-            .image-stage {
-                width: 100%;
-                height: 52vh;
-
-                margin-top: 18px;
-
-                border-radius: 17px;
-            }
-
-            .logo-image {
-                padding: 20px;
-            }
-
-            .projector-hud {
-                width: 100%;
-
-                grid-template-columns: 1fr 1fr;
-
-                gap: 8px;
-            }
-
-            .hud-card.center {
-                grid-column: 1 / -1;
-                grid-row: 1;
-            }
-
-            .hud-card {
-                min-height: 65px;
                 padding: 12px;
             }
 
-            .projector-timer {
-                font-size: 25px;
-            }
-        }
-
-        @media (max-width: 480px) {
-
-            .projector-question {
-                font-size: 18px;
+            .projector-header {
+                padding: 14px;
             }
 
-            .round-label {
-                font-size: 7px;
+            .projector-title {
+                font-size: 16px;
+            }
+
+            .projector-subtitle {
+                font-size: 9px;
             }
 
             .image-stage {
-                height: 45vh;
+                width: 100%;
+                height: 48vh;
             }
 
             .projector-hud {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
             }
 
-            .hud-card.center {
-                grid-column: 1 / -1;
-            }
-
-            .projector-live {
-                font-size: 7px;
-            }
         }
 
-        /* =====================================================
-           UTILITY
-        ===================================================== */
-
-        .hidden {
-            display: none !important;
-        }
     </style>
 </head>
 
-<body class="projector-page">
+<body>
 
 <div class="projector-shell">
 
@@ -642,9 +535,7 @@
         </div>
 
 
-        <!-- =================================================
-             IMAGE
-        ================================================== -->
+        <!-- IMAGE -->
 
         <div
             id="imageStage"
@@ -677,9 +568,7 @@
         </div>
 
 
-        <!-- =================================================
-             HUD
-        ================================================== -->
+        <!-- HUD -->
 
         <div class="projector-hud">
 
@@ -699,7 +588,7 @@
             </div>
 
 
-            <div class="hud-card center">
+            <div class="hud-card">
 
                 <div class="hud-label">
                     CLUE
@@ -709,7 +598,7 @@
                     id="clarityText"
                     class="hud-value"
                 >
-                    STARTING BLURRED
+                    WAITING
                 </div>
 
             </div>
@@ -718,11 +607,11 @@
             <div class="hud-card">
 
                 <div class="hud-label">
-                    PLAYERS
+                    TEAMS
                 </div>
 
                 <div
-                    id="playerCount"
+                    id="teamCount"
                     class="hud-value"
                 >
                     0
@@ -733,9 +622,7 @@
         </div>
 
 
-        <!-- =================================================
-             ANSWER
-        ================================================== -->
+        <!-- ANSWER -->
 
         <div
             id="answerReveal"
@@ -760,146 +647,154 @@
 </div>
 
 
-<script src="/socket.io/socket.io.js"></script>
-
 <script>
 
-    const socket = io();
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const logoImage =
+    document.getElementById(
+        "logoImage"
+    );
+
+const waitingMessage =
+    document.getElementById(
+        "waitingMessage"
+    );
+
+const questionNumber =
+    document.getElementById(
+        "questionNumber"
+    );
+
+const timer =
+    document.getElementById(
+        "timer"
+    );
+
+const clarityText =
+    document.getElementById(
+        "clarityText"
+    );
+
+const teamCount =
+    document.getElementById(
+        "teamCount"
+    );
+
+const answerReveal =
+    document.getElementById(
+        "answerReveal"
+    );
+
+const answerText =
+    document.getElementById(
+        "answerText"
+    );
 
 
-    /* =====================================================
-       DOM
-    ===================================================== */
+/* =========================================================
+   STATE
+========================================================= */
 
-    const logoImage =
-        document.getElementById("logoImage");
-
-    const waitingMessage =
-        document.getElementById("waitingMessage");
-
-    const questionNumber =
-        document.getElementById("questionNumber");
-
-    const timer =
-        document.getElementById("timer");
-
-    const clarityText =
-        document.getElementById("clarityText");
-
-    const playerCount =
-        document.getElementById("playerCount");
-
-    const answerReveal =
-        document.getElementById("answerReveal");
-
-    const answerText =
-        document.getElementById("answerText");
+let lastQuestion = -1;
+let lastImage = "";
 
 
-    /* =====================================================
-       STATE
-    ===================================================== */
+/* =========================================================
+   CALCULATE BLUR
+=========================================================
 
-    let currentQuestionIndex = -1;
+   30 sec  = 12px
+   20 sec  = 9px
+   15 sec  = 6px
+   10 sec  = 3px
+   5 sec   = 1px
+   0 sec   = 0px
 
-    let currentImage = "";
+   This is deliberately much clearer than the old
+   18px starting blur.
+========================================================= */
 
-    let gameStarted = false;
+function calculateBlur(
+    remainingMs
+) {
+
+    const remaining =
+        Math.max(
+            0,
+            Math.min(
+                30000,
+                remainingMs
+            )
+        );
+
+    const seconds =
+        remaining / 1000;
+
+    const blur =
+        Math.max(
+            0,
+            Math.min(
+                12,
+                seconds * 0.4
+            )
+        );
+
+    return blur;
+}
 
 
-    /* =====================================================
-       IMAGE PATH
+/* =========================================================
+   UPDATE IMAGE
+========================================================= */
 
-       IMPORTANT:
+function updateImage(
+    images,
+    revealed
+) {
 
-       New assets are:
+    if (
+        !Array.isArray(images) ||
+        images.length === 0
+    ) {
 
-       /assets/img1.jpeg
-       /assets/img2.jpeg
-       ...
-       /assets/img19.jpeg
+        logoImage.classList.add(
+            "hidden"
+        );
 
-       The server question index is zero-based.
+        waitingMessage.classList.remove(
+            "hidden"
+        );
 
-       Therefore:
+        lastImage = "";
 
-       questionIndex 0 -> img1.jpeg
-       questionIndex 1 -> img2.jpeg
-       ...
-       questionIndex 18 -> img19.jpeg
-    ===================================================== */
+        return;
 
-    function getImagePath(questionIndex) {
-
-        const imageNumber =
-            Number(questionIndex) + 1;
-
-        if (
-            imageNumber < 1 ||
-            imageNumber > 19
-        ) {
-            console.error(
-                "Invalid image number:",
-                imageNumber
-            );
-
-            return "";
-        }
-
-        return `/assets/img${imageNumber}.jpeg`;
     }
 
 
-    /* =====================================================
-       LOAD IMAGE
-    ===================================================== */
+    /*
+       Current game uses question.images.
 
-    function loadQuestionImage(questionIndex) {
+       We show the FIRST image as the
+       current logo clue.
+    */
 
-        const imagePath =
-            getImagePath(questionIndex);
+    const image =
+        images[0];
 
-        if (!imagePath) {
-            return;
-        }
 
-        console.log(
-            "Loading projector image:",
-            imagePath
-        );
+    if (
+        image !== lastImage
+    ) {
 
-        currentImage =
-            imagePath;
-
-        currentQuestionIndex =
-            Number(questionIndex);
+        lastImage =
+            image;
 
         logoImage.src =
-            imagePath;
-
-        logoImage.onerror =
-            () => {
-
-                console.error(
-                    "FAILED TO LOAD IMAGE:",
-                    imagePath
-                );
-
-                clarityText.textContent =
-                    "IMAGE LOAD ERROR";
-            };
-
-        logoImage.onload =
-            () => {
-
-                console.log(
-                    "IMAGE LOADED:",
-                    imagePath
-                );
-
-                clarityText.textContent =
-                    "STARTING BLURRED";
-            };
+            image;
 
         logoImage.classList.remove(
             "hidden"
@@ -909,355 +804,99 @@
             "hidden"
         );
 
-        answerReveal.classList.add(
-            "hidden"
-        );
+        /*
+           Force browser to reveal that
+           the image actually loaded.
+        */
 
-        logoImage.classList.remove(
-            "clear-reveal"
-        );
+        logoImage.onload =
+            () => {
 
-        logoImage.style.filter =
-            "blur(18px)";
+                logoImage.style.opacity =
+                    "1";
+
+            };
+
+        logoImage.onerror =
+            () => {
+
+                clarityText.textContent =
+                    "IMAGE ERROR";
+
+            };
+
     }
 
 
-    /* =====================================================
-       GAME STATE
-    ===================================================== */
+    if (revealed) {
 
-    socket.on(
-        "game-state",
-        state => {
+        logoImage.style.filter =
+            "blur(0px)";
 
-            console.log(
-                "GAME STATE:",
-                state
+        logoImage.style.transform =
+            "scale(1)";
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE GAME
+========================================================= */
+
+async function updateGame() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/state",
+                {
+                    cache:
+                        "no-store"
+                }
             );
 
+        if (
+            !response.ok
+        ) {
 
-            /* PLAYER COUNT */
-
-            if (
-                state &&
-                Array.isArray(state.players)
-            ) {
-
-                playerCount.textContent =
-                    state.players.length;
-
-            }
-
-
-            /* WAITING */
-
-            if (
-                !state ||
-                !state.running ||
-                !state.question
-            ) {
-
-                gameStarted = false;
-
-                questionNumber.textContent =
-                    "WAITING";
-
-                waitingMessage.classList.remove(
-                    "hidden"
-                );
-
-                logoImage.classList.add(
-                    "hidden"
-                );
-
-                answerReveal.classList.add(
-                    "hidden"
-                );
-
-                clarityText.textContent =
-                    "WAITING FOR HOST";
-
-                timer.textContent =
-                    "30";
-
-                return;
-            }
-
-
-            gameStarted = true;
-
-            waitingMessage.classList.add(
-                "hidden"
+            throw new Error(
+                "State request failed"
             );
 
-            logoImage.classList.remove(
-                "hidden"
-            );
+        }
 
 
-            /* =============================================
-               IMPORTANT FIX
-
-               DO NOT USE:
-
-               state.question.image
-
-               Instead use:
-
-               state.questionIndex
-            ============================================== */
-
-            const index =
-                Number(
-                    state.questionIndex
-                );
+        const state =
+            await response.json();
 
 
-            if (
-                Number.isInteger(index) &&
-                index !== currentQuestionIndex
-            ) {
+        /* =================================================
+           WAITING
+        ================================================= */
 
-                loadQuestionImage(index);
-            }
-
-
-            /* =============================================
-               IF PAGE LOADED MID-QUESTION
-
-               We still need to load the image.
-            ============================================== */
-
-            if (
-                Number.isInteger(index) &&
-                !currentImage
-            ) {
-
-                loadQuestionImage(index);
-            }
-
-
-            /* QUESTION NUMBER */
+        if (
+            !state.started
+        ) {
 
             questionNumber.textContent =
-                String(index + 1)
-                    .padStart(2, "0") +
-                " / " +
-                String(
-                    state.question.total || 19
-                ).padStart(2, "0");
-
-
-            /* REVEAL STATE */
-
-            if (state.revealed) {
-
-                logoImage.style.filter =
-                    "blur(0px)";
-
-                logoImage.classList.add(
-                    "clear-reveal"
-                );
-
-                clarityText.textContent =
-                    "ANSWER REVEALED";
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       TIMER
-    ===================================================== */
-
-    socket.on(
-        "timer",
-        data => {
-
-            const remaining =
-                Math.max(
-                    0,
-                    Number(data.remaining || 0)
-                );
-
+                "WAITING";
 
             timer.textContent =
-                Math.ceil(
-                    remaining
-                );
+                "30";
 
+            clarityText.textContent =
+                "WAITING";
 
-            /* =============================================
-               BLUR PROGRESSION
-
-               30 sec -> 18px
-               15 sec -> 8px
-               0 sec  -> 0px
-            ============================================== */
-
-            let blur;
-
-
-            if (remaining > 15) {
-
-                const progress =
-                    (30 - remaining) / 15;
-
-                blur =
-                    18 -
-                    (
-                        progress * 10
-                    );
-
-                clarityText.textContent =
-                    "HEAVILY BLURRED";
-
-            }
-
-            else {
-
-                const progress =
-                    (15 - remaining) / 15;
-
-                blur =
-                    8 -
-                    (
-                        progress * 8
-                    );
-
-
-                if (remaining > 7) {
-
-                    clarityText.textContent =
-                        "GETTING CLEARER";
-
-                }
-
-                else if (remaining > 0) {
-
-                    clarityText.textContent =
-                        "ALMOST CLEAR";
-
-                }
-
-                else {
-
-                    blur = 0;
-
-                    clarityText.textContent =
-                        "FULLY CLEAR";
-                }
-
-            }
-
-
-            logoImage.style.filter =
-                `blur(${Math.max(0, blur)}px)`;
-
-
-            /* URGENT TIMER */
-
-            if (remaining <= 5) {
-
-                timer.classList.add(
-                    "urgent"
-                );
-
-            }
-
-            else {
-
-                timer.classList.remove(
-                    "urgent"
-                );
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       NEW QUESTION
-    ===================================================== */
-
-    socket.on(
-        "new-question",
-        data => {
-
-            console.log(
-                "NEW QUESTION:",
-                data
-            );
-
-
-            let index = -1;
-
-
-            /* =============================================
-               SUPPORT BOTH POSSIBLE SERVER FORMATS
-            ============================================== */
-
-            if (
-                data &&
-                Number.isInteger(
-                    Number(data.questionIndex)
-                )
-            ) {
-
-                index =
-                    Number(
-                        data.questionIndex
-                    );
-
-            }
-
-            else if (
-                data &&
-                data.question &&
-                Number.isInteger(
-                    Number(
-                        data.question.id
-                    )
-                )
-            ) {
-
-                /*
-                    If server sends question id:
-
-                    id 1 -> image 1
-                    id 2 -> image 2
-                    ...
-                */
-
-                index =
-                    Number(
-                        data.question.id
-                    ) - 1;
-
-            }
-
-
-            if (index >= 0) {
-
-                loadQuestionImage(
-                    index
-                );
-
-                questionNumber.textContent =
-                    String(index + 1)
-                        .padStart(2, "0") +
-                    " / 19";
-            }
-
-
-            logoImage.classList.remove(
+            logoImage.classList.add(
                 "hidden"
             );
 
-            waitingMessage.classList.add(
+            waitingMessage.classList.remove(
                 "hidden"
             );
 
@@ -1265,194 +904,254 @@
                 "hidden"
             );
 
-            logoImage.style.filter =
-                "blur(18px)";
+            lastQuestion = -1;
+            lastImage = "";
 
-            logoImage.classList.remove(
-                "clear-reveal"
+            return;
+
+        }
+
+
+        /* =================================================
+           QUESTION
+        ================================================= */
+
+        const currentQuestion =
+            state.question;
+
+
+        questionNumber.textContent =
+            String(
+                currentQuestion
+            ).padStart(
+                2,
+                "0"
+            ) +
+            " / " +
+            String(
+                state.totalQuestions
+            ).padStart(
+                2,
+                "0"
             );
 
-            timer.textContent =
-                "30";
 
-            timer.classList.remove(
-                "urgent"
+        /* =================================================
+           TIMER
+        ================================================= */
+
+        const remaining =
+            Math.max(
+                0,
+                state.remaining
+            );
+
+        const seconds =
+            Math.ceil(
+                remaining / 1000
+            );
+
+        timer.textContent =
+            seconds;
+
+
+        /* =================================================
+           TEAM COUNT
+        ================================================= */
+
+        if (
+            Array.isArray(
+                state.leaderboard
+            )
+        ) {
+
+            teamCount.textContent =
+                state.leaderboard.length;
+
+        }
+
+
+        /* =================================================
+           NEW QUESTION
+        ================================================= */
+
+        if (
+            lastQuestion !==
+            currentQuestion
+        ) {
+
+            lastQuestion =
+                currentQuestion;
+
+            lastImage = "";
+
+            answerReveal.classList.add(
+                "hidden"
             );
 
             clarityText.textContent =
-                "STARTING BLURRED";
+                "STARTING";
 
         }
-    );
 
 
-    /* =====================================================
-       ANSWER REVEALED
-    ===================================================== */
+        /* =================================================
+           IMAGE
+        ================================================= */
 
-    socket.on(
-        "answer-revealed",
-        data => {
+        updateImage(
+            state.images,
+            state.revealed
+        );
 
-            console.log(
-                "ANSWER REVEALED:",
-                data
-            );
 
+        /* =================================================
+           REVEALED
+        ================================================= */
+
+        if (
+            state.revealed
+        ) {
 
             logoImage.style.filter =
                 "blur(0px)";
 
-            logoImage.classList.add(
-                "clear-reveal"
-            );
+            logoImage.style.transform =
+                "scale(1)";
 
             clarityText.textContent =
                 "ANSWER REVEALED";
 
-
-            if (
-                data &&
-                data.answer
-            ) {
-
-                answerText.textContent =
-                    data.answer;
-
-            }
-
-            else {
-
-                answerText.textContent =
-                    "ANSWER";
-
-            }
-
+            answerText.textContent =
+                state.answer ||
+                "—";
 
             answerReveal.classList.remove(
                 "hidden"
             );
 
         }
-    );
 
-
-    /* =====================================================
-       GAME FINISHED
-    ===================================================== */
-
-    socket.on(
-        "game-finished",
-        data => {
-
-            console.log(
-                "GAME FINISHED"
-            );
-
-
-            logoImage.style.filter =
-                "blur(0px)";
-
-            logoImage.classList.add(
-                "clear-reveal"
-            );
-
-            clarityText.textContent =
-                "GAME COMPLETE";
-
-        }
-    );
-
-
-    /* =====================================================
-       GAME RESET
-    ===================================================== */
-
-    socket.on(
-        "game-reset",
-        () => {
-
-            console.log(
-                "GAME RESET"
-            );
-
-
-            currentImage = "";
-
-            currentQuestionIndex = -1;
-
-            gameStarted = false;
-
-
-            logoImage.classList.add(
-                "hidden"
-            );
-
-            logoImage.removeAttribute(
-                "src"
-            );
-
-
-            waitingMessage.classList.remove(
-                "hidden"
-            );
-
+        else {
 
             answerReveal.classList.add(
                 "hidden"
             );
 
 
-            questionNumber.textContent =
-                "WAITING";
+            const blur =
+                calculateBlur(
+                    remaining
+                );
 
 
-            timer.textContent =
-                "30";
+            logoImage.style.filter =
+                `blur(${blur}px)`;
 
+
+            logoImage.style.transform =
+                "scale(1.01)";
+
+
+            if (
+                seconds > 20
+            ) {
+
+                clarityText.textContent =
+                    "BLURRED";
+
+            }
+
+            else if (
+                seconds > 10
+            ) {
+
+                clarityText.textContent =
+                    "GETTING CLEARER";
+
+            }
+
+            else if (
+                seconds > 5
+            ) {
+
+                clarityText.textContent =
+                    "CLEARING";
+
+            }
+
+            else if (
+                seconds > 0
+            ) {
+
+                clarityText.textContent =
+                    "ALMOST CLEAR";
+
+            }
+
+            else {
+
+                clarityText.textContent =
+                    "TIME UP";
+
+            }
+
+        }
+
+
+        /* =================================================
+           URGENT TIMER
+        ================================================= */
+
+        if (
+            seconds <= 5 &&
+            seconds > 0
+        ) {
+
+            timer.classList.add(
+                "urgent"
+            );
+
+        }
+
+        else {
 
             timer.classList.remove(
                 "urgent"
             );
 
-
-            clarityText.textContent =
-                "WAITING FOR HOST";
-
         }
-    );
 
 
-    /* =====================================================
-       CONNECTION STATUS
-    ===================================================== */
+    }
 
-    socket.on(
-        "connect",
-        () => {
+    catch (
+        error
+    ) {
 
-            console.log(
-                "Projector connected:",
-                socket.id
-            );
+        console.error(
+            "Projector state error:",
+            error
+        );
 
-        }
-    );
+        clarityText.textContent =
+            "CONNECTING...";
+
+    }
+
+}
 
 
-    socket.on(
-        "disconnect",
-        () => {
+/* =========================================================
+   START POLLING
+========================================================= */
 
-            console.warn(
-                "Projector disconnected"
-            );
+updateGame();
 
-            clarityText.textContent =
-                "CONNECTION LOST";
-
-        }
-    );
+setInterval(
+    updateGame,
+    250
+);
 
 </script>
 
