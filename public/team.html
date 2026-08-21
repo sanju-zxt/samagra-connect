@@ -1,936 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
-
-<meta name="theme-color" content="#050608">
-
-<title>SAMAGRA • CONNECT</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-}
-
-body {
-    min-height: 100dvh;
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            #191c22 0%,
-            #0b0d11 38%,
-            #050608 75%
-        );
-    color: #fff;
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        );
-
-    background-size: 55px 55px;
-    opacity: .45;
-}
-
-
-/* =========================================================
-   APP
-   ========================================================= */
-
-.app {
-    position: relative;
-
-    width: min(520px, 100%);
-    min-height: 100dvh;
-
-    margin: auto;
-
-    padding:
-        17px
-        15px
-        24px;
-
-    display: flex;
-    flex-direction: column;
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-.header {
-    height: 44px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.07);
-}
-
-.brand {
-    color: #fff;
-
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: .21em;
-}
-
-.live {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    padding:
-        7px 9px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    border-radius: 999px;
-
-    color: #68707d;
-
-    font-size: 6px;
-    font-weight: 900;
-
-    letter-spacing: .13em;
-}
-
-.live-dot {
-    width: 5px;
-    height: 5px;
-
-    border-radius: 50%;
-
-    background: #67e49a;
-
-    box-shadow:
-        0 0 10px
-        rgba(103,228,154,.7);
-}
-
-
-/* =========================================================
-   JOIN
-   ========================================================= */
-
-.join-screen {
-    flex: 1;
-
-    display: flex;
-    align-items: center;
-}
-
-.join-card {
-    width: 100%;
-
-    padding: 26px 21px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.075);
-
-    border-radius: 22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.045),
-            rgba(255,255,255,.012)
-        );
-
-    box-shadow:
-        0 30px 90px
-        rgba(0,0,0,.35);
-}
-
-.kicker {
-    color: #5f6773;
-
-    font-size: 7px;
-    font-weight: 900;
-
-    letter-spacing: .2em;
-}
-
-.join-title {
-    margin-top: 8px;
-
-    color: #fff;
-
-    font-size: 31px;
-    line-height: .95;
-
-    font-weight: 900;
-
-    letter-spacing: -.055em;
-}
-
-.join-text {
-    margin-top: 11px;
-
-    color: #68707d;
-
-    font-size: 10px;
-
-    line-height: 1.6;
-}
-
-.input {
-    width: 100%;
-    height: 55px;
-
-    margin-top: 22px;
-
-    padding:
-        0 15px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius: 13px;
-
-    outline: none;
-
-    background:
-        rgba(0,0,0,.3);
-
-    color: #fff;
-
-    text-align: center;
-
-    font-family: inherit;
-
-    font-size: 15px;
-    font-weight: 800;
-
-    text-transform: uppercase;
-}
-
-.input:focus {
-    border-color:
-        rgba(255,255,255,.3);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255,255,255,.025);
-}
-
-.button {
-    width: 100%;
-    height: 53px;
-
-    margin-top: 10px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.8);
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #fff,
-            #e5e6e9
-        );
-
-    color: #08090c;
-
-    font-family: inherit;
-
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: .1em;
-
-    cursor: pointer;
-}
-
-.button:disabled {
-    opacity: .4;
-    cursor: not-allowed;
-}
-
-.error {
-    min-height: 20px;
-
-    margin-top: 10px;
-
-    color: #ff6974;
-
-    text-align: center;
-
-    font-size: 9px;
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   WAITING
-   ========================================================= */
-
-.waiting-screen {
-    display: none;
-
-    flex: 1;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-}
-
-.waiting-screen.show {
-    display: flex;
-}
-
-.waiting-card {
-    width: 100%;
-
-    padding: 30px 20px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    border-radius: 22px;
-
-    background:
-        rgba(255,255,255,.025);
-}
-
-.loader {
-    width: 54px;
-    height: 54px;
-
-    margin:
-        0 auto 20px;
-
-    border:
-        2px solid
-        rgba(255,255,255,.07);
-
-    border-top-color: #fff;
-
-    border-radius: 50%;
-
-    animation:
-        spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.waiting-title {
-    color: #fff;
-
-    font-size: 22px;
-    font-weight: 900;
-
-    letter-spacing: -.04em;
-}
-
-.waiting-text {
-    margin-top: 8px;
-
-    color: #626a76;
-
-    font-size: 9px;
-
-    line-height: 1.6;
-}
-
-.my-team {
-    margin-top: 15px;
-
-    color: #fff;
-
-    font-size: 12px;
-    font-weight: 900;
-}
-
-
-/* =========================================================
-   GAME
-   ========================================================= */
-
-.game-screen {
-    display: none;
-
-    flex: 1;
-}
-
-.game-screen.show {
-    display: block;
-}
-
-
-/* =========================================================
-   GAME HEADER
-   ========================================================= */
-
-.game-head {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 18px;
-}
-
-.team-name {
-    color: #fff;
-
-    font-size: 13px;
-    font-weight: 900;
-}
-
-.score {
-    color: #777f8b;
-
-    font-size: 8px;
-    font-weight: 800;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-
-/* =========================================================
-   QUESTION CARD
-   ========================================================= */
-
-.question-card {
-    margin-top: 12px;
-
-    padding: 18px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.075);
-
-    border-radius: 19px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.045),
-            rgba(255,255,255,.012)
-        );
-}
-
-.question-top {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-}
-
-.question-label {
-    color: #555d69;
-
-    font-size: 6px;
-    font-weight: 900;
-
-    letter-spacing: .16em;
-}
-
-.question-number {
-    margin-top: 5px;
-
-    color: #fff;
-
-    font-size: 17px;
-    font-weight: 900;
-}
-
-.status {
-    padding:
-        7px 9px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    border-radius: 999px;
-
-    color: #69717e;
-
-    background:
-        rgba(255,255,255,.025);
-
-    font-size: 6px;
-    font-weight: 900;
-
-    letter-spacing: .1em;
-}
-
-
-/* =========================================================
-   TIMER
-   ========================================================= */
-
-.timer {
-    margin-top: 22px;
-
-    color: #fff;
-
-    text-align: center;
-
-    font-size: 58px;
-
-    line-height: .85;
-
-    font-weight: 900;
-
-    letter-spacing: -.08em;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-.timer.danger {
-    color: #ff6974;
-
-    animation:
-        pulse .7s infinite;
-}
-
-@keyframes pulse {
-    50% {
-        opacity: .45;
-    }
-}
-
-
-/* =========================================================
-   CLUE PROGRESS
-   ========================================================= */
-
-.progress {
-    display: flex;
-
-    gap: 5px;
-
-    margin-top: 20px;
-}
-
-.progress span {
-    height: 3px;
-
-    flex: 1;
-
-    border-radius: 99px;
-
-    background:
-        rgba(255,255,255,.08);
-}
-
-.progress span.active {
-    background: #fff;
-}
-
-
-/* =========================================================
-   ANSWER
-   ========================================================= */
-
-.answer-area {
-    margin-top: 13px;
-}
-
-.answer-input {
-    width: 100%;
-    height: 58px;
-
-    padding:
-        0 15px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius: 14px;
-
-    outline: none;
-
-    background:
-        rgba(0,0,0,.3);
-
-    color: #fff;
-
-    text-align: center;
-
-    font-family: inherit;
-
-    font-size: 17px;
-    font-weight: 900;
-
-    text-transform: uppercase;
-}
-
-.answer-input:focus {
-    border-color:
-        rgba(255,255,255,.3);
-}
-
-.submit {
-    width: 100%;
-    height: 54px;
-
-    margin-top: 9px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.8);
-
-    border-radius: 13px;
-
-    background:
-        #fff;
-
-    color: #08090c;
-
-    font-family: inherit;
-
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: .1em;
-}
-
-.submit:disabled {
-    opacity: .35;
-}
-
-
-/* =========================================================
-   SUBMITTED
-   ========================================================= */
-
-.submitted {
-    display: none;
-
-    margin-top: 13px;
-
-    padding: 21px;
-
-    border:
-        1px solid
-        rgba(103,228,154,.13);
-
-    border-radius: 16px;
-
-    background:
-        rgba(103,228,154,.035);
-
-    text-align: center;
-}
-
-.submitted.show {
-    display: block;
-}
-
-.check {
-    color: #67e49a;
-
-    font-size: 23px;
-}
-
-.submitted-title {
-    margin-top: 6px;
-
-    color: #67e49a;
-
-    font-size: 12px;
-    font-weight: 900;
-}
-
-.submitted-text {
-    margin-top: 5px;
-
-    color: #59616d;
-
-    font-size: 8px;
-}
-
-
-/* =========================================================
-   RESULT
-   ========================================================= */
-
-.result {
-    display: none;
-
-    margin-top: 13px;
-
-    padding: 20px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    border-radius: 16px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    text-align: center;
-}
-
-.result.show {
-    display: block;
-}
-
-.result-title {
-    color: #fff;
-
-    font-size: 16px;
-    font-weight: 900;
-}
-
-.result-points {
-    margin-top: 5px;
-
-    color: #67e49a;
-
-    font-size: 29px;
-    font-weight: 900;
-}
-
-.result-total {
-    margin-top: 4px;
-
-    color: #626a76;
-
-    font-size: 8px;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.footer {
-    padding-top: 18px;
-
-    color: #3d444f;
-
-    text-align: center;
-
-    font-size: 6px;
-    font-weight: 900;
-
-    letter-spacing: .16em;
-}
-
-
-@media (max-width: 380px) {
-
-    .app {
-        padding:
-            14px
-            12px
-            20px;
-    }
-
-    .join-title {
-        font-size: 27px;
-    }
-
-    .timer {
-        font-size: 51px;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>Samagra Connect • Play</title>
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
 </head>
 
+<body class="student-page">
 
-<body>
+<div class="mobile-shell">
 
-<div class="app">
+    <!-- HEADER -->
 
+    <header class="mobile-header">
 
-<header class="header">
+        <div>
+            <div class="brand-mini">
+                SAMAGRA
+            </div>
 
-    <div class="brand">
-        SAMAGRA • CONNECT
-    </div>
-
-    <div class="live">
-        <span class="live-dot"></span>
-        LIVE
-    </div>
-
-</header>
-
-
-<!-- =====================================================
-     JOIN
-     ===================================================== -->
-
-<section
-    id="joinScreen"
-    class="join-screen"
->
-
-    <div class="join-card">
-
-        <div class="kicker">
-            4 IMAGES • 1 ANSWER
+            <div class="brand-sub">
+                CONNECT
+            </div>
         </div>
 
-        <div class="join-title">
-            Join your team.
+        <div
+            id="connectionStatus"
+            class="connection offline"
+        >
+            OFFLINE
         </div>
 
-        <div class="join-text">
-            Enter the exact team name given by
-            your team captain.
+    </header>
+
+
+    <!-- JOIN -->
+
+    <section
+        id="joinScreen"
+        class="mobile-card"
+    >
+
+        <div class="eyebrow">
+            INDIVIDUAL GAME
         </div>
+
+        <h1>
+            Find the logo.
+        </h1>
+
+        <p class="mobile-muted">
+            Identify the logo shown on the projector
+            and submit your answer before time runs out.
+        </p>
+
+        <label class="field-label">
+            YOUR NAME
+        </label>
 
         <input
-            id="teamName"
-            class="input"
+            id="nameInput"
+            class="mobile-input"
             type="text"
             maxlength="30"
-            autocomplete="off"
-            placeholder="TEAM NAME"
+            autocomplete="name"
+            placeholder="Enter your name"
         >
 
         <button
             id="joinButton"
-            class="button"
+            class="mobile-button primary"
         >
             JOIN GAME
         </button>
 
         <div
             id="joinError"
-            class="error"
+            class="mobile-error hidden"
         ></div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =====================================================
-     WAITING
-     ===================================================== -->
+    <!-- WAITING -->
 
-<section
-    id="waitingScreen"
-    class="waiting-screen"
->
+    <section
+        id="waitingScreen"
+        class="mobile-card hidden"
+    >
 
-    <div class="waiting-card">
+        <div class="live-orb"></div>
 
-        <div class="loader"></div>
-
-        <div class="waiting-title">
-            You're in.
+        <div class="eyebrow">
+            YOU ARE IN
         </div>
 
-        <div class="waiting-text">
-            Keep this page open.
-            The game will start automatically.
+        <h1 id="playerNameDisplay">
+            Player
+        </h1>
+
+        <p class="mobile-muted">
+            Wait for the host to start the game.
+        </p>
+
+        <div class="waiting-box">
+
+            <div class="waiting-number">
+                <span id="playerScoreWaiting">0</span>
+            </div>
+
+            <div class="waiting-label">
+                POINTS
+            </div>
+
         </div>
 
-        <div
-            id="myTeam"
-            class="my-team"
-        >
-            —
-        </div>
-
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =====================================================
-     GAME
-     ===================================================== -->
+    <!-- GAME -->
 
-<section
-    id="gameScreen"
-    class="game-screen"
->
+    <section
+        id="gameScreen"
+        class="hidden"
+    >
 
-
-    <div class="game-head">
-
-        <div
-            id="gameTeam"
-            class="team-name"
-        >
-            TEAM
-        </div>
-
-        <div
-            id="score"
-            class="score"
-        >
-            0.00 POINTS
-        </div>
-
-    </div>
-
-
-    <div class="question-card">
-
-        <div class="question-top">
+        <div class="game-top">
 
             <div>
-
-                <div class="question-label">
+                <div class="eyebrow">
                     QUESTION
                 </div>
 
@@ -938,234 +146,209 @@ body::before {
                     id="questionNumber"
                     class="question-number"
                 >
-                    01 / 23
+                    01 / 19
                 </div>
-
             </div>
 
             <div
-                id="status"
-                class="status"
+                id="timer"
+                class="mobile-timer"
             >
-                WAITING
+                30
             </div>
 
         </div>
 
 
-        <div
-            id="timer"
-            class="timer"
-        >
-            30.00
+        <div class="mobile-card answer-card">
+
+            <div class="answer-status">
+                <span
+                    id="answerStatusDot"
+                    class="status-dot"
+                ></span>
+
+                <span id="answerStatus">
+                    READY
+                </span>
+            </div>
+
+
+            <div
+                id="gameMessage"
+                class="mobile-game-message"
+            >
+                Watch the projector.
+            </div>
+
+
+            <input
+                id="answerInput"
+                class="mobile-input answer-input"
+                type="text"
+                maxlength="60"
+                autocomplete="off"
+                autocapitalize="none"
+                spellcheck="false"
+                placeholder="Type the logo name"
+            >
+
+
+            <button
+                id="submitButton"
+                class="mobile-button primary"
+            >
+                SUBMIT ANSWER
+            </button>
+
+
+            <div class="answer-help">
+                Spaces and CAPITAL/lowercase do not matter.
+            </div>
+
         </div>
 
 
-        <div
-            id="progress"
-            class="progress"
-        >
+        <!-- SCORE -->
 
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="score-card">
+
+            <div>
+                <div class="score-label">
+                    YOUR SCORE
+                </div>
+
+                <div
+                    id="playerScore"
+                    class="score-value"
+                >
+                    0
+                </div>
+            </div>
+
+            <div class="score-right">
+                <div class="score-label">
+                    STATUS
+                </div>
+
+                <div
+                    id="roundStatus"
+                    class="score-status"
+                >
+                    WAITING
+                </div>
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
 
-    <div
-        id="answerArea"
-        class="answer-area"
+    <!-- FINISHED -->
+
+    <section
+        id="finishedScreen"
+        class="mobile-card hidden"
     >
 
-        <input
-            id="answerInput"
-            class="answer-input"
-            type="text"
-            maxlength="50"
-            autocomplete="off"
-            autocapitalize="characters"
-            placeholder="TYPE ANSWER"
+        <div class="eyebrow">
+            GAME COMPLETE
+        </div>
+
+        <h1>
+            Well played.
+        </h1>
+
+        <div class="final-score">
+
+            <div class="final-score-label">
+                FINAL SCORE
+            </div>
+
+            <div
+                id="finalScore"
+                class="final-score-number"
+            >
+                0
+            </div>
+
+        </div>
+
+        <p class="mobile-muted">
+            Check the leaderboard for the final ranking.
+        </p>
+
+        <a
+            href="/leaderboard.html"
+            class="mobile-button secondary"
         >
+            VIEW LEADERBOARD
+        </a>
 
-        <button
-            id="submitButton"
-            class="submit"
-        >
-            SUBMIT ANSWER
-        </button>
-
-    </div>
-
-
-    <div
-        id="submitted"
-        class="submitted"
-    >
-
-        <div class="check">
-            ✓
-        </div>
-
-        <div class="submitted-title">
-            ANSWER SUBMITTED
-        </div>
-
-        <div class="submitted-text">
-            Wait for the host to reveal the answer.
-        </div>
-
-    </div>
-
-
-    <div
-        id="result"
-        class="result"
-    >
-
-        <div
-            id="resultTitle"
-            class="result-title"
-        >
-            RESULT
-        </div>
-
-        <div
-            id="resultPoints"
-            class="result-points"
-        >
-            +0.00
-        </div>
-
-        <div
-            id="resultTotal"
-            class="result-total"
-        >
-            TOTAL SCORE: 0.00
-        </div>
-
-    </div>
-
-
-</section>
-
-
-<footer class="footer">
-    SAMAGRA CONNECT 2026
-</footer>
-
+    </section>
 
 </div>
 
 
+<script src="/socket.io/socket.io.js"></script>
+
 <script>
+const socket = io();
 
-"use strict";
+let playerId =
+    localStorage.getItem("samagraPlayerId");
 
+let playerName =
+    localStorage.getItem("samagraPlayerName");
 
-/* =========================================================
-   STORAGE
-   ========================================================= */
-
-let teamId =
-    localStorage.getItem(
-        "samagra_team_id"
-    );
-
-let teamName =
-    localStorage.getItem(
-        "samagra_team_name"
-    );
-
-
-/* =========================================================
-   STATE
-   ========================================================= */
-
-let state = null;
-
-let currentQuestion = 0;
-
-let submittedQuestion = 0;
-
-let lastSubmissionResult = null;
+let currentQuestion = -1;
+let hasAnswered = false;
+let gameRunning = false;
 
 
 /* =========================================================
    ELEMENTS
-   ========================================================= */
+========================================================= */
 
 const joinScreen =
-    document.getElementById(
-        "joinScreen"
-    );
+    document.getElementById("joinScreen");
 
 const waitingScreen =
-    document.getElementById(
-        "waitingScreen"
-    );
+    document.getElementById("waitingScreen");
 
 const gameScreen =
-    document.getElementById(
-        "gameScreen"
-    );
+    document.getElementById("gameScreen");
 
-const teamNameInput =
-    document.getElementById(
-        "teamName"
-    );
+const finishedScreen =
+    document.getElementById("finishedScreen");
+
+const nameInput =
+    document.getElementById("nameInput");
 
 const joinButton =
-    document.getElementById(
-        "joinButton"
-    );
+    document.getElementById("joinButton");
 
 const joinError =
+    document.getElementById("joinError");
+
+const playerNameDisplay =
     document.getElementById(
-        "joinError"
+        "playerNameDisplay"
     );
 
-const myTeam =
+const playerScoreWaiting =
     document.getElementById(
-        "myTeam"
+        "playerScoreWaiting"
     );
 
-const gameTeam =
+const playerScore =
     document.getElementById(
-        "gameTeam"
+        "playerScore"
     );
 
-const score =
+const finalScore =
     document.getElementById(
-        "score"
-    );
-
-const questionNumber =
-    document.getElementById(
-        "questionNumber"
-    );
-
-const status =
-    document.getElementById(
-        "status"
-    );
-
-const timer =
-    document.getElementById(
-        "timer"
-    );
-
-const progress =
-    document.querySelectorAll(
-        "#progress span"
-    );
-
-const answerArea =
-    document.getElementById(
-        "answerArea"
+        "finalScore"
     );
 
 const answerInput =
@@ -1178,35 +361,97 @@ const submitButton =
         "submitButton"
     );
 
-const submitted =
+const timer =
     document.getElementById(
-        "submitted"
+        "timer"
     );
 
-const result =
+const questionNumber =
     document.getElementById(
-        "result"
+        "questionNumber"
     );
 
-const resultTitle =
+const gameMessage =
     document.getElementById(
-        "resultTitle"
+        "gameMessage"
     );
 
-const resultPoints =
+const roundStatus =
     document.getElementById(
-        "resultPoints"
+        "roundStatus"
     );
 
-const resultTotal =
+const answerStatus =
     document.getElementById(
-        "resultTotal"
+        "answerStatus"
+    );
+
+const answerStatusDot =
+    document.getElementById(
+        "answerStatusDot"
+    );
+
+const connectionStatus =
+    document.getElementById(
+        "connectionStatus"
     );
 
 
 /* =========================================================
+   SCREEN
+========================================================= */
+
+function showScreen(screen) {
+
+    [
+        joinScreen,
+        waitingScreen,
+        gameScreen,
+        finishedScreen
+    ].forEach(element => {
+        element.classList.add("hidden");
+    });
+
+    screen.classList.remove("hidden");
+}
+
+
+/* =========================================================
+   CONNECTION
+========================================================= */
+
+socket.on("connect", () => {
+
+    connectionStatus.textContent =
+        "ONLINE";
+
+    connectionStatus.className =
+        "connection online";
+
+    if (playerId) {
+        socket.emit(
+            "identify-player",
+            playerId
+        );
+    }
+
+});
+
+
+socket.on("disconnect", () => {
+
+    connectionStatus.textContent =
+        "OFFLINE";
+
+    connectionStatus.className =
+        "connection offline";
+
+});
+
+
+/* =========================================================
    JOIN
-   ========================================================= */
+========================================================= */
 
 joinButton.addEventListener(
     "click",
@@ -1214,16 +459,12 @@ joinButton.addEventListener(
 );
 
 
-teamNameInput.addEventListener(
+nameInput.addEventListener(
     "keydown",
-    function(event) {
+    event => {
 
-        if (
-            event.key === "Enter"
-        ) {
-
+        if (event.key === "Enter") {
             joinGame();
-
         }
 
     }
@@ -1233,530 +474,280 @@ teamNameInput.addEventListener(
 async function joinGame() {
 
     const name =
-        teamNameInput.value.trim();
-
+        nameInput.value.trim();
 
     if (!name) {
 
-        joinError.textContent =
-            "Enter your team name.";
+        showJoinError(
+            "Please enter your name."
+        );
 
         return;
-
     }
 
-
-    joinButton.disabled =
-        true;
-
-    joinError.textContent =
-        "";
-
+    joinButton.disabled = true;
+    joinButton.textContent =
+        "JOINING...";
 
     try {
 
         const response =
             await fetch(
-                "/api/team/join",
+                "/api/join",
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type":
-                            "application/json",
-
-                        "Accept":
                             "application/json"
                     },
-
-                    body:
-                        JSON.stringify({
-                            name: name
-                        })
+                    body: JSON.stringify({
+                        name
+                    })
                 }
             );
-
 
         const data =
             await response.json();
 
-
         if (!response.ok) {
-
             throw new Error(
                 data.error ||
                 "Unable to join."
             );
-
         }
 
+        playerId =
+            data.player.id;
 
-        teamId =
-            data.id;
-
-        teamName =
-            data.name;
-
+        playerName =
+            data.player.name;
 
         localStorage.setItem(
-            "samagra_team_id",
-            teamId
+            "samagraPlayerId",
+            playerId
         );
 
         localStorage.setItem(
-            "samagra_team_name",
-            teamName
+            "samagraPlayerName",
+            playerName
         );
 
+        playerNameDisplay.textContent =
+            playerName;
 
-        myTeam.textContent =
-            teamName;
+        showScreen(waitingScreen);
 
-
-        gameTeam.textContent =
-            teamName;
-
-
-        joinScreen.style.display =
-            "none";
-
-        waitingScreen.classList.add(
-            "show"
+        socket.emit(
+            "identify-player",
+            playerId
         );
 
-        gameScreen.classList.remove(
-            "show"
+    } catch (error) {
+
+        showJoinError(
+            error.message
         );
 
+    } finally {
 
-        update();
+        joinButton.disabled = false;
 
+        joinButton.textContent =
+            "JOIN GAME";
     }
-    catch(error) {
+}
 
-        joinError.textContent =
-            error.message;
 
-        joinButton.disabled =
-            false;
+function showJoinError(message) {
 
-    }
+    joinError.textContent =
+        message;
+
+    joinError.classList.remove(
+        "hidden"
+    );
 
 }
 
 
 /* =========================================================
-   GET STATE
-   ========================================================= */
+   GAME STATE
+========================================================= */
 
-async function getState() {
+socket.on(
+    "game-state",
+    state => {
 
-    try {
-
-        const response =
-            await fetch(
-                "/api/state?_=" +
-                Date.now(),
-                {
-                    cache:
-                        "no-store",
-
-                    headers: {
-                        "Accept":
-                            "application/json"
-                    }
-                }
-            );
-
-
-        if (!response.ok) {
-            return null;
+        if (!playerId) {
+            return;
         }
 
+        const me =
+            state.players.find(
+                player =>
+                    player.id === playerId
+            );
 
-        return await response.json();
+        if (me) {
 
-    }
-    catch(error) {
+            playerScore.textContent =
+                me.score;
 
-        console.error(
-            error
-        );
+            playerScoreWaiting.textContent =
+                me.score;
 
-        return null;
+            if (
+                state.questionIndex >= 0 &&
+                me.answered
+            ) {
+                hasAnswered = true;
+            }
+        }
 
-    }
-
-}
-
-
-/* =========================================================
-   FIND MY TEAM
-   ========================================================= */
-
-function getMyTeam() {
-
-    if (
-        !state ||
-        !Array.isArray(
-            state.leaderboard
-        )
-    ) {
-
-        return null;
-
-    }
-
-
-    return state.leaderboard.find(
-        team =>
-            String(team.id) ===
-            String(teamId)
-    ) || null;
-
-}
-
-
-/* =========================================================
-   MAIN UPDATE
-   ========================================================= */
-
-async function update() {
-
-    const newState =
-        await getState();
-
-
-    if (!newState) {
-        return;
-    }
-
-
-    state =
-        newState;
-
-
-    const mine =
-        getMyTeam();
-
-
-    if (mine) {
-
-        score.textContent =
-            Number(
-                mine.score || 0
-            ).toFixed(2) +
-            " POINTS";
-
-    }
-
-
-    /*
-     * IMPORTANT:
-     *
-     * Once Admin presses START,
-     * state.started becomes true.
-     *
-     * The phone automatically switches
-     * from waiting to the game.
-     */
-
-    if (
-        state.started
-    ) {
-
-        joinScreen.style.display =
-            "none";
-
-        waitingScreen.classList.remove(
-            "show"
-        );
-
-        gameScreen.classList.add(
-            "show"
-        );
-
-        gameTeam.textContent =
-            teamName || "TEAM";
-
-
-        renderGame(
-            mine
-        );
-
-    }
-    else {
 
         if (
-            teamId
+            !state.running &&
+            !state.stopped &&
+            state.questionIndex < 0
         ) {
 
-            joinScreen.style.display =
-                "none";
+            if (
+                !gameScreen.classList.contains(
+                    "hidden"
+                )
+            ) {
+                showScreen(
+                    waitingScreen
+                );
+            }
 
-            waitingScreen.classList.add(
-                "show"
-            );
-
-            gameScreen.classList.remove(
-                "show"
-            );
-
+            return;
         }
 
-    }
 
-}
+        if (state.stopped) {
 
+            gameMessage.textContent =
+                "Game stopped by host.";
 
-/* =========================================================
-   GAME
-   ========================================================= */
+            return;
+        }
 
-function renderGame(
-    mine
-) {
-
-    const q =
-        Number(
-            state.question || 1
-        );
-
-
-    questionNumber.textContent =
-        String(q).padStart(2, "0") +
-        " / " +
-        state.totalQuestions;
-
-
-    /*
-     * New round
-     */
-
-    if (
-        currentQuestion !== q
-    ) {
-
-        currentQuestion =
-            q;
-
-        submittedQuestion =
-            0;
-
-        lastSubmissionResult =
-            null;
-
-        resetAnswerUI();
-
-    }
-
-
-    /*
-     * Server tells us whether this
-     * team has submitted.
-     */
-
-    if (
-        mine &&
-        (
-            mine.answered ||
-            mine.submitted
-        )
-    ) {
-
-        submittedQuestion =
-            q;
-
-        showSubmitted();
-
-    }
-
-
-    /*
-     * If Admin closes the round,
-     * disable answer.
-     */
-
-    if (
-        !state.submissionsOpen
-    ) {
-
-        answerInput.disabled =
-            true;
-
-        submitButton.disabled =
-            true;
-
-        status.textContent =
-            state.revealed
-                ? "ANSWER REVEALED"
-                : "CLOSED";
-
-    }
-    else {
 
         if (
-            submittedQuestion !== q
+            state.running &&
+            state.questionIndex >= 0
         ) {
 
-            answerInput.disabled =
-                false;
+            if (
+                currentQuestion !==
+                state.questionIndex
+            ) {
 
-            submitButton.disabled =
-                false;
+                currentQuestion =
+                    state.questionIndex;
+
+                hasAnswered = false;
+
+                answerInput.value = "";
+
+                submitButton.disabled =
+                    false;
+
+                submitButton.textContent =
+                    "SUBMIT ANSWER";
+
+                answerStatus.textContent =
+                    "READY";
+
+                answerStatusDot.className =
+                    "status-dot";
+
+            }
+
+            showScreen(gameScreen);
+
+            questionNumber.textContent =
+                String(
+                    state.questionIndex + 1
+                ).padStart(2, "0") +
+                " / " +
+                String(
+                    state.question.total
+                ).padStart(2, "0");
+
+
+            if (state.locked) {
+
+                submitButton.disabled =
+                    true;
+
+                roundStatus.textContent =
+                    state.revealed
+                        ? "REVEALED"
+                        : "LOCKED";
+
+            } else {
+
+                roundStatus.textContent =
+                    "LIVE";
+
+            }
 
         }
 
-        status.textContent =
-            "ANSWER OPEN";
-
     }
-
-
-    updateProgress();
-
-}
+);
 
 
 /* =========================================================
    TIMER
-   ========================================================= */
+========================================================= */
 
-function updateTimer() {
+socket.on(
+    "timer",
+    data => {
 
-    if (
-        !state ||
-        !state.started
-    ) {
-
-        timer.textContent =
-            "30.00";
-
-        return;
-
-    }
-
-
-    const remaining =
-        Math.max(
-            0,
-            Number(
-                state.remaining || 0
-            )
-        );
-
-
-    const seconds =
-        remaining / 1000;
-
-
-    if (
-        seconds <= 0
-    ) {
+        const seconds =
+            Math.max(
+                0,
+                data.remaining
+            );
 
         timer.textContent =
-            "00.00";
+            Math.ceil(seconds);
 
-        timer.classList.add(
-            "danger"
-        );
+        if (seconds <= 5) {
 
-        answerInput.disabled =
-            true;
+            timer.classList.add(
+                "danger"
+            );
 
-        submitButton.disabled =
-            true;
+        } else {
 
-        status.textContent =
-            "TIME UP";
-
-        return;
-
-    }
-
-
-    timer.textContent =
-        seconds.toFixed(2);
-
-
-    timer.classList.toggle(
-        "danger",
-        seconds <= 5
-    );
-
-}
-
-
-/* =========================================================
-   IMAGE PROGRESS
-   ========================================================= */
-
-function updateProgress() {
-
-    if (
-        !state
-    ) {
-        return;
-    }
-
-
-    const remaining =
-        Number(
-            state.remaining || 0
-        );
-
-
-    const elapsed =
-        30000 -
-        remaining;
-
-
-    let count = 1;
-
-
-    if (
-        elapsed >= 22500
-    ) {
-
-        count = 4;
-
-    }
-    else if (
-        elapsed >= 15000
-    ) {
-
-        count = 3;
-
-    }
-    else if (
-        elapsed >= 7500
-    ) {
-
-        count = 2;
-
-    }
-
-
-    progress.forEach(
-        (
-            item,
-            index
-        ) => {
-
-            item.classList.toggle(
-                "active",
-                index < count
+            timer.classList.remove(
+                "danger"
             );
 
         }
-    );
 
-}
+        if (seconds <= 0) {
+
+            submitButton.disabled =
+                true;
+
+            roundStatus.textContent =
+                "TIME UP";
+
+        }
+
+    }
+);
 
 
 /* =========================================================
    SUBMIT
-   ========================================================= */
+========================================================= */
 
 submitButton.addEventListener(
     "click",
@@ -1766,14 +757,10 @@ submitButton.addEventListener(
 
 answerInput.addEventListener(
     "keydown",
-    function(event) {
+    event => {
 
-        if (
-            event.key === "Enter"
-        ) {
-
+        if (event.key === "Enter") {
             submitAnswer();
-
         }
 
     }
@@ -1782,256 +769,230 @@ answerInput.addEventListener(
 
 async function submitAnswer() {
 
-    if (
-        !state ||
-        !state.started ||
-        !state.submissionsOpen
-    ) {
-
+    if (hasAnswered) {
         return;
-
     }
-
 
     const answer =
         answerInput.value.trim();
 
-
     if (!answer) {
 
-        answerInput.focus();
+        gameMessage.textContent =
+            "Type an answer first.";
 
         return;
-
     }
 
+    submitButton.disabled = true;
 
-    submitButton.disabled =
-        true;
-
-    answerInput.disabled =
-        true;
-
+    submitButton.textContent =
+        "SUBMITTING...";
 
     try {
 
         const response =
             await fetch(
-                "/api/team/answer",
+                "/api/answer",
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type":
-                            "application/json",
-
-                        "Accept":
                             "application/json"
                     },
-
-                    body:
-                        JSON.stringify({
-                            id:
-                                teamId,
-
-                            answer:
-                                answer
-                        })
+                    body: JSON.stringify({
+                        playerId,
+                        answer
+                    })
                 }
             );
-
 
         const data =
             await response.json();
 
-
         if (!response.ok) {
-
             throw new Error(
                 data.error ||
-                "Submission failed."
+                "Could not submit."
             );
-
         }
 
+        hasAnswered = true;
 
-        submittedQuestion =
-            currentQuestion;
+        answerInput.disabled = true;
 
-        lastSubmissionResult =
-            data;
+        submitButton.textContent =
+            "ANSWER SUBMITTED";
 
+        if (data.correct) {
 
-        showSubmitted();
+            answerStatus.textContent =
+                "CORRECT";
 
+            answerStatusDot.className =
+                "status-dot correct";
 
-        /*
-         * The server has already calculated
-         * the score.
-         */
+            gameMessage.textContent =
+                `Correct! +${data.points} points`;
 
-        showResult(
-            data
-        );
+            roundStatus.textContent =
+                `+${data.points} POINTS`;
 
-    }
-    catch(error) {
+        } else {
 
-        answerInput.disabled =
-            false;
+            answerStatus.textContent =
+                "ANSWER LOCKED";
+
+            answerStatusDot.className =
+                "status-dot wrong";
+
+            gameMessage.textContent =
+                "Answer submitted.";
+
+            roundStatus.textContent =
+                "SUBMITTED";
+        }
+
+        playerScore.textContent =
+            data.totalScore;
+
+    } catch (error) {
 
         submitButton.disabled =
             false;
 
-        alert(
-            error.message
+        submitButton.textContent =
+            "SUBMIT ANSWER";
+
+        gameMessage.textContent =
+            error.message;
+    }
+}
+
+
+/* =========================================================
+   NEW QUESTION
+========================================================= */
+
+socket.on(
+    "new-question",
+    data => {
+
+        currentQuestion =
+            data.question.number - 1;
+
+        hasAnswered = false;
+
+        answerInput.value = "";
+
+        answerInput.disabled = false;
+
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+            "SUBMIT ANSWER";
+
+        answerStatus.textContent =
+            "READY";
+
+        answerStatusDot.className =
+            "status-dot";
+
+        gameMessage.textContent =
+            "Watch the projector.";
+
+        roundStatus.textContent =
+            "LIVE";
+
+        showScreen(gameScreen);
+
+        answerInput.focus();
+
+    }
+);
+
+
+/* =========================================================
+   ROUND END
+========================================================= */
+
+socket.on(
+    "round-ended",
+    () => {
+
+        submitButton.disabled =
+            true;
+
+        roundStatus.textContent =
+            "TIME UP";
+
+        gameMessage.textContent =
+            "Time is up.";
+
+    }
+);
+
+
+/* =========================================================
+   GAME FINISHED
+========================================================= */
+
+socket.on(
+    "game-finished",
+    () => {
+
+        const score =
+            playerScore.textContent;
+
+        finalScore.textContent =
+            score;
+
+        showScreen(
+            finishedScreen
         );
 
     }
-
-}
-
-
-/* =========================================================
-   SUBMITTED
-   ========================================================= */
-
-function showSubmitted() {
-
-    answerArea.style.display =
-        "none";
-
-    submitted.classList.add(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
-   RESULT
-   ========================================================= */
-
-function showResult(
-    data
-) {
-
-    submitted.classList.remove(
-        "show"
-    );
-
-    result.classList.add(
-        "show"
-    );
-
-
-    if (
-        data.correct
-    ) {
-
-        resultTitle.textContent =
-            "CORRECT";
-
-        resultPoints.textContent =
-            "+" +
-            Number(
-                data.points || 0
-            ).toFixed(2);
-
-    }
-    else {
-
-        resultTitle.textContent =
-            "NOT QUITE";
-
-        resultPoints.textContent =
-            "+0.00";
-
-    }
-
-
-    resultTotal.textContent =
-        "TOTAL SCORE: " +
-        Number(
-            data.score || 0
-        ).toFixed(2);
-
-}
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-function resetAnswerUI() {
-
-    answerArea.style.display =
-        "block";
-
-    submitted.classList.remove(
-        "show"
-    );
-
-    result.classList.remove(
-        "show"
-    );
-
-    answerInput.value =
-        "";
-
-    answerInput.disabled =
-        false;
-
-    submitButton.disabled =
-        false;
-
-    status.textContent =
-        "ANSWER OPEN";
-
-}
-
-
-/* =========================================================
-   AUTO UPDATE
-   ========================================================= */
-
-setInterval(
-    update,
-    500
-);
-
-setInterval(
-    updateTimer,
-    50
 );
 
 
 /* =========================================================
-   RESTORE
-   ========================================================= */
+   GAME RESET
+========================================================= */
 
-if (
-    teamId &&
-    teamName
-) {
+socket.on(
+    "game-reset",
+    () => {
 
-    myTeam.textContent =
-        teamName;
+        currentQuestion = -1;
 
-    gameTeam.textContent =
-        teamName;
+        hasAnswered = false;
 
-    joinScreen.style.display =
-        "none";
+        answerInput.value = "";
 
-    waitingScreen.classList.add(
-        "show"
+        answerInput.disabled = false;
+
+        showScreen(
+            waitingScreen
+        );
+
+    }
+);
+
+
+/* =========================================================
+   AUTO RESTORE
+========================================================= */
+
+if (playerId && playerName) {
+
+    playerNameDisplay.textContent =
+        playerName;
+
+    showScreen(
+        waitingScreen
     );
 
-    update();
-
 }
-
 </script>
 
 </body>
