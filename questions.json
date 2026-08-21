@@ -2,92 +2,92 @@
   {
     "id": 1,
     "answer": "SPOTIFY",
-    "image": "/assets/slide-2-img-1.jpg"
+    "image": "/assets/img1.jpg"
   },
   {
     "id": 2,
     "answer": "HUNGAMA",
-    "image": "/assets/slide-2-img-2.jpg"
+    "image": "/assets/img2.jpg"
   },
   {
     "id": 3,
     "answer": "AUDI",
-    "image": "/assets/slide-2-img-3.jpg"
+    "image": "/assets/img3.jpg"
   },
   {
     "id": 4,
     "answer": "JAGUAR",
-    "image": "/assets/slide-3-img-1.jpg"
+    "image": "/assets/img4.jpg"
   },
   {
     "id": 5,
     "answer": "BENZ",
-    "image": "/assets/slide-3-img-2.jpg"
+    "image": "/assets/img5.jpg"
   },
   {
     "id": 6,
     "answer": "GUCCI",
-    "image": "/assets/slide-3-img-3.jpg"
+    "image": "/assets/img6.jpg"
   },
   {
     "id": 7,
     "answer": "ALLEN SOLLY",
-    "image": "/assets/slide-4-img-1.jpg"
+    "image": "/assets/img7.jpg"
   },
   {
     "id": 8,
     "answer": "DOMINOS",
-    "image": "/assets/slide-4-img-2.jpg"
+    "image": "/assets/img8jpg"
   },
   {
     "id": 9,
     "answer": "BASKIN ROBBINS",
-    "image": "/assets/slide-4-img-3.jpg"
+    "image": "/assets/img9.jpg"
   },
   {
     "id": 10,
     "answer": "OLYMPIC",
-    "image": "/assets/slide-4-img-4.jpg"
+    "image": "/assets/img10.jpg"
   },
   {
     "id": 11,
     "answer": "PRINGLES",
-    "image": "/assets/slide-5-img-1.jpg"
+    "image": "/assets/img11.jpg"
   },
   {
     "id": 12,
     "answer": "SHELL",
-    "image": "/assets/slide-5-img-2.jpg"
+    "image": "/assets/img12.jpg"
   },
   {
     "id": 13,
     "answer": "STARBUCKS",
-    "image": "/assets/slide-5-img-3.jpg"
+    "image": "/assets/img13.jpg"
   },
   {
     "id": 14,
     "answer": "CARTOON NETWORK",
-    "image": "/assets/slide-5-img-4.jpg"
+    "image": "/assets/img14.jpg"
   },
   {
     "id": 15,
     "answer": "VISUAL STUDIO CODE",
-    "image": "/assets/slide-6-img-1.jpg"
+    "image": "/assets/img15.jpg"
   },
   {
     "id": 16,
     "answer": "GITHUB",
-    "image": "/assets/slide-6-img-2.jpg"
+    "image": "/assets/img16.jpg"
   },
   {
     "id": 17,
     "answer": "OPENAI",
-    "image": "/assets/slide-6-img-3.jpg"
+    "image": "/assets/img17.jpg"
   },
   {
     "id": 18,
     "answer": "MEESHO",
-    "image": "/assets/slide-6-img-4.jpg"
+    "image": "/assets/img18.jpg"
   },
   {
     "id": 19,
@@ -95,6 +95,6 @@
     "aliases": [
       "BEN10"
     ],
-    "image": "/assets/slide-7-img-1.jpg"
+    "image": "/assets/img19.jpg"
   }
 ]
