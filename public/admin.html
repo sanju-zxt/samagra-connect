@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -9,271 +10,1003 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Samagra Connect • Admin</title>
+    <title>SAMAGRA CONNECT • Admin</title>
 
-    <link
-        rel="stylesheet"
-        href="/style.css"
-    >
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    #171a20 0%,
+                    #080a0d 42%,
+                    #030405 100%
+                );
+
+            color: #f5f6f8;
+
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .page {
+            width: min(
+                1500px,
+                100%
+            );
+
+            min-height: 100vh;
+
+            margin: auto;
+
+            padding: 24px;
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 20px 24px;
+
+            border-radius: 22px;
+
+            border: 1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.035);
+
+            backdrop-filter:
+                blur(20px);
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.3);
+        }
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+        .brand-mark {
+            width: 48px;
+            height: 48px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 15px;
+
+            background: white;
+
+            color: #050608;
+
+            font-size: 23px;
+
+            font-weight: 950;
+        }
+
+        .brand-name {
+            font-size: 20px;
+
+            font-weight: 950;
+
+            letter-spacing:
+                0.14em;
+        }
+
+        .brand-subtitle {
+            margin-top: 3px;
+
+            color:
+                rgba(255,255,255,0.38);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing:
+                0.25em;
+        }
+
+        .connection {
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 10px 15px;
+
+            border-radius: 999px;
+
+            border: 1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.025);
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.1em;
+        }
+
+        .connection-dot {
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #ff5757;
+        }
+
+        .connection.online
+        .connection-dot {
+            background: #35ff8b;
+
+            box-shadow:
+                0 0 15px
+                rgba(53,255,139,0.7);
+        }
+
+        /* =====================================================
+           GRID
+        ===================================================== */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.4fr)
+                minmax(330px, 0.6fr);
+
+            gap: 18px;
+
+            margin-top: 18px;
+        }
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .card {
+            padding: 24px;
+
+            border-radius: 22px;
+
+            border: 1px solid
+                rgba(255,255,255,0.075);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.28);
+
+            backdrop-filter:
+                blur(18px);
+        }
+
+        .card-title {
+            font-size: 17px;
+
+            font-weight: 900;
+        }
+
+        .card-subtitle {
+            margin-top: 6px;
+
+            color:
+                rgba(255,255,255,0.42);
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           GAME STATUS
+        ===================================================== */
+
+        .status-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-top: 20px;
+        }
+
+        .stat {
+            padding: 17px;
+
+            border-radius: 16px;
+
+            border: 1px solid
+                rgba(255,255,255,0.06);
+
+            background:
+                rgba(255,255,255,0.025);
+        }
+
+        .stat-label {
+            color:
+                rgba(255,255,255,0.38);
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.16em;
+        }
+
+        .stat-value {
+            margin-top: 7px;
+
+            font-size: 25px;
+
+            font-weight: 950;
+
+            font-variant-numeric:
+                tabular-nums;
+        }
+
+        /* =====================================================
+           TIMER
+        ===================================================== */
+
+        .timer-panel {
+            margin-top: 16px;
+
+            padding: 24px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            border: 1px solid
+                rgba(255,255,255,0.07);
+
+            background:
+                rgba(0,0,0,0.22);
+        }
+
+        .timer-label {
+            color:
+                rgba(255,255,255,0.4);
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.2em;
+        }
+
+        .timer {
+            margin-top: 8px;
+
+            font-size: 70px;
+
+            line-height: 1;
+
+            font-weight: 950;
+
+            font-variant-numeric:
+                tabular-nums;
+        }
+
+        .timer.danger {
+            color: #ff5757;
+
+            text-shadow:
+                0 0 25px
+                rgba(255,87,87,0.5);
+        }
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+        .button {
+            min-height: 52px;
+
+            padding: 13px 18px;
+
+            border-radius: 14px;
+
+            border: 1px solid
+                rgba(255,255,255,0.12);
+
+            background:
+                rgba(255,255,255,0.045);
+
+            color: #f5f6f8;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.09em;
+
+            cursor: pointer;
+
+            transition:
+                transform .18s ease,
+                background .18s ease,
+                opacity .18s ease;
+        }
+
+        .button:hover:not(:disabled) {
+            transform:
+                translateY(-2px);
+
+            background:
+                rgba(255,255,255,0.09);
+        }
+
+        .button:active:not(:disabled) {
+            transform:
+                translateY(0);
+        }
+
+        .button.primary {
+            background: white;
+
+            color: #050608;
+
+            border-color: white;
+        }
+
+        .button.danger {
+            color: #ff7777;
+
+            border-color:
+                rgba(255,87,87,0.25);
+
+            background:
+                rgba(255,87,87,0.07);
+        }
+
+        .button:disabled {
+            opacity: .28;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+        /* =====================================================
+           QUESTION
+        ===================================================== */
+
+        .question-box {
+            margin-top: 18px;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            border: 1px solid
+                rgba(255,255,255,0.07);
+
+            background:
+                rgba(255,255,255,0.025);
+        }
+
+        .question-number {
+            color:
+                rgba(255,255,255,0.4);
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.18em;
+        }
+
+        .question-answer {
+            margin-top: 8px;
+
+            font-size: 25px;
+
+            font-weight: 950;
+
+            letter-spacing:
+                .02em;
+        }
+
+        .answer-hidden {
+            color:
+                rgba(255,255,255,0.22);
+        }
+
+        /* =====================================================
+           LEADERBOARD
+        ===================================================== */
+
+        .leaderboard {
+            width: 100%;
+
+            border-collapse:
+                separate;
+
+            border-spacing:
+                0 6px;
+
+            margin-top: 14px;
+        }
+
+        .leaderboard th {
+            padding: 7px 9px;
+
+            text-align: left;
+
+            color:
+                rgba(255,255,255,0.32);
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                0.15em;
+        }
+
+        .leaderboard td {
+            padding: 13px 9px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border-top: 1px solid
+                rgba(255,255,255,0.035);
+
+            border-bottom: 1px solid
+                rgba(255,255,255,0.035);
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .leaderboard td:first-child {
+            border-radius:
+                10px 0 0 10px;
+
+            width: 45px;
+
+            color:
+                rgba(255,255,255,0.4);
+        }
+
+        .leaderboard td:last-child {
+            border-radius:
+                0 10px 10px 0;
+
+            text-align: right;
+
+            font-weight: 950;
+        }
+
+        .leaderboard .top-rank td {
+            background:
+                rgba(255,255,255,0.07);
+        }
+
+        .empty {
+            padding: 35px 10px;
+
+            text-align: center;
+
+            color:
+                rgba(255,255,255,0.3);
+
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .message {
+            margin-top: 16px;
+
+            padding: 14px 16px;
+
+            border-radius: 13px;
+
+            border: 1px solid
+                rgba(255,255,255,0.07);
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color:
+                rgba(255,255,255,0.55);
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .message.success {
+            color: #35ff8b;
+
+            border-color:
+                rgba(53,255,139,0.2);
+
+            background:
+                rgba(53,255,139,0.06);
+        }
+
+        .message.error {
+            color: #ff7777;
+
+            border-color:
+                rgba(255,87,87,0.2);
+
+            background:
+                rgba(255,87,87,0.06);
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .page {
+                padding: 12px;
+            }
+
+            .header {
+                padding: 16px;
+            }
+
+            .brand-name {
+                font-size: 16px;
+            }
+
+            .status-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .actions {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .timer {
+                font-size: 58px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
-<body class="admin-page">
 
-<div class="admin-shell">
+<body>
 
+<div class="page">
 
-    <!-- HEADER -->
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-    <header class="admin-header">
+    <header class="header">
 
-        <div>
+        <div class="brand">
 
-            <div class="eyebrow">
-                SAMAGRA CONNECT
+            <div class="brand-mark">
+                S
             </div>
 
-            <h1>
-                Game Control
-            </h1>
+            <div>
 
-            <p>
-                Individual Logo Challenge
-            </p>
+                <div class="brand-name">
+                    SAMAGRA
+                </div>
+
+                <div class="brand-subtitle">
+                    CONNECT • ADMIN CONTROL
+                </div>
+
+            </div>
 
         </div>
 
 
         <div
-            id="adminStatus"
-            class="admin-status"
+            id="connection"
+            class="connection"
         >
-            READY
+
+            <span
+                class="connection-dot"
+            ></span>
+
+            <span id="connectionText">
+                CONNECTING
+            </span>
+
         </div>
 
     </header>
 
 
-    <!-- STATS -->
+    <!-- =====================================================
+         MAIN GRID
+    ====================================================== -->
 
-    <section class="admin-stats">
-
-        <div class="admin-stat">
-
-            <span>
-                QUESTION
-            </span>
-
-            <strong
-                id="questionStat"
-            >
-                —
-            </strong>
-
-        </div>
+    <main class="grid">
 
 
-        <div class="admin-stat">
+        <!-- =================================================
+             LEFT
+        ================================================== -->
 
-            <span>
-                TIME
-            </span>
+        <section class="card">
 
-            <strong
-                id="timeStat"
-            >
-                30
-            </strong>
+            <div class="card-title">
+                Game Control
+            </div>
 
-        </div>
-
-
-        <div class="admin-stat">
-
-            <span>
-                PLAYERS
-            </span>
-
-            <strong
-                id="playersStat"
-            >
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="admin-stat">
-
-            <span>
-                MAX
-            </span>
-
-            <strong>
-                10
-            </strong>
-
-        </div>
-
-    </section>
-
-
-    <!-- CONTROLS -->
-
-    <section class="admin-panel">
-
-        <div class="panel-title">
-            HOST CONTROL
-        </div>
-
-        <div class="admin-buttons">
-
-            <button
-                id="startButton"
-                class="admin-button primary"
-            >
-                START GAME
-            </button>
-
-            <button
-                id="nextButton"
-                class="admin-button"
-            >
-                NEXT QUESTION
-            </button>
-
-            <button
-                id="revealButton"
-                class="admin-button"
-            >
-                REVEAL ANSWER
-            </button>
-
-            <button
-                id="resetButton"
-                class="admin-button"
-            >
-                RESET
-            </button>
-
-            <button
-                id="stopButton"
-                class="admin-button danger"
-            >
-                STOP GAME
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- CURRENT -->
-
-    <section class="admin-grid">
-
-
-        <div class="admin-panel">
-
-            <div class="panel-title">
-                CURRENT QUESTION
+            <div class="card-subtitle">
+                Control the live logo challenge.
             </div>
 
 
-            <div
-                id="currentQuestion"
-                class="current-question"
-            >
-                WAITING
+            <!-- STATUS -->
+
+            <div class="status-grid">
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        STATUS
+                    </div>
+
+                    <div
+                        id="gameStatus"
+                        class="stat-value"
+                    >
+                        WAITING
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        QUESTION
+                    </div>
+
+                    <div
+                        id="questionNumber"
+                        class="stat-value"
+                    >
+                        0 / 19
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        PLAYERS
+                    </div>
+
+                    <div
+                        id="playerCount"
+                        class="stat-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
             </div>
 
 
-            <div class="admin-answer-box">
+            <!-- TIMER -->
 
-                <div class="panel-small">
-                    ANSWER
+            <div class="timer-panel">
+
+                <div class="timer-label">
+                    TIME REMAINING
+                </div>
+
+                <div
+                    id="timer"
+                    class="timer"
+                >
+                    30
+                </div>
+
+            </div>
+
+
+            <!-- CONTROLS -->
+
+            <div class="actions">
+
+                <button
+                    id="startButton"
+                    class="button primary"
+                >
+                    START GAME
+                </button>
+
+
+                <button
+                    id="restartButton"
+                    class="button"
+                    disabled
+                >
+                    RESTART ROUND
+                </button>
+
+
+                <button
+                    id="revealButton"
+                    class="button"
+                    disabled
+                >
+                    REVEAL ANSWER
+                </button>
+
+
+                <button
+                    id="nextButton"
+                    class="button"
+                    disabled
+                >
+                    NEXT QUESTION
+                </button>
+
+
+                <button
+                    id="resetButton"
+                    class="button danger"
+                >
+                    RESET GAME
+                </button>
+
+
+                <button
+                    id="stopButton"
+                    class="button danger"
+                    disabled
+                >
+                    STOP GAME
+                </button>
+
+            </div>
+
+
+            <!-- QUESTION -->
+
+            <div class="question-box">
+
+                <div class="question-number">
+                    CURRENT ANSWER
                 </div>
 
                 <div
                     id="currentAnswer"
-                    class="admin-answer hidden"
-                >
-                    —
-                </div>
-
-                <div
-                    id="answerHidden"
-                    class="answer-hidden"
+                    class="question-answer answer-hidden"
                 >
                     HIDDEN
                 </div>
 
             </div>
 
-        </div>
 
-
-        <!-- LEADERBOARD -->
-
-        <div class="admin-panel">
-
-            <div class="panel-heading-row">
-
-                <div class="panel-title">
-                    LIVE LEADERBOARD
-                </div>
-
-                <div
-                    id="leaderboardCount"
-                    class="mini-pill"
-                >
-                    0 PLAYERS
-                </div>
-
-            </div>
-
+            <!-- MESSAGE -->
 
             <div
-                id="leaderboard"
-                class="admin-leaderboard"
+                id="message"
+                class="message"
             >
-
-                <div class="empty-board">
-                    No players yet.
-                </div>
-
+                Waiting for game server...
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- ACTIVITY -->
+        <!-- =================================================
+             RIGHT
+        ================================================== -->
 
-    <section class="admin-panel">
+        <section class="card">
 
-        <div class="panel-title">
-            SYSTEM
-        </div>
+            <div class="card-title">
+                Live Leaderboard
+            </div>
 
-        <div
-            id="systemMessage"
-            class="system-message"
-        >
-            Waiting for game start.
-        </div>
+            <div class="card-subtitle">
+                Scores update automatically.
+            </div>
 
-    </section>
+
+            <table class="leaderboard">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            PLAYER
+                        </th>
+
+                        <th>
+                            STATUS
+                        </th>
+
+                        <th>
+                            SCORE
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="leaderboardBody"
+                >
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            class="empty"
+                        >
+                            No players yet.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
 
 </div>
 
 
-<script src="/socket.io/socket.io.js"></script>
-
 <script>
 
-const socket = io();
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const connection =
+    document.getElementById(
+        "connection"
+    );
+
+const connectionText =
+    document.getElementById(
+        "connectionText"
+    );
+
+const gameStatus =
+    document.getElementById(
+        "gameStatus"
+    );
+
+const questionNumber =
+    document.getElementById(
+        "questionNumber"
+    );
+
+const playerCount =
+    document.getElementById(
+        "playerCount"
+    );
+
+const timer =
+    document.getElementById(
+        "timer"
+    );
+
+const currentAnswer =
+    document.getElementById(
+        "currentAnswer"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+const leaderboardBody =
+    document.getElementById(
+        "leaderboardBody"
+    );
 
 
 const startButton =
@@ -281,14 +1014,19 @@ const startButton =
         "startButton"
     );
 
-const nextButton =
+const restartButton =
     document.getElementById(
-        "nextButton"
+        "restartButton"
     );
 
 const revealButton =
     document.getElementById(
         "revealButton"
+    );
+
+const nextButton =
+    document.getElementById(
+        "nextButton"
     );
 
 const resetButton =
@@ -301,555 +1039,880 @@ const stopButton =
         "stopButton"
     );
 
-const questionStat =
-    document.getElementById(
-        "questionStat"
-    );
-
-const timeStat =
-    document.getElementById(
-        "timeStat"
-    );
-
-const playersStat =
-    document.getElementById(
-        "playersStat"
-    );
-
-const adminStatus =
-    document.getElementById(
-        "adminStatus"
-    );
-
-const currentQuestion =
-    document.getElementById(
-        "currentQuestion"
-    );
-
-const currentAnswer =
-    document.getElementById(
-        "currentAnswer"
-    );
-
-const answerHidden =
-    document.getElementById(
-        "answerHidden"
-    );
-
-const leaderboard =
-    document.getElementById(
-        "leaderboard"
-    );
-
-const leaderboardCount =
-    document.getElementById(
-        "leaderboardCount"
-    );
-
-const systemMessage =
-    document.getElementById(
-        "systemMessage"
-    );
-
 
 /* =========================================================
-   API HELPER
+   HELPERS
 ========================================================= */
 
-async function adminAction(
-    endpoint
+function showMessage(
+    text,
+    type = ""
 ) {
 
-    try {
+    message.textContent =
+        text;
 
-        const response =
-            await fetch(
-                endpoint,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    }
-                }
-            );
+    message.className =
+        "message";
 
-        const data =
-            await response.json();
+    if (type) {
 
-        if (!response.ok) {
-            throw new Error(
-                data.error ||
-                "Action failed."
-            );
-        }
+        message.classList.add(
+            type
+        );
 
-        if (data.answer) {
-
-            currentAnswer.textContent =
-                data.answer;
-
-            currentAnswer.classList.remove(
-                "hidden"
-            );
-
-            answerHidden.classList.add(
-                "hidden"
-            );
-        }
-
-        return data;
-
-    } catch (error) {
-
-        systemMessage.textContent =
-            error.message;
-
-        throw error;
     }
+
+}
+
+
+function setConnected(
+    connected
+) {
+
+    if (connected) {
+
+        connection.classList.add(
+            "online"
+        );
+
+        connectionText.textContent =
+            "CONNECTED";
+
+    }
+
+    else {
+
+        connection.classList.remove(
+            "online"
+        );
+
+        connectionText.textContent =
+            "OFFLINE";
+
+    }
+
 }
 
 
 /* =========================================================
-   START
+   API REQUEST
 ========================================================= */
 
-startButton.addEventListener(
-    "click",
-    async () => {
+async function api(
+    url,
+    options = {}
+) {
 
-        await adminAction(
-            "/api/admin/start"
+    const response =
+        await fetch(
+            url,
+            {
+                ...options,
+
+                headers: {
+                    "Content-Type":
+                        "application/json",
+
+                    ...(options.headers ||
+                        {})
+                }
+            }
         );
 
-        systemMessage.textContent =
-            "Game started.";
+
+    let data;
+
+    const contentType =
+        response.headers
+            .get(
+                "content-type"
+            ) || "";
+
+
+    if (
+        contentType.includes(
+            "application/json"
+        )
+    ) {
+
+        data =
+            await response.json();
 
     }
-);
+
+    else {
+
+        const text =
+            await response.text();
+
+        throw new Error(
+            `Server returned non-JSON response (${response.status}): ${text.slice(0, 120)}`
+        );
+
+    }
+
+
+    if (
+        !response.ok
+    ) {
+
+        throw new Error(
+            data.error ||
+            `Request failed (${response.status})`
+        );
+
+    }
+
+
+    return data;
+
+}
 
 
 /* =========================================================
-   NEXT
+   UPDATE UI FROM STATE
 ========================================================= */
 
-nextButton.addEventListener(
-    "click",
-    async () => {
+function updateUI(
+    state
+) {
 
-        const data =
-            await adminAction(
-                "/api/admin/next"
-            );
+    setConnected(
+        true
+    );
 
-        if (data.finished) {
 
-            systemMessage.textContent =
-                "Game finished.";
+    const started =
+        Boolean(
+            state.started
+        );
 
-        } else {
 
-            systemMessage.textContent =
-                "Next question started.";
-        }
+    gameStatus.textContent =
+        started
+            ? "LIVE"
+            : "WAITING";
+
+
+    const question =
+        state.question || 0;
+
+
+    questionNumber.textContent =
+        `${question} / ${state.totalQuestions || 19}`;
+
+
+    playerCount.textContent =
+        state.playerCount ??
+        (
+            Array.isArray(
+                state.leaderboard
+            )
+                ? state.leaderboard.length
+                : 0
+        );
+
+
+    const remaining =
+        Math.max(
+            0,
+            Number(
+                state.remaining || 0
+            )
+        );
+
+
+    const seconds =
+        Math.ceil(
+            remaining / 1000
+        );
+
+
+    timer.textContent =
+        started
+            ? seconds
+            : 30;
+
+
+    if (
+        started &&
+        seconds <= 5
+    ) {
+
+        timer.classList.add(
+            "danger"
+        );
 
     }
-);
+
+    else {
+
+        timer.classList.remove(
+            "danger"
+        );
+
+    }
 
 
-/* =========================================================
-   REVEAL
-========================================================= */
+    /* =====================================================
+       ANSWER
+    ===================================================== */
 
-revealButton.addEventListener(
-    "click",
-    async () => {
-
-        const data =
-            await adminAction(
-                "/api/admin/reveal"
-            );
+    if (
+        state.revealed &&
+        state.answer
+    ) {
 
         currentAnswer.textContent =
-            data.answer;
+            state.answer;
 
         currentAnswer.classList.remove(
-            "hidden"
+            "answer-hidden"
         );
-
-        answerHidden.classList.add(
-            "hidden"
-        );
-
-        systemMessage.textContent =
-            "Answer revealed.";
 
     }
-);
 
-
-/* =========================================================
-   RESET
-========================================================= */
-
-resetButton.addEventListener(
-    "click",
-    async () => {
-
-        const confirmed =
-            confirm(
-                "Reset the entire game and all scores?"
-            );
-
-        if (!confirmed) {
-            return;
-        }
-
-        await adminAction(
-            "/api/admin/reset"
-        );
+    else {
 
         currentAnswer.textContent =
-            "—";
+            "HIDDEN";
 
         currentAnswer.classList.add(
-            "hidden"
+            "answer-hidden"
         );
 
-        answerHidden.classList.remove(
-            "hidden"
+    }
+
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    startButton.disabled =
+        started;
+
+    restartButton.disabled =
+        !started;
+
+    revealButton.disabled =
+        !started ||
+        Boolean(
+            state.revealed
         );
 
-        systemMessage.textContent =
-            "Game reset.";
+    nextButton.disabled =
+        !started;
 
-    }
-);
+    stopButton.disabled =
+        !started;
 
 
-/* =========================================================
-   STOP
-========================================================= */
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
 
-stopButton.addEventListener(
-    "click",
-    async () => {
+    if (
+        started &&
+        state.revealed
+    ) {
 
-        await adminAction(
-            "/api/admin/stop"
+        showMessage(
+            "Answer revealed.",
+            "success"
         );
 
-        systemMessage.textContent =
-            "Game stopped.";
+    }
+
+    else if (
+        started &&
+        state.submissionsOpen
+    ) {
+
+        showMessage(
+            "Question is live. Students can submit answers.",
+            "success"
+        );
 
     }
-);
 
+    else if (
+        started
+    ) {
 
-/* =========================================================
-   GAME STATE
-========================================================= */
-
-socket.on(
-    "game-state",
-    state => {
-
-        playersStat.textContent =
-            state.players.length;
-
-
-        if (
-            state.questionIndex >= 0 &&
-            state.question
-        ) {
-
-            questionStat.textContent =
-                `${state.questionIndex + 1} / ${state.question.total}`;
-
-            currentQuestion.textContent =
-                `QUESTION ${String(
-                    state.questionIndex + 1
-                ).padStart(2, "0")}`;
-
-        } else {
-
-            questionStat.textContent =
-                "—";
-
-            currentQuestion.textContent =
-                "WAITING";
-        }
-
-
-        if (!state.running) {
-
-            adminStatus.textContent =
-                state.stopped
-                    ? "STOPPED"
-                    : "READY";
-
-        } else if (state.locked) {
-
-            adminStatus.textContent =
-                state.revealed
-                    ? "ANSWER REVEALED"
-                    : "LOCKED";
-
-        } else {
-
-            adminStatus.textContent =
-                "LIVE";
-        }
-
-
-        if (state.revealed) {
-
-            currentAnswer.classList.remove(
-                "hidden"
-            );
-
-            answerHidden.classList.add(
-                "hidden"
-            );
-
-        } else {
-
-            currentAnswer.classList.add(
-                "hidden"
-            );
-
-            answerHidden.classList.remove(
-                "hidden"
-            );
-
-        }
+        showMessage(
+            "Question is locked.",
+            ""
+        );
 
     }
-);
 
+    else {
 
-/* =========================================================
-   TIMER
-========================================================= */
-
-socket.on(
-    "timer",
-    data => {
-
-        timeStat.textContent =
-            Math.ceil(
-                Math.max(
-                    0,
-                    data.remaining
-                )
-            );
+        showMessage(
+            "Ready to start the game.",
+            ""
+        );
 
     }
-);
+
+
+    /* =====================================================
+       LEADERBOARD
+    ===================================================== */
+
+    renderLeaderboard(
+        state.leaderboard ||
+        []
+    );
+
+}
 
 
 /* =========================================================
    LEADERBOARD
 ========================================================= */
 
-socket.on(
-    "leaderboard",
-    list => {
+function renderLeaderboard(
+    players
+) {
 
-        playersStat.textContent =
-            list.length;
+    if (
+        !players.length
+    ) {
 
-        leaderboardCount.textContent =
-            `${list.length} ${
-                list.length === 1
-                    ? "PLAYER"
-                    : "PLAYERS"
-            }`;
-
-
-        if (!list.length) {
-
-            leaderboard.innerHTML = `
-                <div class="empty-board">
+        leaderboardBody.innerHTML = `
+            <tr>
+                <td
+                    colspan="4"
+                    class="empty"
+                >
                     No players yet.
-                </div>
-            `;
+                </td>
+            </tr>
+        `;
 
-            return;
-        }
-
-
-        leaderboard.innerHTML =
-            list
-                .map(
-                    player => `
-                    <div class="admin-player-row">
-
-                        <div class="player-rank">
-                            ${player.rank}
-                        </div>
-
-                        <div class="player-name">
-                            ${escapeHtml(
-                                player.name
-                            )}
-                        </div>
-
-                        <div class="player-connection ${
-                            player.connected
-                                ? "online"
-                                : "offline"
-                        }">
-                            ${
-                                player.connected
-                                    ? "ONLINE"
-                                    : "OFFLINE"
-                            }
-                        </div>
-
-                        <div class="player-score">
-                            ${player.score}
-                        </div>
-
-                    </div>
-                    `
-                )
-                .join("");
+        return;
 
     }
-);
 
 
-/* =========================================================
-   EVENTS
-========================================================= */
+    leaderboardBody.innerHTML =
+        players
+            .map(
+                (
+                    player,
+                    index
+                ) => {
 
-socket.on(
-    "game-started",
-    () => {
-
-        systemMessage.textContent =
-            "Game started.";
-
-    }
-);
+                    const rank =
+                        player.rank ||
+                        index + 1;
 
 
-socket.on(
-    "new-question",
-    () => {
+                    return `
+                        <tr
+                            class="${
+                                rank === 1
+                                    ? "top-rank"
+                                    : ""
+                            }"
+                        >
 
-        currentAnswer.classList.add(
-            "hidden"
-        );
+                            <td>
+                                ${rank}
+                            </td>
 
-        answerHidden.classList.remove(
-            "hidden"
-        );
+                            <td>
+                                ${escapeHtml(
+                                    player.name
+                                )}
+                            </td>
 
-        systemMessage.textContent =
-            "New question is live.";
+                            <td>
+                                ${
+                                    player.status ||
+                                    (
+                                        player.correct
+                                            ? "CORRECT"
+                                            : "PLAYING"
+                                    )
+                                }
+                            </td>
 
-    }
-);
+                            <td>
+                                ${Number(
+                                    player.score || 0
+                                ).toFixed(2)}
+                            </td>
 
+                        </tr>
+                    `;
 
-socket.on(
-    "answer-revealed",
-    data => {
+                }
+            )
+            .join("");
 
-        currentAnswer.textContent =
-            data.answer;
-
-        currentAnswer.classList.remove(
-            "hidden"
-        );
-
-        answerHidden.classList.add(
-            "hidden"
-        );
-
-    }
-);
-
-
-socket.on(
-    "round-ended",
-    () => {
-
-        systemMessage.textContent =
-            "Time is up.";
-
-    }
-);
-
-
-socket.on(
-    "game-finished",
-    () => {
-
-        systemMessage.textContent =
-            "All 19 questions completed.";
-
-        adminStatus.textContent =
-            "FINISHED";
-
-    }
-);
-
-
-socket.on(
-    "game-stopped",
-    () => {
-
-        systemMessage.textContent =
-            "Game stopped.";
-
-    }
-);
-
-
-socket.on(
-    "game-reset",
-    () => {
-
-        systemMessage.textContent =
-            "Game reset.";
-
-        currentQuestion.textContent =
-            "WAITING";
-
-        currentAnswer.textContent =
-            "—";
-
-        currentAnswer.classList.add(
-            "hidden"
-        );
-
-        answerHidden.classList.remove(
-            "hidden"
-        );
-
-    }
-);
+}
 
 
 /* =========================================================
    ESCAPE HTML
 ========================================================= */
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return String(
+        value
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
+
+
+/* =========================================================
+   LOAD STATE
+========================================================= */
+
+async function loadState() {
+
+    try {
+
+        const state =
+            await api(
+                "/api/state"
+            );
+
+        updateUI(
+            state
+        );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        console.error(
+            error
+        );
+
+        setConnected(
+            false
+        );
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+async function startGame() {
+
+    startButton.disabled =
+        true;
+
+    startButton.textContent =
+        "STARTING...";
+
+
+    try {
+
+        const data =
+            await api(
+                "/api/admin/start",
+                {
+                    method:
+                        "POST"
+                }
+            );
+
+
+        updateUI(
+            data.state
+        );
+
+
+        showMessage(
+            "Game started successfully.",
+            "success"
+        );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        console.error(
+            "START ERROR:",
+            error
+        );
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+        await loadState();
+
+    }
+
+    finally {
+
+        startButton.textContent =
+            "START GAME";
+
+    }
+
+}
+
+
+/* =========================================================
+   RESTART
+========================================================= */
+
+async function restartGame() {
+
+    try {
+
+        const data =
+            await api(
+                "/api/admin/restart",
+                {
+                    method:
+                        "POST"
+                }
+            );
+
+        updateUI(
+            data.state
+        );
+
+        showMessage(
+            "Current round restarted.",
+            "success"
+        );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+async function revealAnswer() {
+
+    try {
+
+        const data =
+            await api(
+                "/api/admin/reveal",
+                {
+                    method:
+                        "POST"
+                }
+            );
+
+
+        updateUI(
+            data.state
+        );
+
+
+        showMessage(
+            `Answer revealed: ${data.answer}`,
+            "success"
+        );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+async function nextQuestion() {
+
+    try {
+
+        const data =
+            await api(
+                "/api/admin/next",
+                {
+                    method:
+                        "POST"
+                }
+            );
+
+
+        updateUI(
+            data.state
+        );
+
+
+        if (
+            data.finished
+        ) {
+
+            showMessage(
+                "All questions completed.",
+                "success"
+            );
+
+        }
+
+        else {
+
+            showMessage(
+                "Next question started.",
+                "success"
+            );
+
+        }
+
+    }
+
+    catch (
+        error
+    ) {
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+async function resetGame() {
+
+    const confirmed =
+        confirm(
+            "Reset the game? Scores will be cleared."
+        );
+
+
+    if (
+        !confirmed
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const data =
+            await api(
+                "/api/admin/reset",
+                {
+                    method:
+                        "POST"
+                }
+            );
+
+
+        updateUI(
+            data.state
+        );
+
+
+        showMessage(
+            "Game reset.",
+            "success"
+        );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   STOP
+========================================================= */
+
+async function stopGame() {
+
+    const confirmed =
+        confirm(
+            "Stop the current game?"
+        );
+
+
+    if (
+        !confirmed
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const data =
+            await api(
+                "/api/admin/stop",
+                {
+                    method:
+                        "POST"
+                }
+            );
+
+
+        updateUI(
+            data.state
+        );
+
+
+        showMessage(
+            "Game stopped.",
+            "success"
+        );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        showMessage(
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startGame
+);
+
+restartButton.addEventListener(
+    "click",
+    restartGame
+);
+
+revealButton.addEventListener(
+    "click",
+    revealAnswer
+);
+
+nextButton.addEventListener(
+    "click",
+    nextQuestion
+);
+
+resetButton.addEventListener(
+    "click",
+    resetGame
+);
+
+stopButton.addEventListener(
+    "click",
+    stopGame
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+loadState();
+
+
+/* =========================================================
+   LIVE STATE
+========================================================= */
+
+setInterval(
+    loadState,
+    250
+);
 
 </script>
 
 </body>
+
 </html>
