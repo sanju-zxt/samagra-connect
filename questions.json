@@ -1,116 +1,99 @@
 [
   {
     "id": 1,
-    "answer": "GOOGLE",
+    "answer": "SPOTIFY",
     "image": "/assets/slide-2-img-1.jpg"
   },
   {
     "id": 2,
-    "answer": "AUDI",
+    "answer": "HUNGAMA",
     "image": "/assets/slide-2-img-2.jpg"
   },
   {
     "id": 3,
-    "answer": "BIR",
+    "answer": "AUDI",
     "image": "/assets/slide-2-img-3.jpg"
   },
   {
     "id": 4,
-    "answer": "OLYMPICS",
+    "answer": "JAGUAR",
     "image": "/assets/slide-3-img-1.jpg"
   },
   {
     "id": 5,
-    "answer": "PRINGLES",
+    "answer": "BENZ",
     "image": "/assets/slide-3-img-2.jpg"
   },
   {
     "id": 6,
-    "answer": "STARBUCKS",
+    "answer": "GUCCI",
     "image": "/assets/slide-3-img-3.jpg"
   },
   {
     "id": 7,
-    "answer": "VISUAL STUDIO CODE",
-    "aliases": [
-      "VSCODE",
-      "VS CODE",
-      "VISUALSTUDIOCODE"
-    ],
+    "answer": "ALLEN SOLLY",
     "image": "/assets/slide-4-img-1.jpg"
   },
   {
     "id": 8,
-    "answer": "GITHUB",
+    "answer": "DOMINOS",
     "image": "/assets/slide-4-img-2.jpg"
   },
   {
     "id": 9,
-    "answer": "ALLEN SOLLY",
-    "aliases": [
-      "ALLENSOLLY"
-    ],
+    "answer": "BASKIN ROBBINS",
     "image": "/assets/slide-4-img-3.jpg"
   },
   {
     "id": 10,
-    "answer": "MEESHO",
+    "answer": "OLYMPIC",
     "image": "/assets/slide-4-img-4.jpg"
   },
   {
     "id": 11,
-    "answer": "HOURGLASS",
+    "answer": "PRINGLES",
     "image": "/assets/slide-5-img-1.jpg"
   },
   {
     "id": 12,
-    "answer": "JAGUAR",
+    "answer": "SHELL",
     "image": "/assets/slide-5-img-2.jpg"
   },
   {
     "id": 13,
-    "answer": "SPOTIFY",
+    "answer": "STARBUCKS",
     "image": "/assets/slide-5-img-3.jpg"
   },
   {
     "id": 14,
-    "answer": "SHELL",
+    "answer": "CARTOON NETWORK",
     "image": "/assets/slide-5-img-4.jpg"
   },
   {
     "id": 15,
-    "answer": "OPENAI",
+    "answer": "VISUAL STUDIO CODE",
     "image": "/assets/slide-6-img-1.jpg"
   },
   {
     "id": 16,
-    "answer": "MERCEDES BENZ",
-    "aliases": [
-      "MERCEDES",
-      "MERCEDESBENZ"
-    ],
+    "answer": "GITHUB",
     "image": "/assets/slide-6-img-2.jpg"
   },
   {
     "id": 17,
-    "answer": "GUCCI",
+    "answer": "OPENAI",
     "image": "/assets/slide-6-img-3.jpg"
   },
   {
     "id": 18,
-    "answer": "DOMINOS",
-    "aliases": [
-      "DOMINO'S",
-      "DOMINOSPIZZA"
-    ],
+    "answer": "MEESHO",
     "image": "/assets/slide-6-img-4.jpg"
   },
   {
     "id": 19,
-    "answer": "CARTOON NETWORK",
+    "answer": "BEN 10",
     "aliases": [
-      "CARTOONNETWORK",
-      "CN"
+      "BEN10"
     ],
     "image": "/assets/slide-7-img-1.jpg"
   }
