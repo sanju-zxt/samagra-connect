@@ -2,1554 +2,361 @@
 <html lang="en">
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>SAMAGRA • CONNECT • ADMIN</title>
+    <title>Samagra Connect • Admin</title>
 
-<style>
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-}
-
-body {
-    min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            #181b21 0%,
-            #0a0c10 35%,
-            #050608 75%
-        );
-
-    color: #fff;
-
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-body::before {
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        );
-
-    background-size:
-        60px 60px;
-
-    opacity: .45;
-}
-
-
-/* =========================================================
-   APP
-   ========================================================= */
-
-.app {
-
-    position: relative;
-
-    width:
-        min(
-            1500px,
-            100%
-        );
-
-    min-height: 100vh;
-
-    margin: auto;
-
-    padding:
-        25px
-        25px
-        40px;
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-.header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding-bottom: 20px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.07);
-}
-
-.brand {
-
-    color: #fff;
-
-    font-size: 11px;
-
-    font-weight: 900;
-
-    letter-spacing: .23em;
-}
-
-.admin-label {
-
-    margin-top: 6px;
-
-    color: #59616d;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .17em;
-}
-
-.connection {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    padding:
-        8px 11px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    border-radius: 999px;
-
-    color: #69717e;
-
-    background:
-        rgba(255,255,255,.025);
-
-    font-size: 6px;
-
-    font-weight: 900;
-
-    letter-spacing: .12em;
-}
-
-.connection-dot {
-
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: #67e49a;
-
-    box-shadow:
-        0 0 10px
-        rgba(103,228,154,.6);
-}
-
-
-/* =========================================================
-   TOP GRID
-   ========================================================= */
-
-.top-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1.5fr)
-        minmax(330px, .8fr);
-
-    gap: 15px;
-
-    margin-top: 17px;
-}
-
-
-/* =========================================================
-   CARD
-   ========================================================= */
-
-.card {
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.04),
-            rgba(255,255,255,.012)
-        );
-
-    box-shadow:
-        0 25px 80px
-        rgba(0,0,0,.25);
-
-    backdrop-filter:
-        blur(15px);
-}
-
-
-/* =========================================================
-   CONTROL CARD
-   ========================================================= */
-
-.control-card {
-
-    padding: 20px;
-}
-
-.card-title {
-
-    color: #fff;
-
-    font-size: 15px;
-
-    font-weight: 900;
-}
-
-.card-subtitle {
-
-    margin-top: 5px;
-
-    color: #626a76;
-
-    font-size: 9px;
-}
-
-.controls {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
-
-    margin-top: 17px;
-}
-
-button {
-
-    min-height: 43px;
-
-    padding:
-        0 15px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.75);
-
-    border-radius: 11px;
-
-    background:
-        #fff;
-
-    color: #08090c;
-
-    font-family: inherit;
-
-    font-size: 8px;
-
-    font-weight: 900;
-
-    letter-spacing: .08em;
-
-    cursor: pointer;
-}
-
-button:hover {
-    transform: translateY(-1px);
-}
-
-button:disabled {
-    opacity: .35;
-    cursor: not-allowed;
-}
-
-button.secondary {
-
-    border-color:
-        rgba(255,255,255,.1);
-
-    background:
-        rgba(255,255,255,.045);
-
-    color: #d9dde3;
-}
-
-button.danger {
-
-    border-color:
-        rgba(255,105,116,.2);
-
-    background:
-        rgba(255,105,116,.07);
-
-    color: #ff858d;
-}
-
-
-/* =========================================================
-   ROUND INFO
-   ========================================================= */
-
-.round-card {
-
-    padding: 20px;
-}
-
-.round-number {
-
-    color: #fff;
-
-    font-size: 36px;
-
-    line-height: 1;
-
-    font-weight: 900;
-
-    letter-spacing: -.06em;
-}
-
-.round-label {
-
-    margin-top: 7px;
-
-    color: #59616d;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .16em;
-}
-
-.admin-timer {
-
-    margin-top: 17px;
-
-    color: #fff;
-
-    font-size: 42px;
-
-    font-weight: 900;
-
-    letter-spacing: -.07em;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-.admin-timer.danger {
-    color: #ff6974;
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-.status-line {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-top: 14px;
-
-    padding-top: 13px;
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.06);
-}
-
-.status-label {
-
-    color: #555d69;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .13em;
-}
-
-.status-value {
-
-    color: #67e49a;
-
-    font-size: 8px;
-
-    font-weight: 900;
-}
-
-
-/* =========================================================
-   LEADERBOARD
-   ========================================================= */
-
-.leaderboard-card {
-
-    margin-top: 15px;
-
-    padding: 20px;
-}
-
-.leaderboard-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-}
-
-.leaderboard-title {
-
-    color: #fff;
-
-    font-size: 18px;
-
-    font-weight: 900;
-}
-
-.leaderboard-info {
-
-    color: #59616d;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .1em;
-}
-
-
-/* =========================================================
-   RANKING
-   ========================================================= */
-
-.table-wrapper {
-
-    width: 100%;
-
-    margin-top: 12px;
-
-    overflow-x: auto;
-}
-
-table {
-
-    width: 100%;
-
-    border-collapse:
-        separate;
-
-    border-spacing:
-        0 6px;
-
-    table-layout: fixed;
-}
-
-th {
-
-    padding:
-        8px 12px;
-
-    color: #4f5763;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .14em;
-
-    text-align: left;
-}
-
-th:nth-child(1) {
-    width: 80px;
-}
-
-th:nth-child(2) {
-    width: auto;
-}
-
-th:nth-child(3) {
-    width: 150px;
-}
-
-th:nth-child(4) {
-    width: 140px;
-}
-
-th:last-child {
-    text-align: right;
-}
-
-td {
-
-    height: 58px;
-
-    padding:
-        9px 12px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.035);
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.035);
-
-    color: #aeb5bf;
-
-    font-size: 10px;
-
-    font-weight: 700;
-}
-
-td:first-child {
-
-    border-radius:
-        11px
-        0
-        0
-        11px;
-}
-
-td:last-child {
-
-    border-radius:
-        0
-        11px
-        11px
-        0;
-
-    text-align: right;
-
-    color: #fff;
-
-    font-size: 14px;
-
-    font-weight: 900;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-tr.rank-one td {
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.085),
-            rgba(255,255,255,.025)
-        );
-
-    color: #fff;
-}
-
-.rank {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 32px;
-    height: 32px;
-
-    border-radius: 9px;
-
-    background:
-        rgba(255,255,255,.04);
-
-    color: #69717e;
-
-    font-size: 9px;
-
-    font-weight: 900;
-}
-
-.rank-one .rank {
-    background:
-        rgba(255,255,255,.1);
-
-    color: #fff;
-}
-
-.team {
-
-    color: #fff;
-
-    font-size: 11px;
-
-    font-weight: 900;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-}
-
-.team-wrap {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 11px;
-
-    min-width: 0;
-}
-
-.avatar {
-
-    width: 34px;
-    height: 34px;
-
-    flex: 0 0 34px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    border-radius: 10px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    color: #fff;
-
-    font-size: 9px;
-
-    font-weight: 900;
-}
-
-.answered {
-
-    color: #67e49a;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .1em;
-}
-
-.waiting {
-
-    color: #59616d;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .1em;
-}
-
-.correct {
-
-    color: #67e49a;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .1em;
-}
-
-.wrong {
-
-    color: #ff6974;
-
-    font-size: 7px;
-
-    font-weight: 900;
-
-    letter-spacing: .1em;
-}
-
-.empty {
-
-    height: 150px;
-
-    text-align: center;
-
-    color: #59616d;
-
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   MESSAGE
-   ========================================================= */
-
-.message {
-
-    position: fixed;
-
-    right: 20px;
-    bottom: 20px;
-
-    z-index: 100;
-
-    max-width: 340px;
-
-    padding:
-        13px 16px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius: 12px;
-
-    background:
-        #11141a;
-
-    color: #fff;
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-    box-shadow:
-        0 20px 50px
-        rgba(0,0,0,.4);
-
-    opacity: 0;
-
-    transform:
-        translateY(10px);
-
-    pointer-events: none;
-
-    transition:
-        .25s ease;
-}
-
-.message.show {
-
-    opacity: 1;
-
-    transform:
-        translateY(0);
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-    .top-grid {
-
-        grid-template-columns:
-            1fr;
-    }
-
-    .app {
-        padding:
-            17px
-            13px
-            30px;
-    }
-
-}
-
-@media (max-width: 650px) {
-
-    .leaderboard-card {
-        padding: 13px;
-    }
-
-    table {
-        min-width: 650px;
-    }
-
-    .leaderboard-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-}
-
-</style>
 </head>
 
+<body class="admin-page">
 
-<body>
-
-<div class="app">
-
-
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
-<header class="header">
-
-    <div>
-
-        <div class="brand">
-            SAMAGRA • CONNECT
-        </div>
-
-        <div class="admin-label">
-            GAME CONTROL CENTER
-        </div>
-
-    </div>
+<div class="admin-shell">
 
 
-    <div class="connection">
+    <!-- HEADER -->
 
-        <span class="connection-dot"></span>
+    <header class="admin-header">
 
-        SERVER CONNECTED
+        <div>
 
-    </div>
+            <div class="eyebrow">
+                SAMAGRA CONNECT
+            </div>
 
-</header>
+            <h1>
+                Game Control
+            </h1>
 
+            <p>
+                Individual Logo Challenge
+            </p>
 
-<!-- =====================================================
-     TOP
-     ===================================================== -->
-
-<section class="top-grid">
-
-
-    <div class="card control-card">
-
-        <div class="card-title">
-            Game Controls
-        </div>
-
-        <div class="card-subtitle">
-            Control the live round from here.
         </div>
 
 
-        <div class="controls">
+        <div
+            id="adminStatus"
+            class="admin-status"
+        >
+            READY
+        </div>
+
+    </header>
+
+
+    <!-- STATS -->
+
+    <section class="admin-stats">
+
+        <div class="admin-stat">
+
+            <span>
+                QUESTION
+            </span>
+
+            <strong
+                id="questionStat"
+            >
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <span>
+                TIME
+            </span>
+
+            <strong
+                id="timeStat"
+            >
+                30
+            </strong>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <span>
+                PLAYERS
+            </span>
+
+            <strong
+                id="playersStat"
+            >
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <span>
+                MAX
+            </span>
+
+            <strong>
+                10
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTROLS -->
+
+    <section class="admin-panel">
+
+        <div class="panel-title">
+            HOST CONTROL
+        </div>
+
+        <div class="admin-buttons">
 
             <button
-                id="startBtn"
-                onclick="api('/api/admin/start')"
+                id="startButton"
+                class="admin-button primary"
             >
                 START GAME
             </button>
 
-
             <button
-                class="secondary"
-                onclick="api('/api/admin/restart')"
-            >
-                RESTART ROUND
-            </button>
-
-
-            <button
-                class="secondary"
-                onclick="api('/api/admin/reveal')"
-            >
-                REVEAL ANSWER
-            </button>
-
-
-            <button
-                class="secondary"
-                onclick="api('/api/admin/next')"
+                id="nextButton"
+                class="admin-button"
             >
                 NEXT QUESTION
             </button>
 
+            <button
+                id="revealButton"
+                class="admin-button"
+            >
+                REVEAL ANSWER
+            </button>
 
             <button
-                class="danger"
-                onclick="api('/api/admin/stop')"
+                id="resetButton"
+                class="admin-button"
+            >
+                RESET
+            </button>
+
+            <button
+                id="stopButton"
+                class="admin-button danger"
             >
                 STOP GAME
             </button>
 
         </div>
 
-    </div>
+    </section>
 
 
-    <div class="card round-card">
+    <!-- CURRENT -->
 
-        <div
-            id="roundNumber"
-            class="round-number"
-        >
-            READY
-        </div>
-
-        <div class="round-label">
-            CURRENT QUESTION
-        </div>
+    <section class="admin-grid">
 
 
-        <div
-            id="adminTimer"
-            class="admin-timer"
-        >
-            30.00
-        </div>
+        <div class="admin-panel">
 
-
-        <div class="status-line">
-
-            <div class="status-label">
-                GAME STATUS
+            <div class="panel-title">
+                CURRENT QUESTION
             </div>
 
+
             <div
-                id="gameStatus"
-                class="status-value"
+                id="currentQuestion"
+                class="current-question"
             >
                 WAITING
             </div>
 
+
+            <div class="admin-answer-box">
+
+                <div class="panel-small">
+                    ANSWER
+                </div>
+
+                <div
+                    id="currentAnswer"
+                    class="admin-answer hidden"
+                >
+                    —
+                </div>
+
+                <div
+                    id="answerHidden"
+                    class="answer-hidden"
+                >
+                    HIDDEN
+                </div>
+
+            </div>
+
         </div>
 
-    </div>
+
+        <!-- LEADERBOARD -->
+
+        <div class="admin-panel">
+
+            <div class="panel-heading-row">
+
+                <div class="panel-title">
+                    LIVE LEADERBOARD
+                </div>
+
+                <div
+                    id="leaderboardCount"
+                    class="mini-pill"
+                >
+                    0 PLAYERS
+                </div>
+
+            </div>
 
 
-</section>
+            <div
+                id="leaderboard"
+                class="admin-leaderboard"
+            >
+
+                <div class="empty-board">
+                    No players yet.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
-<!-- =====================================================
-     LEADERBOARD
-     ===================================================== -->
+    <!-- ACTIVITY -->
 
-<section class="card leaderboard-card">
+    <section class="admin-panel">
 
-
-    <div class="leaderboard-header">
-
-        <div class="leaderboard-title">
-            Live Leaderboard
+        <div class="panel-title">
+            SYSTEM
         </div>
 
         <div
-            id="leaderboardInfo"
-            class="leaderboard-info"
+            id="systemMessage"
+            class="system-message"
         >
-            0 TEAMS
+            Waiting for game start.
         </div>
 
-    </div>
-
-
-    <div class="table-wrapper">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        RANK
-                    </th>
-
-                    <th>
-                        TEAM
-                    </th>
-
-                    <th>
-                        ANSWER
-                    </th>
-
-                    <th>
-                        RESULT
-                    </th>
-
-                    <th>
-                        POINTS
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody
-                id="leaderboard"
-            >
-
-                <tr>
-
-                    <td
-                        colspan="5"
-                        class="empty"
-                    >
-                        No teams have joined yet.
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-</section>
-
+    </section>
 
 </div>
 
 
-<div
-    id="message"
-    class="message"
-></div>
-
+<script src="/socket.io/socket.io.js"></script>
 
 <script>
 
-"use strict";
+const socket = io();
 
 
-/* =========================================================
-   ELEMENTS
-   ========================================================= */
+const startButton =
+    document.getElementById(
+        "startButton"
+    );
+
+const nextButton =
+    document.getElementById(
+        "nextButton"
+    );
+
+const revealButton =
+    document.getElementById(
+        "revealButton"
+    );
+
+const resetButton =
+    document.getElementById(
+        "resetButton"
+    );
+
+const stopButton =
+    document.getElementById(
+        "stopButton"
+    );
+
+const questionStat =
+    document.getElementById(
+        "questionStat"
+    );
+
+const timeStat =
+    document.getElementById(
+        "timeStat"
+    );
+
+const playersStat =
+    document.getElementById(
+        "playersStat"
+    );
+
+const adminStatus =
+    document.getElementById(
+        "adminStatus"
+    );
+
+const currentQuestion =
+    document.getElementById(
+        "currentQuestion"
+    );
+
+const currentAnswer =
+    document.getElementById(
+        "currentAnswer"
+    );
+
+const answerHidden =
+    document.getElementById(
+        "answerHidden"
+    );
 
 const leaderboard =
     document.getElementById(
         "leaderboard"
     );
 
-const roundNumber =
+const leaderboardCount =
     document.getElementById(
-        "roundNumber"
+        "leaderboardCount"
     );
 
-const adminTimer =
+const systemMessage =
     document.getElementById(
-        "adminTimer"
-    );
-
-const gameStatus =
-    document.getElementById(
-        "gameStatus"
-    );
-
-const leaderboardInfo =
-    document.getElementById(
-        "leaderboardInfo"
-    );
-
-const message =
-    document.getElementById(
-        "message"
+        "systemMessage"
     );
 
 
 /* =========================================================
-   STATE
-   ========================================================= */
+   API HELPER
+========================================================= */
 
-let state = null;
-
-
-/* =========================================================
-   ESCAPE
-   ========================================================= */
-
-function escapeHTML(
-    value
-) {
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-/* =========================================================
-   LOAD STATE
-   ========================================================= */
-
-async function loadState() {
-
-    try {
-
-        const response =
-            await fetch(
-                "/api/state?_=" +
-                Date.now(),
-                {
-                    cache:
-                        "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-            return;
-        }
-
-
-        state =
-            await response.json();
-
-
-        render();
-
-    }
-    catch(error) {
-
-        console.error(
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER
-   ========================================================= */
-
-function render() {
-
-    if (!state) {
-        return;
-    }
-
-
-    /* ROUND */
-
-    if (
-        state.started
-    ) {
-
-        roundNumber.textContent =
-            String(
-                state.question
-            ).padStart(
-                2,
-                "0"
-            ) +
-            " / " +
-            state.totalQuestions;
-
-    }
-    else {
-
-        roundNumber.textContent =
-            "READY";
-
-    }
-
-
-    /* STATUS */
-
-    if (
-        state.started &&
-        state.submissionsOpen
-    ) {
-
-        gameStatus.textContent =
-            "ROUND LIVE";
-
-        gameStatus.style.color =
-            "#67e49a";
-
-    }
-    else if (
-        state.started &&
-        state.revealed
-    ) {
-
-        gameStatus.textContent =
-            "ANSWER REVEALED";
-
-        gameStatus.style.color =
-            "#ffffff";
-
-    }
-    else {
-
-        gameStatus.textContent =
-            "WAITING";
-
-        gameStatus.style.color =
-            "#59616d";
-
-    }
-
-
-    /* LEADERBOARD */
-
-    renderLeaderboard(
-        Array.isArray(
-            state.leaderboard
-        )
-            ? state.leaderboard
-            : []
-    );
-
-}
-
-
-/* =========================================================
-   LEADERBOARD
-   ========================================================= */
-
-function renderLeaderboard(
-    teams
-) {
-
-    leaderboardInfo.textContent =
-        teams.length +
-        (
-            teams.length === 1
-                ? " TEAM"
-                : " TEAMS"
-        );
-
-
-    if (
-        teams.length === 0
-    ) {
-
-        leaderboard.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="5"
-                    class="empty"
-                >
-                    No teams have joined yet.
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    leaderboard.innerHTML =
-        teams.map(
-            (
-                team,
-                index
-            ) => {
-
-                const rank =
-                    Number(
-                        team.rank ||
-                        index + 1
-                    );
-
-
-                const initial =
-                    (
-                        team.name ||
-                        "T"
-                    )
-                        .charAt(0)
-                        .toUpperCase();
-
-
-                let answerStatus =
-                    "WAITING";
-
-                let answerClass =
-                    "waiting";
-
-
-                if (
-                    team.submitted
-                ) {
-
-                    answerStatus =
-                        "SUBMITTED";
-
-                    answerClass =
-                        "answered";
-
-                }
-
-
-                let result =
-                    "—";
-
-                let resultClass =
-                    "";
-
-
-                if (
-                    team.submitted
-                ) {
-
-                    if (
-                        team.correct
-                    ) {
-
-                        result =
-                            "CORRECT";
-
-                        resultClass =
-                            "correct";
-
-                    }
-                    else {
-
-                        result =
-                            "WRONG";
-
-                        resultClass =
-                            "wrong";
-
-                    }
-
-                }
-
-
-                return `
-
-                    <tr
-                        class="${
-                            rank === 1
-                                ? "rank-one"
-                                : ""
-                        }"
-                    >
-
-                        <td>
-
-                            <span
-                                class="rank"
-                            >
-                                ${
-                                    String(
-                                        rank
-                                    ).padStart(
-                                        2,
-                                        "0"
-                                    )
-                                }
-                            </span>
-
-                        </td>
-
-
-                        <td>
-
-                            <div
-                                class="team-wrap"
-                            >
-
-                                <div
-                                    class="avatar"
-                                >
-                                    ${escapeHTML(
-                                        initial
-                                    )}
-                                </div>
-
-                                <div
-                                    class="team"
-                                >
-                                    ${escapeHTML(
-                                        team.name
-                                    )}
-                                </div>
-
-                            </div>
-
-                        </td>
-
-
-                        <td>
-
-                            <span
-                                class="${
-                                    answerClass
-                                }"
-                            >
-                                ${answerStatus}
-                            </span>
-
-                        </td>
-
-
-                        <td>
-
-                            <span
-                                class="${
-                                    resultClass
-                                }"
-                            >
-                                ${result}
-                            </span>
-
-                        </td>
-
-
-                        <td>
-
-                            ${Number(
-                                team.score || 0
-                            ).toFixed(2)}
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-        )
-        .join("");
-
-}
-
-
-/* =========================================================
-   TIMER
-   ========================================================= */
-
-function updateTimer() {
-
-    if (
-        !state ||
-        !state.started
-    ) {
-
-        adminTimer.textContent =
-            "30.00";
-
-        adminTimer.classList.remove(
-            "danger"
-        );
-
-        return;
-
-    }
-
-
-    const remaining =
-        Math.max(
-            0,
-            Number(
-                state.remaining || 0
-            )
-        );
-
-
-    adminTimer.textContent =
-        (
-            remaining / 1000
-        ).toFixed(2);
-
-
-    adminTimer.classList.toggle(
-        "danger",
-        remaining <= 5000
-    );
-
-}
-
-
-/* =========================================================
-   API ACTION
-   ========================================================= */
-
-async function api(
+async function adminAction(
     endpoint
 ) {
 
@@ -1559,118 +366,488 @@ async function api(
             await fetch(
                 endpoint,
                 {
-                    method:
-                        "POST",
-
+                    method: "POST",
                     headers: {
-                        "Accept":
+                        "Content-Type":
                             "application/json"
                     }
                 }
             );
 
-
         const data =
             await response.json();
 
-
         if (!response.ok) {
-
             throw new Error(
                 data.error ||
-                "Request failed."
+                "Action failed."
+            );
+        }
+
+        if (data.answer) {
+
+            currentAnswer.textContent =
+                data.answer;
+
+            currentAnswer.classList.remove(
+                "hidden"
+            );
+
+            answerHidden.classList.add(
+                "hidden"
+            );
+        }
+
+        return data;
+
+    } catch (error) {
+
+        systemMessage.textContent =
+            error.message;
+
+        throw error;
+    }
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+startButton.addEventListener(
+    "click",
+    async () => {
+
+        await adminAction(
+            "/api/admin/start"
+        );
+
+        systemMessage.textContent =
+            "Game started.";
+
+    }
+);
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+nextButton.addEventListener(
+    "click",
+    async () => {
+
+        const data =
+            await adminAction(
+                "/api/admin/next"
+            );
+
+        if (data.finished) {
+
+            systemMessage.textContent =
+                "Game finished.";
+
+        } else {
+
+            systemMessage.textContent =
+                "Next question started.";
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+revealButton.addEventListener(
+    "click",
+    async () => {
+
+        const data =
+            await adminAction(
+                "/api/admin/reveal"
+            );
+
+        currentAnswer.textContent =
+            data.answer;
+
+        currentAnswer.classList.remove(
+            "hidden"
+        );
+
+        answerHidden.classList.add(
+            "hidden"
+        );
+
+        systemMessage.textContent =
+            "Answer revealed.";
+
+    }
+);
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+resetButton.addEventListener(
+    "click",
+    async () => {
+
+        const confirmed =
+            confirm(
+                "Reset the entire game and all scores?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        await adminAction(
+            "/api/admin/reset"
+        );
+
+        currentAnswer.textContent =
+            "—";
+
+        currentAnswer.classList.add(
+            "hidden"
+        );
+
+        answerHidden.classList.remove(
+            "hidden"
+        );
+
+        systemMessage.textContent =
+            "Game reset.";
+
+    }
+);
+
+
+/* =========================================================
+   STOP
+========================================================= */
+
+stopButton.addEventListener(
+    "click",
+    async () => {
+
+        await adminAction(
+            "/api/admin/stop"
+        );
+
+        systemMessage.textContent =
+            "Game stopped.";
+
+    }
+);
+
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+socket.on(
+    "game-state",
+    state => {
+
+        playersStat.textContent =
+            state.players.length;
+
+
+        if (
+            state.questionIndex >= 0 &&
+            state.question
+        ) {
+
+            questionStat.textContent =
+                `${state.questionIndex + 1} / ${state.question.total}`;
+
+            currentQuestion.textContent =
+                `QUESTION ${String(
+                    state.questionIndex + 1
+                ).padStart(2, "0")}`;
+
+        } else {
+
+            questionStat.textContent =
+                "—";
+
+            currentQuestion.textContent =
+                "WAITING";
+        }
+
+
+        if (!state.running) {
+
+            adminStatus.textContent =
+                state.stopped
+                    ? "STOPPED"
+                    : "READY";
+
+        } else if (state.locked) {
+
+            adminStatus.textContent =
+                state.revealed
+                    ? "ANSWER REVEALED"
+                    : "LOCKED";
+
+        } else {
+
+            adminStatus.textContent =
+                "LIVE";
+        }
+
+
+        if (state.revealed) {
+
+            currentAnswer.classList.remove(
+                "hidden"
+            );
+
+            answerHidden.classList.add(
+                "hidden"
+            );
+
+        } else {
+
+            currentAnswer.classList.add(
+                "hidden"
+            );
+
+            answerHidden.classList.remove(
+                "hidden"
             );
 
         }
 
-
-        showMessage(
-            data.message ||
-            "Done."
-        );
-
-
-        /*
-         * Immediately refresh state.
-         */
-
-        await loadState();
-
     }
-    catch(error) {
-
-        showMessage(
-            error.message,
-            true
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   MESSAGE
-   ========================================================= */
-
-let messageTimer;
-
-
-function showMessage(
-    text,
-    error = false
-) {
-
-    message.textContent =
-        text;
-
-    message.style.borderColor =
-        error
-            ? "rgba(255,105,116,.25)"
-            : "rgba(103,228,154,.18)";
-
-    message.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        messageTimer
-    );
-
-
-    messageTimer =
-        setTimeout(
-            () => {
-
-                message.classList.remove(
-                    "show"
-                );
-
-            },
-            2500
-        );
-
-}
-
-
-/* =========================================================
-   LIVE
-   ========================================================= */
-
-loadState();
-
-
-setInterval(
-    loadState,
-    700
 );
 
 
-setInterval(
-    updateTimer,
-    50
+/* =========================================================
+   TIMER
+========================================================= */
+
+socket.on(
+    "timer",
+    data => {
+
+        timeStat.textContent =
+            Math.ceil(
+                Math.max(
+                    0,
+                    data.remaining
+                )
+            );
+
+    }
 );
+
+
+/* =========================================================
+   LEADERBOARD
+========================================================= */
+
+socket.on(
+    "leaderboard",
+    list => {
+
+        playersStat.textContent =
+            list.length;
+
+        leaderboardCount.textContent =
+            `${list.length} ${
+                list.length === 1
+                    ? "PLAYER"
+                    : "PLAYERS"
+            }`;
+
+
+        if (!list.length) {
+
+            leaderboard.innerHTML = `
+                <div class="empty-board">
+                    No players yet.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        leaderboard.innerHTML =
+            list
+                .map(
+                    player => `
+                    <div class="admin-player-row">
+
+                        <div class="player-rank">
+                            ${player.rank}
+                        </div>
+
+                        <div class="player-name">
+                            ${escapeHtml(
+                                player.name
+                            )}
+                        </div>
+
+                        <div class="player-connection ${
+                            player.connected
+                                ? "online"
+                                : "offline"
+                        }">
+                            ${
+                                player.connected
+                                    ? "ONLINE"
+                                    : "OFFLINE"
+                            }
+                        </div>
+
+                        <div class="player-score">
+                            ${player.score}
+                        </div>
+
+                    </div>
+                    `
+                )
+                .join("");
+
+    }
+);
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+socket.on(
+    "game-started",
+    () => {
+
+        systemMessage.textContent =
+            "Game started.";
+
+    }
+);
+
+
+socket.on(
+    "new-question",
+    () => {
+
+        currentAnswer.classList.add(
+            "hidden"
+        );
+
+        answerHidden.classList.remove(
+            "hidden"
+        );
+
+        systemMessage.textContent =
+            "New question is live.";
+
+    }
+);
+
+
+socket.on(
+    "answer-revealed",
+    data => {
+
+        currentAnswer.textContent =
+            data.answer;
+
+        currentAnswer.classList.remove(
+            "hidden"
+        );
+
+        answerHidden.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+
+socket.on(
+    "round-ended",
+    () => {
+
+        systemMessage.textContent =
+            "Time is up.";
+
+    }
+);
+
+
+socket.on(
+    "game-finished",
+    () => {
+
+        systemMessage.textContent =
+            "All 19 questions completed.";
+
+        adminStatus.textContent =
+            "FINISHED";
+
+    }
+);
+
+
+socket.on(
+    "game-stopped",
+    () => {
+
+        systemMessage.textContent =
+            "Game stopped.";
+
+    }
+);
+
+
+socket.on(
+    "game-reset",
+    () => {
+
+        systemMessage.textContent =
+            "Game reset.";
+
+        currentQuestion.textContent =
+            "WAITING";
+
+        currentAnswer.textContent =
+            "—";
+
+        currentAnswer.classList.add(
+            "hidden"
+        );
+
+        answerHidden.classList.remove(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
 
 </script>
 
